@@ -26,8 +26,7 @@
   ],
   "vue": {
     "devServer": {
-      "proxy": "http://localhost:7201"
+      "proxy": "http://localhost:3001"
     }
   }
 }
-  
