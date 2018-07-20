@@ -112,7 +112,7 @@ export default {
   margin-top: 13px;
 }
 .content{
-    width: 82.5%;
+    width:80%;
     height: 570px;
     background-color: white;
     display: inline-block;
