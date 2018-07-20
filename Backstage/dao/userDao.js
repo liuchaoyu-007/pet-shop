@@ -34,13 +34,14 @@ module.exports.register = async (data) => {//注册包括判断是否已注册
     return isdata;
 }
 module.exports.Land = async (data) => {//登陆
+    console.log(data)
     const {
         userAcount,//账号
         userPwd,//密码
         userType//登陆类型
     } = data
     let isdata = "false";
-    let datas = "";
+    let datas = "false";
     const datauser = await mongoose.model("user").find()
     for (let i = 0; i < datauser.length; i++) {
         if (userAcount == datauser[i].userAcount && userPwd == datauser[i].userPwd && userType == datauser[i].userType) {
@@ -51,5 +52,6 @@ module.exports.Land = async (data) => {//登陆
             isdata = "false";
         }
     }
+    console.log(datas)
     return datas;
 }
