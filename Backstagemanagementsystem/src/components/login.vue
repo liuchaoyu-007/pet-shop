@@ -57,7 +57,7 @@ export default {
             callback: action => {
               localStorage.username = data.name;
               localStorage.usertype = data.type;
-              this.$router.push("/info");
+              this.$router.push("/info/messagecenter");
             }
           });
         } else {
