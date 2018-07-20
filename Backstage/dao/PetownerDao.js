@@ -8,17 +8,17 @@ module.exports.Petowner = async (data) => {//注册包括判断是否已注册
         memberName,//真实姓名
         memberImg,//头像
     } = data
-    let isdata = false;
+    let isdata = "false";
     const datauser = await mongoose.model("Spoilmanagement").find()
     for (let i = 0; i < datauser.length; i++) {
         if (memberuser == datauser[i].memberuser && memberpassword == datauser[i].memberpassword) {
-            isdata = true;
+            isdata = "true";
             i = datauser.length + 1;
         } else {
-            isdata = false;
+            isdata = "false";
         }
     }
-    if (isdata) {
+    if (isdata=="true") {
         await mongoose.model("Spoilmanagement")
             .create({
                 memberuser: memberuser,//账号
@@ -33,9 +33,9 @@ module.exports.Petowner = async (data) => {//注册包括判断是否已注册
                 memberPoint: 0,//积分
                 haveapet: []//宠物
             })
-            isdata = true;
+            isdata = "true";
     } else {
-        isdata = false;
+        isdata = "false";
     }
     return isdata;
 }
@@ -44,14 +44,14 @@ module.exports.Petowget = async (data) => {//登陆
         memberuser,//账号
         memberpassword,//密码
     } = data
-    let isdata = false;
+    let isdata = "false";
     const datauser = await mongoose.model("Spoilmanagement").find()
     for (let i = 0; i < datauser.length; i++) {
         if (memberuser == datauser[i].memberuser && memberpassword == datauser[i].memberpassword) {
-            isdata = true;
+            isdata = "true";
             i = datauser.length + 1;
         } else {
-            isdata = false;
+            isdata = "false";
         }
     }
     return isdata;

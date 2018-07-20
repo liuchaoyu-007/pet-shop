@@ -21,7 +21,16 @@ var MovieSchema = new Schema({
         type: Number//这个订单购买数量
     },
     userprice: {
-        type: Number//这个订单购买价格
+        type: Number//这个订单购买单价
+    },
+    userzong: {
+        type: Number//这个订单购买总价
+    },
+    useryou: {
+        type: Number//这个订单运费
+    },
+    userdiqu: {
+        type: String//这个订单发往地
     },
 });
 

@@ -4,8 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var Petowner = require('./routes/Petowner');//宠物用户
+var user = require('./routes/user');//后台用户
 
-require("./dao/data.js");
+require("./dao/database.js");
 var app = express();
 
 // view engine setup
@@ -23,6 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
+app.use('/Petowner', Petowner);//宠物用户
+app.use('/user', user);//后台用户
 
 
 
