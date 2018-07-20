@@ -9,7 +9,7 @@
             </el-input>
           </el-form-item>
           <el-form-item label="密码">
-            <el-input placeholder="请输入密码" v-model="pass" clearable>
+            <el-input placeholder="请输入密码" type="password" v-model="pass" clearable>
             </el-input>
           </el-form-item>
           <el-form-item label="登录类型">
@@ -19,7 +19,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="btn">登录</el-button>
+            <el-button type="primary" @click="btn" style="margin-left:18%;">登录</el-button>
             <el-button @click="reg">注册</el-button>
           </el-form-item>
         </el-form>
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     async btn() {
-      if (this.user != "" && this.pass != "" && this.type != "") {
+      if (this.user != undefined && this.pass != undefined && this.type != undefined) {
         const data = await fetch("/user/Land", {
           method: "post",
           body: JSON.stringify({
@@ -51,11 +51,12 @@ export default {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
-        console.log(data);
-        if (data != "") {
+        if (data.name != "false" && data.type != "false") {
           this.$alert("登陆成功！", "提示", {
             confirmButtonText: "确定",
             callback: action => {
+              localStorage.username = data.name;
+              localStorage.usertype = data.type;
               this.$router.push("/info");
             }
           });
@@ -65,16 +66,13 @@ export default {
           });
         }
       } else {
-        this.alerts();
+        this.$alert("输入错误", "提示", {
+          confirmButtonText: "确定"
+        });
       }
     },
     reg() {
       this.$router.push("/reg");
-    },
-    alerts() {
-      this.$alert("输入错误", "提示", {
-        confirmButtonText: "确定"
-      });
     }
   }
 };
