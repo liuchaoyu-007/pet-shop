@@ -17,6 +17,7 @@
                     {{myname}}!欢迎你
                 </li>
             </ul>
+            <span id="time">{{time}}</span>
         </div>
     </div>
     <div>
@@ -85,10 +86,19 @@ export default {
   data() {
     return {
       myname: localStorage.username,
-      mytype: localStorage.usertype
+      mytype: localStorage.usertype,
+      istypetrue: this.iftrue(),
+      time: new Date().toLocaleString()
     };
   },
   methods: {
+    iftrue() {
+      if (this.mytype == "平台管理员") {//用于判断登陆用户权限
+        return 1;
+      } else {
+        return 0;
+      }
+    },
     messagecenter() {
       //消息中心
       this.$router.push("/info/messagecenter");
@@ -140,6 +150,13 @@ export default {
 * {
   margin: 0;
   padding: 0;
+}
+#time {
+  position: absolute;
+  top: 17px;
+  right: 2.2%;
+  color: #dbdbdb;
+  font-size: 12px;
 }
 body {
   background-image: url("../assets/16df68841428aaa063dd76639ca3cab8.jpg");
