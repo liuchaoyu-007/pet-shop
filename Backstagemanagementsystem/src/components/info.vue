@@ -85,7 +85,7 @@
 export default {
   data() {
     return {
-      myname: localStorage.username,
+      myname: localStorage.userName,
       mytype: localStorage.usertype,
       istypetrue: this.iftrue(),
       time: new Date().toLocaleString()

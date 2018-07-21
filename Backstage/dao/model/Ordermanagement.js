@@ -5,6 +5,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var MovieSchema = new Schema({
+    storesure: {
+        type: String//这个订单属于那个店家的（店家姓名）
+    },
     storename: {
         type: String//这个订单属于那个门店
     },
@@ -32,6 +35,9 @@ var MovieSchema = new Schema({
     userdiqu: {
         type: String//这个订单发往地
     },
+    state:{
+        type: String//这个订单是否发货
+    }
 });
 
 mongoose.model("Ordermanagement", MovieSchema, "Ordermanagement");

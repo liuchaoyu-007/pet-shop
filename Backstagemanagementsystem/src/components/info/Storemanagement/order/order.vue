@@ -2,83 +2,64 @@
     <div>
         <el-table
         :data="rows"
-        style="width: 100%"
-        max-height="250">
+        border
+        style="width: 100%">
         <el-table-column
         fixed
-        prop="_id"
-        label="日期"
-        width="150">
-        </el-table-column>
-        <el-table-column
-        prop="empName"
-        label="姓名"
+        prop="usertime"
+        label="订单时间"
         width="120">
         </el-table-column>
         <el-table-column
-        prop=""
-        label="省份"
+        prop="storename"
+        label="店主门店"
+        width="">
+        </el-table-column>
+        <el-table-column
+        prop="username"
+        label="宠物用户"
         width="120">
         </el-table-column>
         <el-table-column
-        prop="city"
-        label="市区"
+        prop="usernum"
+        label="购买数量"
         width="120">
         </el-table-column>
         <el-table-column
-        prop="address"
-        label="地址"
-        width="300">
+        prop="userprice"
+        label="购买单价"
+        width="120">
         </el-table-column>
         <el-table-column
-        prop="zip"
-        label="邮编"
+        prop="userzong"
+        label="购买总价"
+        width="120">
+        </el-table-column>
+        <el-table-column
+        prop="useryou"
+        label="订单运费"
+        width="120">
+        </el-table-column>
+        <el-table-column
+        prop="userdiqu"
+        label="订单发往地"
+        width="120">
+        </el-table-column>
+        <el-table-column
+        prop="state"
+        label="订单状态"
         width="120">
         </el-table-column>
         <el-table-column
         fixed="right"
         label="操作"
-        width="120">
-        <template slot-scope="scope">
-            <el-button
-            @click.native.prevent="deleteRow(scope.$index, tableData4)"
-            type="text"
-            size="small">
-            移除
-            </el-button>
-        </template>
-    </el-table-column>
-  </el-table>
-        <el-table
-        :data="rows"
-        border
-        style="width: 100%">
-        <el-table-column
-        fixed
-        prop="_id"
-        label="编号"
-        width="">
-        </el-table-column>
-        <el-table-column
-        prop="empName"
-        label="姓名"
-        width="120">
-        </el-table-column>
-        <el-table-column
-        prop="job"
-        label="岗位"
-        width="120">
-        </el-table-column>
-        <el-table-column
-        prop="sal"
-        label="薪水"
-        width="120">
-        </el-table-column>
-        <el-table-column 
-        label="操作"
-        width="75px"
+        width="65px"
         >
         <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)">发货</el-button>
             <el-button
             size="mini"
             type="danger"

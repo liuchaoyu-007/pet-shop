@@ -51,12 +51,13 @@ export default {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
-        if (data.name != "false" && data.type != "false") {
+        if (data != "false" ){
           this.$alert("登陆成功！", "提示", {
             confirmButtonText: "确定",
             callback: action => {
-              localStorage.username = data.name;
-              localStorage.usertype = data.type;
+              localStorage.userName = data.userName;//姓名
+              localStorage.userStatus = data.userStatus//状态
+              localStorage.userType = data.userType//用户类型
               this.$router.push("/info/messagecenter");
             }
           });

@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var Petowner = require('./routes/Petowner');//宠物用户
 var user = require('./routes/user');//后台用户
+var Ordermanagement = require('./routes/Ordermanagement');//订单
 
 require("./dao/database.js");
 var app = express();
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/Petowner', Petowner);//宠物用户
 app.use('/user', user);//后台用户
+app.use('/Ordermanagement', Ordermanagement);//订单
 
 
 
