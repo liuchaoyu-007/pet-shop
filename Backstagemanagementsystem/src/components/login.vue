@@ -51,7 +51,7 @@ export default {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
-        if (data != "false" ){
+        if (data != false ){
           this.$alert("登陆成功！", "提示", {
             confirmButtonText: "确定",
             callback: action => {

@@ -10,7 +10,7 @@ module.exports.register = async (data) => {//注册包括判断是否已注册
     let isdata = "false";
     const datauser = await mongoose.model("user").find()
     for (let i = 0; i < datauser.length; i++) {
-        if (userAcount == datauser[i].userAcount && userPwd == datauser[i].userPwd) {
+        if (userAcount == datauser[i].userAcount && userType == datauser[i].userType) {
             isdata = true;
             i = datauser.length + 1;
         } else {
