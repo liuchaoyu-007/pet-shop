@@ -1,76 +1,77 @@
 <template>
 <div>
     <div class="header">
-        <span>宠物管理系统</span>
-        <div>
+        <span>宠物邦后台管理系统</span>
+        <div style="height:60px;">
             <ul>
                 <li style="float:right;" @click="falsemy">
-                    <span>退出</span>
+                  <img src="../assets/tuichu.png" alt="">
+                  <p>退出登陆</p>
                 </li>
-                <li style="float:right;" @click="falsemy">
-                    <img src="../assets/tuichu.png" alt="">
+                <li style="float:right;">
+                  <img src="../assets/dasao.png" alt="">
+                  <p>清除缓存</p>
                 </li>
-                <li style="float:right;margin-right:15px;">
-                    {{mytype}}
+                <li style="float:right;">
+                  <img src="../assets/leixing.png" alt="">
+                  <p>{{mytype}}</p>
                 </li>
-                <li style="float:right;margin-right:10px;">
-                    {{myname}}!欢迎你
+                <li style="float:right;">
+                  <img src="../assets/yonghu.png" alt="">
+                  <p>{{myname}}！欢迎你</p>
                 </li>
             </ul>
-            <span id="time">{{time}}</span>
         </div>
     </div>
-    <div>
-        
-    </div>
     <el-row class="tac">
-        <el-menu
-            default-active="1"
-            class="el-menu-vertical-demo"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b">
-            <el-menu-item index="1" @click="messagecenter">
-                <i class="el-icon-bell"></i>
-                <span slot="title">消息中心</span>
-            </el-menu-item>
-            <el-menu-item index="2" @click="usermanagement">
-                <i class="el-icon-date"></i>
-                <span slot="title">用户管理</span>
-            </el-menu-item>
-            <el-submenu index="3">
-                <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>门店管理</span>
-                </template>
-                <el-menu-item-group>
-                    <el-menu-item index="3-1" @click="storeinformation">门店信息</el-menu-item>
-                    <el-menu-item index="3-2" @click="servicemanagement">服务管理</el-menu-item>
-                    <el-submenu index="3-3">
-                        <template slot="title">
-                        <span>商品管理</span>
-                        </template>
-                        <el-menu-item-group>
-                            <el-menu-item index="3-3-1" @click="Commoditypet">宠物</el-menu-item>
-                            <el-menu-item index="3-3-2" @click="Commodityfoot">食品</el-menu-item>
-                            <el-menu-item index="3-3-3" @click="CommodityArticles">用品</el-menu-item>                            
-                        </el-menu-item-group>
-                    </el-submenu>
-                    <el-menu-item index="3-4" @click="order">订单管理</el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="4">
-                <template slot="title">
-                <i class="el-icon-setting"></i>
-                <span>友情链接</span>
-                </template>
-                <el-menu-item-group>
-                    <el-menu-item index="4-1">猫</el-menu-item>
-                    <el-menu-item index="4-2">狗</el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
-        </el-menu>
+      <el-menu
+          default-active="1"
+          class="el-menu-vertical-demo"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b">
+          <el-menu-item index="1" @click="messagecenter">
+              <i class="el-icon-bell"></i>
+              <span slot="title">消息中心</span>
+          </el-menu-item>
+          <el-menu-item index="2" @click="usermanagement">
+              <i class="el-icon-date"></i>
+              <span slot="title">用户管理</span>
+          </el-menu-item>
+          <el-submenu index="3">
+              <template slot="title">
+              <i class="el-icon-menu"></i>
+              <span>门店管理</span>
+              </template>
+              <el-menu-item-group>
+                  <el-menu-item index="3-1" @click="storeinformation">门店信息</el-menu-item>
+                  <el-menu-item index="3-2" @click="servicemanagement">服务管理</el-menu-item>
+                  <el-submenu index="3-3">
+                      <template slot="title">
+                      <span>商品管理</span>
+                      </template>
+                      <el-menu-item-group>
+                          <el-menu-item index="3-3-1" @click="Commoditypet">宠物</el-menu-item>
+                          <el-menu-item index="3-3-2" @click="Commodityfoot">食品</el-menu-item>
+                          <el-menu-item index="3-3-3" @click="CommodityArticles">用品</el-menu-item>                            
+                      </el-menu-item-group>
+                  </el-submenu>
+                  <el-menu-item index="3-4" @click="order">订单管理</el-menu-item>
+              </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="4">
+              <template slot="title">
+              <i class="el-icon-setting"></i>
+              <span>友情链接</span>
+              </template>
+              <el-menu-item-group>
+                  <el-menu-item index="4-1">猫</el-menu-item>
+                  <el-menu-item index="4-2">狗</el-menu-item>
+              </el-menu-item-group>
+          </el-submenu>
+      </el-menu>
     </el-row>
+    <p id="time">{{time}}</p>
     <div class="content">
         <router-view/>
     </div>
@@ -93,7 +94,8 @@ export default {
   },
   methods: {
     iftrue() {
-      if (this.mytype == "平台管理员") {//用于判断登陆用户权限
+      if (this.mytype == "平台管理员") {
+        //用于判断登陆用户权限
         return 1;
       } else {
         return 0;
@@ -152,11 +154,11 @@ export default {
   padding: 0;
 }
 #time {
-  position: absolute;
-  top: 17px;
-  right: 2.2%;
   color: #dbdbdb;
   font-size: 12px;
+  float: right;
+  margin: 3px auto;
+  margin-right: 2%;
 }
 body {
   background-image: url("../assets/16df68841428aaa063dd76639ca3cab8.jpg");
@@ -181,23 +183,22 @@ footer p {
 }
 .header {
   width: 100%;
-  height: 50px;
-  background-color: rgb(84, 92, 100);
-  line-height: 50px;
+  height: 60px;
+  background-color: #1296db;
+  line-height: 60px;
   cursor: pointer;
 }
 .header > span {
   font-size: 24px;
   color: white;
   font-weight: 600;
-  margin-left: 45%;
+  margin-left: 2%;
 }
 .header div {
   display: inline-block;
   float: right;
-  width: 300px;
-  height: 50px;
-  line-height: 50px;
+  height: 60px;
+  line-height: 60px;
   margin-right: 30px;
   text-align: center;
 }
@@ -205,10 +206,25 @@ footer p {
   float: left;
   list-style: none;
   color: #dbdbdb;
+  width: 100px;
+  height: 54px;
+  margin-top: 3px;
+  border-left: 1px solid white;
+  text-align: center;
+  transition: .7s;
+}
+.header li:hover {
+  background-color: #66c9ff;
+}
+.header li p {
+  color: black;
+  text-align: center;
+  margin-top: -44px;
+  font-size: 14px;
+  color: white;
 }
 .header img {
-  width: 24px;
-  margin-top: 13px;
+  width: 33px;
 }
 .content {
   width: 82.95%;
@@ -219,4 +235,14 @@ footer p {
   margin-right: 30px;
   overflow-y: scroll;
 }
+/* 
+轮播图
+<div class="block">
+  <el-carousel height="100px">
+    <el-carousel-item v-for="item in 4" :key="item">
+      <h3>{{ item }}</h3>
+    </el-carousel-item>
+  </el-carousel>
+</div> 
+*/
 </style>
