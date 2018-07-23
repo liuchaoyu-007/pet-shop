@@ -1,17 +1,13 @@
 export default {
   namespaced: true,
   state: {
-    curPage: 1,
-    eachPage: 5,
-    maxPage: 0,
-    count: 0,
     rows: [],
-    mydata: {}
   },
 
   mutations: {
     getEmpsByPage(state, payload) {
-      Object.assign(state, payload)
+      console.log("in")
+      Object.assign(state.rows, payload)
     },
     setCurPage(state, curPage) {
       state.curPage = curPage
@@ -20,35 +16,65 @@ export default {
       state.curPage = 1
       state.eachPage = eachPage
     },
-    scEmpsByPage(state, payload) {
-      const data = fetch("/Ordermanagement/Ordermanagement", {
+    typexz(state, value) {
+      let data = [];
+      if (value == 1) {//显示全部
+        return state.rows
+      } else if (value == 2) {//显示已发货
+        for (let i = 0; i < state.rows.length; i++) {
+          if (state.rows[i].state == "yes") {
+            data.push(state.rows[i])
+          }
+        }
+      } else {//显示未发货
+        for (let i = 0; i < state.rows.length; i++) {
+          if (state.rows[i].state == "no") {
+            data.push(state.rows[i])
+          }
+        }
+      }
+      Object.assign(state.rows, data)
+    },
+    tianjias(state, datas) {
+      const data = fetch("/Ordermanagement/add", {
         method: "post",
-        body: JSON.stringify({
-          storesure: payload,
-          curPage: state.curPage,
-          eachPage: state.eachPage
-        }),
+        body: JSON.stringify(datas),
         headers: {
           "Content-Type": "application/json"
         }
       }).then(res => res.json());
-      Object.assign(state, data)
+      Object.assign(state.rows, data)
+    },
+    scEmpsByPage() {
+      this.async_getEmpsByPage()
     }
   },
   actions: {
-    async async_getEmpsByPage({ state, commit }) {
-      const data = await fetch("/Ordermanagement/Ordermanagement", {
-        method: "post",
-        body: JSON.stringify({
-          storesure:localStorage.userName,//店家姓名
-          page: state.curPage,
-          rows: state.eachPage
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then(res => res.json());
-      commit("getEmpsByPage", data)
+    async async_getEmpsByPage({ commit }) {
+      let data;
+      if (localStorage.userType == "门店管理员") {
+        data = await fetch("/Ordermanagement/Ordermanagement", {//这个是当前店主的订单-门店管理员
+          method: "post",
+          body: JSON.stringify({
+            storesure: localStorage.userAcount,//店家账号
+          }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(res => res.json());
+        console.log(data)
+        commit("getEmpsByPage", data)
+      } else {
+        data = await fetch("/Ordermanagement/Ordermanagementtype", {//这个是所有店主的订单-平台管理员
+          method: "post",
+          body: JSON.stringify(),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(res => res.json());
+        console.log(data)
+        commit("getEmpsByPage", data)
+      }
     },
   }
 }

@@ -17,25 +17,28 @@ var StoreSchema= new Schema({
     shopAdd:{//营业执照地址
         type:String
     },
-    shopLocation:{//定位
+    shopCorporate:{//法人
         type:String
     },
-    shopCorporate:{//法人
+    shopContacts:{//联系人
         type:String
     },
     shopTel:{//联系电话
         type:Number
     },
-    shopImg:{//头图
+    shopCover:{//店铺门头图片
         type:String
     },
-    shopFeature:{//特色
+    shopDescription:{//店铺描述
         type:String
     },
-    VIPLevel:{//VIP等级
+    empName:{//店员姓名
         type:String
     },
-    CommissionRate:{//佣金比例
+    empLevel:{//店员职级
+        type:String
+    },
+    empLevel:{//店员职级
         type:String
     },
     shopEmployee:[{//店员

@@ -58,6 +58,7 @@ export default {
               localStorage.userName = data.userName;//姓名
               localStorage.userStatus = data.userStatus//状态
               localStorage.userType = data.userType//用户类型
+              localStorage.userAcount = data.userAcount//用户账号
               this.$router.push("/info/messagecenter");
             }
           });
@@ -86,7 +87,8 @@ export default {
   margin: 100px auto;
 }
 
-body {
+.telogs {
+  height:700px;
   background-image: url("../assets/16df68841428aaa063dd76639ca3cab8.jpg");
   background-repeat: no-repeat;
   background-size: 100%;

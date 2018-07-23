@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="teloel">
+    <div class="bag">
+        <div class="teloel ">
             <el-card class="box-card user1">
                 <p style="text-align: center;margin: 10px;color: rgb(53, 63, 68);font-size:30px;">宠物邦-注册</p>
                 <el-form status-icon ref="ruleForm2" label-width="100px" class="demo-ruleForm">
@@ -145,7 +145,8 @@ export default {
   margin: 50px auto;
 }
 
-body {
+.bag{
+  height: 640px;
   background-image: url("../assets/16df68841428aaa063dd76639ca3cab8.jpg");
   background-repeat: no-repeat;
   background-size: 100%;

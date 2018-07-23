@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 
 var MovieSchema = new Schema({
     storesure: {
-        type: String//这个订单属于那个店家的（店家姓名）
+        type: String//这个订单属于那个店家的（店家账号）
     },
     storename: {
         type: String//这个订单属于那个门店
