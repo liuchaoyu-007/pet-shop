@@ -235,8 +235,7 @@ export default {
           "Content-Type": "application/json"
         }
       }).then(res => res.json());
-      this.rows = dataa;
-      this.lsrows = this.rows;
+      this.async_getEmpsByPage()
     },
     async async_getEmpsByPage() {
       if (localStorage.userType == "门店管理员") {
