@@ -86,7 +86,8 @@ export default {
   margin: 100px auto;
 }
 
-body {
+.telogs {
+  height:700px;
   background-image: url("../assets/16df68841428aaa063dd76639ca3cab8.jpg");
   background-repeat: no-repeat;
   background-size: 100%;
