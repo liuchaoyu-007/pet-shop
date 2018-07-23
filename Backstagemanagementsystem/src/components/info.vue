@@ -8,7 +8,7 @@
                   <img src="../assets/tuichu.png" alt="">
                   <p>退出登陆</p>
                 </li>
-                <li style="float:right;">
+                <li style="float:right;" @click="falsemyHC">
                   <img src="../assets/dasao.png" alt="">
                   <p>清除缓存</p>
                 </li>
@@ -44,15 +44,7 @@
               <span>门店管理</span>
               </template>
               <el-menu-item-group>
-                <el-submenu index="3-1">
-                      <template slot="title">
-                      <span>门店管理</span>
-                      </template>
-                      <el-menu-item-group>
-                          <el-menu-item index="3-1-1" @click="StoreBuilding">创建门店</el-menu-item>
-                          <el-menu-item index="3-1-2" @click="storeinformation">门店信息</el-menu-item>                           
-                      </el-menu-item-group>
-                  </el-submenu>
+                  <el-menu-item index="3-1" @click="storeinformation">门店信息</el-menu-item>
                   <el-menu-item index="3-2" @click="servicemanagement">服务管理</el-menu-item>
                   <el-submenu index="3-3">
                       <template slot="title">
@@ -64,10 +56,13 @@
                           <el-menu-item index="3-3-3" @click="CommodityArticles">用品</el-menu-item>                            
                       </el-menu-item-group>
                   </el-submenu>
-                  <el-menu-item index="3-4" @click="order">订单管理</el-menu-item>
               </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="4">
+          <el-menu-item index="4" @click="order">
+              <i class="el-icon-tickets"></i>
+              <span slot="title">订单管理</span>
+          </el-menu-item>
+          <el-submenu index="5">
               <template slot="title">
               <i class="el-icon-setting"></i>
               <span>友情链接</span>
@@ -95,7 +90,7 @@ export default {
   data() {
     return {
       myname: localStorage.userName,
-      mytype: localStorage.usertype,
+      mytype: localStorage.userType,
       istypetrue: this.iftrue(),
       time: new Date().toLocaleString()
     };
@@ -109,6 +104,17 @@ export default {
         return 0;
       }
     },
+    falsemyHC(){
+      this.$confirm("您将要清除缓存, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          alert("清除成功")
+        })
+        .catch(() => {});
+    },
     messagecenter() {
       //消息中心
       this.$router.push("/info/messagecenter");
@@ -118,12 +124,8 @@ export default {
       this.$router.push("/info/usermanagement");
     },
     storeinformation() {
-      //门店管理
+      //门店管理-门店信息
       this.$router.push("/info/storemanagement/storeinformation");
-    },
-    StoreBuilding(){
-      //创建门店
-      this.$router.push("/info/storemanagement/StoreBuilding");
     },
     servicemanagement() {
       //门店管理-服务管理
@@ -181,7 +183,7 @@ footer {
   width: 100%;
   height: 100px;
   background-color: rgb(63, 66, 68);
-  margin-top: 650px;
+  margin-top: 850px;
 }
 footer p {
   text-align: center;
@@ -207,6 +209,7 @@ footer p {
   margin-left: 2%;
 }
 .header div {
+  display: inline-block;
   float: right;
   height: 60px;
   line-height: 60px;
@@ -238,9 +241,10 @@ footer p {
   width: 33px;
 }
 .content {
-  width: 80%;
+  width: 82.95%;
   height: 570px;
   background-color: white;
+  display: inline-block;
   float: right;
   margin-right: 30px;
   overflow-y: scroll;
