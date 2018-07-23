@@ -40,14 +40,16 @@
                 <el-input maxlength="9" size="mini" v-model="userName" placeholder="请输入姓名"></el-input>
               </div>
               <div>
-                <span>登录类型</span>
-                <el-input maxlength="9" size="mini" v-model="userType" placeholder="请输入登录类型"></el-input>
-
+                <p>登录类型</p>
+                <el-radio v-model="userType" label="平台管理员">平台管理员</el-radio>
+                <el-radio v-model="userType" label="门店管理员">门店管理员</el-radio>
               </div>
 
               <div>
-                <span>状态</span>
-                <el-input maxlength="9" size="mini" v-model="userStatus" placeholder="请输入状态"></el-input>
+                <p>状态</p>
+                  <el-radio v-model="userStatus" label="申请中">申请中</el-radio>
+                  <el-radio v-model="userStatus" label="可用">可用</el-radio>
+                  <el-radio v-model="userStatus" label="不可用">不可用</el-radio>
               </div>
               <span slot="footer" class="dialog-footer">
                 <el-button @click="centerDialogVisible = false">取 消</el-button>

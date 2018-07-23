@@ -17,9 +17,12 @@ export default {
       state.eachPage = eachPage
     },
     typexz(state, value) {
+      console.log(value)
       let data = [];
       if (value == 1) {//显示全部
-        return state.rows
+        for (let i = 0; i < state.rows.length; i++) {
+          data.push(state.rows[i])
+        }
       } else if (value == 2) {//显示已发货
         for (let i = 0; i < state.rows.length; i++) {
           if (state.rows[i].state == "yes") {
@@ -34,6 +37,7 @@ export default {
         }
       }
       Object.assign(state.rows, data)
+      console.log(state.rows,data)
     },
     tianjias(state, datas) {
       const data = fetch("/Ordermanagement/add", {
