@@ -23,7 +23,7 @@
     <el-table-column
       prop="sDate"
       label="出厂日期"
-      width="120">
+      width="100">
     </el-table-column>
     <el-table-column
       prop="sName"
@@ -63,7 +63,7 @@
     <el-table-column
       prop="sSize"
       label="包装规格"
-      width="90">
+      width="80">
     </el-table-column>
     <el-table-column
       prop="sTime"
@@ -73,7 +73,7 @@
     <el-table-column
       prop="sCanFor"
       label="适用阶段"
-      width="90">
+      width="80">
     </el-table-column>
     <el-table-column
       prop="sPrice"
