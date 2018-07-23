@@ -218,7 +218,7 @@ export default {
       const data = {
         storesure: this.form.storesure, //这个订单属于那个店家的（店家账号）
         storename: this.form.storename, //这个订单属于那个门店
-        username: this.form.username, //这个订单属于那个用户
+        username: this.form.username, //这个订单属于那个用户(账号)
         usertime: this.form.usertime, //这个订单购买时间
         userpsrum: this.form.userpsrum, //这个订单购买的什么商品
         usernum: this.form.usernum, //这个订单购买数量
