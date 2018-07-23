@@ -183,7 +183,7 @@ footer {
   width: 100%;
   height: 100px;
   background-color: rgb(63, 66, 68);
-  margin-top: 850px;
+  margin-top:650px;
 }
 footer p {
   text-align: center;
@@ -209,7 +209,7 @@ footer p {
   margin-left: 2%;
 }
 .header div {
-  display: inline-block;
+
   float: right;
   height: 60px;
   line-height: 60px;
@@ -241,10 +241,9 @@ footer p {
   width: 33px;
 }
 .content {
-  width: 82.95%;
+  width: 80%;
   height: 570px;
   background-color: white;
-  display: inline-block;
   float: right;
   margin-right: 30px;
   overflow-y: scroll;
