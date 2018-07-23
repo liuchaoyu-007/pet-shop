@@ -6,7 +6,7 @@
             margin: 10px auto;
             background-color:  #C0C4CC;
             text-align: center;
-            color:#409EFF;">小七宠物店</h3>
+            color:#409EFF;">小89七宠物店</h3>
         <el-table
         :data="tableData"
         border
