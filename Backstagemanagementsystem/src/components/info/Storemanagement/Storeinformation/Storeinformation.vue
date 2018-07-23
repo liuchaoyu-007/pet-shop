@@ -1,5 +1,6 @@
 <template>
 <div>
+  <!-- 搜索框 -->
   <div class="int">
       <el-input style="width: 300px; margin:5px 10px;"
       placeholder="请输入内容"
@@ -12,6 +13,7 @@
   <div>
     <template>
       <el-tabs v-model="activeName" @tab-click="handleClick">
+        <!-- 门店信息框 -->
         <el-tab-pane label="门店信息" name="first">
             <el-table
             :data="tableData"
@@ -23,13 +25,13 @@
               width="180">
             </el-table-column>
             <el-table-column
-              prop="name"
-              label="门店类型"
+              prop="shopContacts"
+              label="联系人"
               width="180">
             </el-table-column>
             <el-table-column
               prop="shopCorporate"
-              label="联系人"
+              label="法人"
               width="180">
             </el-table-column>
             <el-table-column
@@ -56,8 +58,86 @@
             </el-table-column>
           </el-table>
         </el-tab-pane>
-        <el-tab-pane label="营业执照信息" name="second">营业执照信息</el-tab-pane>
-        <el-tab-pane label="店员信息" name="third">店员信息</el-tab-pane>
+        <!-- 营业执照信息框 -->
+        <el-tab-pane label="营业执照信息" name="second">
+           <el-table
+            :data="tableData"
+            stripe
+            style="width: 100%">
+            <el-table-column
+              prop="shopLicenceNum"
+              label="营业执照号码"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="shopAdd"
+              label="营业执照地址"
+              width="180">
+            </el-table-column>
+             <el-table-column
+              label="营业执照图片"
+              width="300">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini">
+                  <img src="../../../../assets/u=4119941613,1752835551&fm=27&gp=0.jpg" style="width:250px;" />
+                </el-button>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="shopDescription"
+              label="店铺描述"
+              width="300">
+            </el-table-column>
+            <el-table-column
+                label="操作"
+                >
+                <template slot-scope="scope">
+                    <el-button type="text" size="small">编辑</el-button>
+                </template>
+           </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <!-- 店员信息框 -->
+        <el-tab-pane label="店员信息" name="third">
+          <el-table
+            :data="tableData"
+            stripe
+            style="width: 100%">
+            <el-table-column
+              prop="empName"
+              label="店员"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="shopAdd"
+              label="营业执照地址"
+              width="180">
+            </el-table-column>
+             <el-table-column
+              label="营业执照图片"
+              width="300">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini">
+                  <img src="../../../../assets/u=4119941613,1752835551&fm=27&gp=0.jpg" style="width:250px;" />
+                </el-button>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="shopDescription"
+              label="店铺描述"
+              width="300">
+            </el-table-column>
+            <el-table-column
+                label="操作"
+                >
+                <template slot-scope="scope">
+                    <el-button type="text" size="small">编辑</el-button>
+                </template>
+           </el-table-column>
+          </el-table>
+        </el-tab-pane>
       </el-tabs>
     </template>
   </div>
@@ -66,25 +146,40 @@
 
 <script>
 export default {
-  methods: {
-    handleClick(row) {
-      console.log(row);
-    }
-  },
-
   data() {
     return {
       tableData: [
         {
-          shopName: "123宠物店",
-          name: "宠物店",
-          shopCorporate: "王小虎",
-          shopTel: "13255949884",
-          shopAdd: "上海市普陀区金沙江路 1518 弄"
+          shopName: "123宠物店", //店名
+          shopContacts: "王大虎", //联系人
+          shopCorporate: "王小虎", //法人
+          shopTel: "13255949884", //联系电话
+          shopAdd: "上海市普陀区金沙江路 1518 弄", //营业执照地址
+          shopLicenceNum: "1614648468646", //营业执照号码
+          shopDescription: "打嘎嘎嘎刚", //店铺描述
+          shopLicenceImg: "", //营业执照图片
+          shopCover: "", //店铺门头图片
+          shopEmployee: [
+            {
+              //店员
+              empName: "王大锤", //姓名
+              empLevel: "高级抡大锤", //职级
+              empPhone: "1568489489" //联系电话
+            }
+          ]
         }
       ],
-      input:""
+      activeName: "second",
+      input: ""
     };
+  },
+  methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
+    handleClick1(row) {
+      console.log(row);
+    }
   }
 };
 </script>
