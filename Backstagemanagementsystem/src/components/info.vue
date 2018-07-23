@@ -44,7 +44,15 @@
               <span>门店管理</span>
               </template>
               <el-menu-item-group>
-                  <el-menu-item index="3-1" @click="storeinformation">门店信息</el-menu-item>
+                 <el-submenu index="3-3">
+                      <template slot="title">
+                      <span>门店管理</span>
+                      </template>
+                      <el-menu-item-group>
+                          <el-menu-item index="3-3-1" @click="StoreBuilding">创建门店</el-menu-item>
+                          <el-menu-item index="3-3-2" @click="storeinformation">门店信息</el-menu-item>                            
+                      </el-menu-item-group>
+                  </el-submenu>
                   <el-menu-item index="3-2" @click="servicemanagement">服务管理</el-menu-item>
                   <el-submenu index="3-3">
                       <template slot="title">
@@ -126,6 +134,10 @@ export default {
     storeinformation() {
       //门店管理-门店信息
       this.$router.push("/info/storemanagement/storeinformation");
+    },
+    StoreBuilding(){
+      //门店管理-创建门店
+       this.$router.push("/info/storemanagement/StoreBuilding");
     },
     servicemanagement() {
       //门店管理-服务管理
