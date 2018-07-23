@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 require("./model/Spoilmanagement");//-----------宠物主管理-用户-------//
 require("./model/Ordermanagement");//-----------订单管理-------//
 require("./model/user");//-----------后台管理人员和门店用户-------//
+require("./model/Commodity");//-------商品-------//
+
 var dbURI = 'mongodb://localhost/pet';
 mongoose.connect(dbURI);
 mongoose.connection.on('connected', function () {
