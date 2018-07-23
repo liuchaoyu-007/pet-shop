@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Login from "./components/login.vue"//登陆界面
 import Info from "./components/info.vue"//导航首页
 import Reg from './components/reg.vue'
+
+import Store from "./Store/store.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -20,7 +22,12 @@ export default new Router({
     {
       path: '/info',
       name: 'info',
-      component: Info
+      component: Info,
+      children:[{
+        path:'store',
+        name:'Store',
+        component: Store,
+      }]
     }
   ]
 })

@@ -19,7 +19,7 @@
             </ul>
         </div>
     </div>
-    <el-row class="tac">
+    <el-row class="tac" router>
         <el-menu
             default-active="1"
             class="el-menu-vertical-demo"
@@ -39,8 +39,8 @@
                 <i class="el-icon-menu"></i>
                 <span>门店管理</span>
                 </template>
-                <el-menu-item-group>
-                    <el-menu-item index="3-1">门店信息</el-menu-item>
+                <el-menu-item-group router>
+                    <el-menu-item index="3-1" @click="qq">门店信息</el-menu-item>
                     <el-menu-item index="3-2">服务管理</el-menu-item>
                     <el-menu-item index="3-3">商品管理</el-menu-item>
                     <el-menu-item index="3-4">订单管理</el-menu-item>
@@ -59,7 +59,6 @@
         </el-menu>
     </el-row>
     <div class="content">
-        1222222222222223kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
         <router-view/>
     </div>
 </div>
@@ -67,6 +66,9 @@
 <script>
 export default {
   methods: {
+      qq(){
+          this.$router.push("./info/store")
+      }
   }
 };
 </script>
