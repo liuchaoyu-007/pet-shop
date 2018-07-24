@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header-s">
-      <div style="margin-left:8px;">
+      <div style="margin-left:8px;" class="header-sdiv">
         <el-button type="primary" @click="dialogFormVisible = true">添加订单</el-button>
         <el-dialog title="添加订单" :visible.sync="dialogFormVisible" center modal class="add">
           <el-form :model="form">
@@ -41,8 +41,10 @@
             <el-button type="primary" @click="tianjia">确 定</el-button>
           </div>
         </el-dialog>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <el-button type="primary" @click="async_getEmpsByPage">刷新数据</el-button>
       </div>
-      <div style="float:right;">
+      <div style="float:right;" class="header-sdiv">
         <el-select v-model="value" placeholder="默认-显示全部" @change="typexzs" >
           <el-option
             v-for="item in options"
@@ -63,6 +65,11 @@
         prop="usertime"
         label="订单时间"
         width="160">
+        </el-table-column>
+        <el-table-column
+          type="index"
+          label="订单序号"
+          width="50">
         </el-table-column>
         <el-table-column
         prop="storesure"
@@ -117,7 +124,10 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handlelete(scope.$index, scope.row)">发货</el-button>
+            @click="handfy(scope.$index, scope.row)">详情</el-button>
+          <el-button
+            size="mini"
+            @click="handfy(scope.$index, scope.row)">更改</el-button>
             <el-button
             size="mini"
             type="danger"
@@ -125,6 +135,62 @@
         </template>
         </el-table-column>
       </el-table>
+    </div>
+    <div class="data" id="adds">
+      <el-card class="box-card">
+        <p style="text-align: center;margin: 10px;color: rgb(53, 63, 68);font-size:30px;">订单详情</p>
+        <el-form status-icon ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="店家账号">
+            <el-input v-model="data.storesure" clearable :disabled="true">
+            </el-input>
+          </el-form-item>
+          <el-form-item label="店家店名">
+            <el-input v-model="data.storename" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="用户名字">
+            <el-input v-model="data.username" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="订单时间">
+            <el-input v-model="data.usertime" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="商品名称">
+            <el-input v-model="data.userpsrum" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="商品数量">
+            <el-input v-model="data.usernum" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="商品单价">
+            <el-input v-model="data.userprice" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="商品总价">
+            <el-input v-model="data.userzong" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="订单运费">
+            <el-input v-model="data.useryou" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="订单发往地">
+            <el-input v-model="data.userdiqu" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="是否发货">
+            <el-radio-group v-model="data.state">
+              <el-radio label="yes"></el-radio>
+              <el-radio label="no"></el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="queding" style="margin-left:26%;">确定</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
     </div>
   </div>
 </template>
@@ -170,7 +236,21 @@ export default {
         userdiqu: "", //这个订单发往地
         state: "no" //这个订单是否发货
       },
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
+      data: {
+        id: "", //id
+        storesure: "", //这个订单属于那个店家的（店家账号）
+        storename: "", //这个订单属于那个门店
+        username: "", //这个订单属于那个用户
+        usertime: "", //这个订单购买时间
+        userpsrum: "", //这个订单购买的什么商品
+        usernum: "", //这个订单购买数量
+        userprice: "", //这个订单购买单价
+        userzong: "", //这个订单购买总价
+        useryou: "", //这个订单运费
+        userdiqu: "", //这个订单发往地
+        state: "no" //这个订单是否发货
+      }
     };
   },
   created() {
@@ -178,14 +258,55 @@ export default {
   },
 
   methods: {
-    handlelete(index, row) {
-      //发货
-      this.setCurPage(val);
+    handfy(index, row) {//详情
+      document.getElementById("adds").style.display = "block";
+      for (let i = 0; i < this.lsrows.length; i++) {
+        if (this.lsrows[i]._id == row._id) {
+          this.data.id = this.lsrows[i]._id;
+          this.data.storesure = this.lsrows[i].storesure; //这个订单属于那个店家的（店家账号）
+          this.data.storename = this.lsrows[i].storename; //这个订单属于那个门店
+          this.data.username = this.lsrows[i].username; //这个订单属于那个用户(账号)
+          this.data.usertime = this.lsrows[i].usertime; //这个订单购买时间
+          this.data.userpsrum = this.lsrows[i].userpsrum; //这个订单购买的什么商品
+          this.data.usernum = this.lsrows[i].usernum; //这个订单购买数量
+          this.data.userprice = this.lsrows[i].userprice; //这个订单购买单价
+          this.data.userzong = this.lsrows[i].userzong; //这个订单购买总价
+          this.data.useryou = this.lsrows[i].useryou; //这个订单运费
+          this.data.userdiqu = this.lsrows[i].userdiqu; //这个订单发往地
+          this.data.state = this.lsrows[i].state; //这个订单是否发货
+        }
+      }
     },
-    handleDelete(index, row) {
-      //删除
-      this.scEmpsByPage(row._id);
+    queding() {//修改
+      let dataa = fetch("/Ordermanagement/hot", {
+        method: "post",
+        body: JSON.stringify(this.data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => res.json());
       this.async_getEmpsByPage();
+      document.getElementById("adds").style.display = "none";
+    },
+    handleDelete(index, row) {//删除
+      this.$confirm("您将要删除该订单, 是否继续?", "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          let dataa = fetch("/Ordermanagement/sc", {
+            method: "post",
+            body: JSON.stringify({
+              id:row._id
+            }),
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }).then(res => res.json());
+          this.async_getEmpsByPage();
+        })
+        .catch(() => {});
     },
     typexzs() {
       //筛选
@@ -213,31 +334,40 @@ export default {
       }
       this.lsrows = data;
     },
+    pdtj() {},
     tianjia() {
       //添加订单
-      const data = {
-        storesure: this.form.storesure, //这个订单属于那个店家的（店家账号）
-        storename: this.form.storename, //这个订单属于那个门店
-        username: this.form.username, //这个订单属于那个用户(账号)
-        usertime: this.form.usertime, //这个订单购买时间
-        userpsrum: this.form.userpsrum, //这个订单购买的什么商品
-        usernum: this.form.usernum, //这个订单购买数量
-        userprice: this.form.userprice, //这个订单购买单价
-        userzong: this.form.userzong, //这个订单购买总价
-        useryou: this.form.useryou, //这个订单运费
-        userdiqu: this.form.userdiqu, //这个订单发往地
-        state: "no" //这个订单是否发货
-      };
-      let dataa = fetch("/Ordermanagement/add", {
-        method: "post",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then(res => res.json());
-      this.async_getEmpsByPage()
+      this.dialogFormVisible = false
+      if (localStorage.userType == "平台管理员") {
+        const data = {
+          storesure: this.form.storesure, //这个订单属于那个店家的（店家账号）
+          storename: this.form.storename, //这个订单属于那个门店
+          username: this.form.username, //这个订单属于那个用户(账号)
+          usertime: this.form.usertime, //这个订单购买时间
+          userpsrum: this.form.userpsrum, //这个订单购买的什么商品
+          usernum: this.form.usernum, //这个订单购买数量
+          userprice: this.form.userprice, //这个订单购买单价
+          userzong: this.form.userzong, //这个订单购买总价
+          useryou: this.form.useryou, //这个订单运费
+          userdiqu: this.form.userdiqu, //这个订单发往地
+          state: "no" //这个订单是否发货
+        };
+        let dataa = fetch("/Ordermanagement/add", {
+          method: "post",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(res => res.json());
+        this.async_getEmpsByPage();
+      } else {
+        this.$alert("您不是平台登陆人员，无法添加订单", "警告", {
+          confirmButtonText: "确定"
+        });
+      }
     },
     async async_getEmpsByPage() {
+      document.getElementById("zhuanquan").style.display = "block"
       if (localStorage.userType == "门店管理员") {
         let data = await fetch("/Ordermanagement/Ordermanagement", {
           //这个是当前店主的订单-门店管理员
@@ -249,7 +379,6 @@ export default {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
-        console.log(data);
         this.rows = data;
         this.lsrows = this.rows;
       } else {
@@ -261,16 +390,26 @@ export default {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
-        console.log(data);
         this.rows = data;
         this.lsrows = this.rows;
       }
+      document.getElementById("zhuanquan").style.display = "none"
     }
   }
 };
 </script>
 
 <style>
+.data {
+  position: fixed;
+  top: 100px;
+  left: 33%;
+  width: 500px;
+  height: 500px;
+  border: 1px solid #1296db;
+  overflow-y: scroll;
+  display: none;
+}
 .el-dialog--center {
   margin: 0 auto;
   height: 480px;
@@ -288,5 +427,8 @@ export default {
   height: 50px;
   margin: 8px 5px;
   line-height: 50px;
+}
+.header-sdiv {
+  display: inline-block;
 }
 </style>
