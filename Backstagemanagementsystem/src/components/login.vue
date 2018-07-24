@@ -59,6 +59,7 @@ export default {
               localStorage.userStatus = data.userStatus//状态
               localStorage.userType = data.userType//用户类型
               localStorage.userAcount = data.userAcount//用户账号
+              localStorage.userId = data._id //用户ID
               this.$router.push("/info/messagecenter");
             }
           });

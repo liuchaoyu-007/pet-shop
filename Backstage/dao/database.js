@@ -5,6 +5,7 @@ require("./model/Ordermanagement");//-----------订单管理-------//
 require("./model/user");//-----------后台管理人员和门店用户-------//
 require("./model/Commodity");//-------商品-------//
 require("./model/store");//-------门店管理-------//
+require("./model/serviceAdm");//-------服务管理-------//
 
 var dbURI = 'mongodb://localhost/pet';
 mongoose.connect(dbURI);

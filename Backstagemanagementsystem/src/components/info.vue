@@ -141,7 +141,7 @@ export default {
     },
     servicemanagement() {
       //门店管理-服务管理
-      this.$router.push("/info/storemanagement/servicemanagement");
+      this.$router.push("/info/storemanagement/serviceAdm");
     },
     order() {
       //门店管理-订单管理

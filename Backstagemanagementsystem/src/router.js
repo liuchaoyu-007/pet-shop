@@ -12,6 +12,7 @@ import Order from './components/info/Storemanagement/order/order.vue'//门店管
 import Commoditypet from "./components/info/Storemanagement/Commodity/pet.vue"//门店管理-商品管理-宠物
 import Commodityfoot from "./components/info/Storemanagement/Commodity/foot.vue"//门店管理-商品管理-食物
 import CommodityArticles from "./components/info/Storemanagement/Commodity/Articles.vue"//门店管理-商品管理-食物
+import ServiceAdm from "./components/info/Storemanagement/Servicemanagement/serviceAdm.vue" //服务管理二级
 Vue.use(Router)
 
 export default new Router({
@@ -55,6 +56,10 @@ export default new Router({
         {
           path: "storemanagement/servicemanagement", //门店-服务管理
           name: "Servicemanagement", component: Servicemanagement
+        },
+        {
+          path: "storemanagement/serviceAdm", //门店-服务管理
+          name: "ServiceAdm", component: ServiceAdm
         },
         {
           path: "storemanagement/order", //门店-订单管理
