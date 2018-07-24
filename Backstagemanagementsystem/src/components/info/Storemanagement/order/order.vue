@@ -1,10 +1,18 @@
 <template>
   <div>
     <div class="header-s">
+      <div style="width:400px;">
+        <el-input
+          placeholder="请输入内容"
+          prefix-icon="el-icon-search"
+          v-model="sousuo">
+        </el-input>
+      </div>
       <div style="margin-left:8px;">
-        <el-button type="primary" @click="dialogFormVisible = true">添加订单</el-button>
-        <el-dialog title="添加订单" :visible.sync="dialogFormVisible" center modal class="add">
-          <el-form :model="form">
+        <el-button type="primary" icon="el-icon-search">搜索</el-button>
+        <el-button type="text" @click="dialogFormVisible = true">添加</el-button>
+        <el-dialog title="添加订单" :visible.sync="dialogFormVisible" center modal>
+          <el-form :model="form" style="margin:10px auto;">
             <el-form-item label="店家账号" :label-width="formLabelWidth">
               <el-input v-model="form.storesure" auto-complete="off"></el-input>
             </el-form-item>
@@ -55,9 +63,9 @@
     </div>
     <div>
         <el-table
-        :data="lsrows"
+        :data="rows"
         border
-        style="width: 100%"> 
+        style="width: 100%">
         <el-table-column
         fixed
         prop="usertime"
@@ -117,7 +125,7 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handlelete(scope.$index, scope.row)">发货</el-button>
+            @click="handleDelete(scope.$index, scope.row)">发货</el-button>
             <el-button
             size="mini"
             type="danger"
@@ -137,8 +145,6 @@ const { mapState, mapActions, mapMutations } = createNamespacedHelpers("emps");
 export default {
   data() {
     return {
-      rows: [],
-      lsrows: [],
       sousuo: "",
       options: [
         {
@@ -170,55 +176,56 @@ export default {
         userdiqu: "", //这个订单发往地
         state: "no" //这个订单是否发货
       },
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
     };
   },
   created() {
-    this.async_getEmpsByPage();
+    this.$store.dispatch("emps/async_getEmpsByPage");
+  },
+
+  watch: {
+    curPage() {
+      //监听curPage
+      this.async_getEmpsByPage();
+    },
+    eachPage() {
+      //监听eachPage
+      this.async_getEmpsByPage();
+    }
+  },
+
+  computed: {
+    ...mapState(["rows"])
   },
 
   methods: {
-    handlelete(index, row) {
-      //发货
+    ...mapActions(["async_getEmpsByPage"]),
+    ...mapMutations([
+      "setCurPage",
+      "setEachPage",
+      "scEmpsByPage",
+      "typexz",
+      "tianjias"
+    ]),
+    handleSizeChange(val) {
+      this.setEachPage(val);
+    },
+    handleCurrentChange(val) {
       this.setCurPage(val);
     },
     handleDelete(index, row) {
-      //删除
       this.scEmpsByPage(row._id);
       this.async_getEmpsByPage();
     },
     typexzs() {
-      //筛选
       const value = this.$data.value;
-      let data = [];
-      if (value == 1) {
-        //显示全部
-        for (let i = 0; i < this.rows.length; i++) {
-          data.push(this.rows[i]);
-        }
-      } else if (value == 2) {
-        //显示已发货
-        for (let i = 0; i < this.rows.length; i++) {
-          if (this.rows[i].state == "yes") {
-            data.push(this.rows[i]);
-          }
-        }
-      } else {
-        //显示未发货
-        for (let i = 0; i < this.rows.length; i++) {
-          if (this.rows[i].state == "no") {
-            data.push(this.rows[i]);
-          }
-        }
-      }
-      this.lsrows = data;
+      this.typexz(value);
     },
     tianjia() {
-      //添加订单
       const data = {
         storesure: this.form.storesure, //这个订单属于那个店家的（店家账号）
         storename: this.form.storename, //这个订单属于那个门店
-        username: this.form.username, //这个订单属于那个用户(账号)
+        username: this.form.username, //这个订单属于那个用户
         usertime: this.form.usertime, //这个订单购买时间
         userpsrum: this.form.userpsrum, //这个订单购买的什么商品
         usernum: this.form.usernum, //这个订单购买数量
@@ -228,59 +235,14 @@ export default {
         userdiqu: this.form.userdiqu, //这个订单发往地
         state: "no" //这个订单是否发货
       };
-      let dataa = fetch("/Ordermanagement/add", {
-        method: "post",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then(res => res.json());
-      this.async_getEmpsByPage()
-    },
-    async async_getEmpsByPage() {
-      if (localStorage.userType == "门店管理员") {
-        let data = await fetch("/Ordermanagement/Ordermanagement", {
-          //这个是当前店主的订单-门店管理员
-          method: "post",
-          body: JSON.stringify({
-            storesure: localStorage.userAcount //店家账号
-          }),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }).then(res => res.json());
-        console.log(data);
-        this.rows = data;
-        this.lsrows = this.rows;
-      } else {
-        let data = await fetch("/Ordermanagement/Ordermanagementtype", {
-          //这个是所有店主的订单-平台管理员
-          method: "post",
-          body: JSON.stringify(),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }).then(res => res.json());
-        console.log(data);
-        this.rows = data;
-        this.lsrows = this.rows;
-      }
+      this.tianjias(data);
+      dialogFormVisible = false
     }
   }
 };
 </script>
 
 <style>
-.el-dialog--center {
-  margin: 0 auto;
-  height: 480px;
-  overflow-y: scroll;
-  margin-top: -100px;
-}
-
-.el-dialog--center {
-  display: block;
-}
 .el-pagination {
   text-align: center;
 }
@@ -288,5 +250,8 @@ export default {
   height: 50px;
   margin: 8px 5px;
   line-height: 50px;
+}
+.header-s div {
+  display: inline-block;
 }
 </style>

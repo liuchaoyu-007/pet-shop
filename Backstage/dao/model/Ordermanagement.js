@@ -12,7 +12,7 @@ var MovieSchema = new Schema({
         type: String//这个订单属于那个门店
     },
     username: {
-        type: String//这个订单属于那个用户（账号）
+        type: String//这个订单属于那个用户
     },
     usertime: {
         type: String//这个订单购买时间

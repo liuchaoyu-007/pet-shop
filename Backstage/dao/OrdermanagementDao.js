@@ -19,5 +19,6 @@ module.exports.Ordermanagementtype = async (datas) => {// -------获取所有门
     return await mongoose.model("Ordermanagement").find()
 }
 module.exports.add = async (data) => {// -------添加订单--------//
-    return await mongoose.model("Ordermanagement").create(data)
+    await mongoose.model("Ordermanagement").create(data)
+    return await mongoose.model("Ordermanagement").find()
 }
