@@ -54,6 +54,7 @@
                 >
                 <template slot-scope="scope">
                     <el-button type="text" size="small">编辑</el-button>
+                    <el-button type="text" size="small">删除</el-button>
                 </template>
             </el-table-column>
           </el-table>
@@ -94,6 +95,7 @@
                 >
                 <template slot-scope="scope">
                     <el-button type="text" size="small">编辑</el-button>
+                    <el-button type="text" size="small">删除</el-button>
                 </template>
            </el-table-column>
           </el-table>
@@ -110,23 +112,13 @@
               width="180">
             </el-table-column>
             <el-table-column
-              prop="shopAdd"
-              label="营业执照地址"
+              prop="empLevel"
+              label="职级"
               width="180">
             </el-table-column>
              <el-table-column
-              label="营业执照图片"
-              width="300">
-              <template slot-scope="scope">
-                <el-button
-                  size="mini">
-                  <img src="../../../../assets/u=4119941613,1752835551&fm=27&gp=0.jpg" style="width:250px;" />
-                </el-button>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="shopDescription"
-              label="店铺描述"
+              prop="empPhone"
+              label="店员电话"
               width="300">
             </el-table-column>
             <el-table-column
@@ -134,6 +126,7 @@
                 >
                 <template slot-scope="scope">
                     <el-button type="text" size="small">编辑</el-button>
+                    <el-button type="text" size="small">删除</el-button>
                 </template>
            </el-table-column>
           </el-table>
@@ -159,14 +152,9 @@ export default {
           shopDescription: "打嘎嘎嘎刚", //店铺描述
           shopLicenceImg: "", //营业执照图片
           shopCover: "", //店铺门头图片
-          shopEmployee: [
-            {
-              //店员
-              empName: "王大锤", //姓名
-              empLevel: "高级抡大锤", //职级
-              empPhone: "1568489489" //联系电话
-            }
-          ]
+          empName: "王大锤", //姓名
+          empLevel: "高级抡大锤", //职级
+          empPhone: "1568489489" //联系电话
         }
       ],
       activeName: "second",
