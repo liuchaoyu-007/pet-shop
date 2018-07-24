@@ -8,11 +8,6 @@ Vue.use(ElementUI);
 import store from "./store.js"
 
 
-import inputs from "./components/info/Usermanagement/inputs.vue"
-import todolist from "./components/info/Usermanagement/todolist.vue"
-Vue.component('inputs',inputs)
-Vue.component('todolist',todolist)
-
 Vue.config.productionTip = false
 
 new Vue({

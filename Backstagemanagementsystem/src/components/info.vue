@@ -53,15 +53,15 @@
                           <el-menu-item index="3-3-2" @click="storeinformation">门店信息</el-menu-item>                            
                       </el-menu-item-group>
                   </el-submenu>
-                  <el-menu-item index="4-2" @click="servicemanagement">服务管理</el-menu-item>
-                  <el-submenu index="4-3">
+                  <el-menu-item index="3-2" @click="servicemanagement">服务管理</el-menu-item>
+                  <el-submenu index="3-4">
                       <template slot="title">
                       <span>商品管理</span>
                       </template>
                       <el-menu-item-group>
-                          <el-menu-item index="4-3-1" @click="Commoditypet">宠物</el-menu-item>
-                          <el-menu-item index="4-3-2" @click="Commodityfoot">食品</el-menu-item>
-                          <el-menu-item index="4-3-3" @click="CommodityArticles">用品</el-menu-item>                            
+                          <el-menu-item index="3-4-1" @click="Commoditypet">宠物</el-menu-item>
+                          <el-menu-item index="3-4-2" @click="Commodityfoot">食品</el-menu-item>
+                          <el-menu-item index="3-4-3" @click="CommodityArticles">用品</el-menu-item>                            
                       </el-menu-item-group>
                   </el-submenu>
               </el-menu-item-group>
@@ -125,13 +125,7 @@ export default {
     },
     messagecenter() {
       //消息中心
-      if(localStorage.userType=="平台管理员"){
-        this.$router.push("/info/messagecenter");
-      }else{
-        this.$alert("只能平太管理进入", "提示", {
-          confirmButtonText: "确定"
-        });
-      }
+      this.$router.push("/info/messagecenter");
     },
     usermanagement() {
       //用户管理

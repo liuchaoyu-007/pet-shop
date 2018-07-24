@@ -12,8 +12,7 @@ var StoreSchema= new Schema({
         type:Number
     },
     shopLicenceImg:{//营业执照图片
-        type: Schema.Types.ObjectId,
-		ref: "imgs"
+        type:String
     },
     shopAdd:{//营业执照地址
         type:String
@@ -39,9 +38,14 @@ var StoreSchema= new Schema({
     empLevel:{//店员职级
         type:String
     },
-    empPhone:{//店员电话
-        type:Number
-    }
+    empLevel:{//店员职级
+        type:String
+    },
+    shopEmployee:[{//店员
+        empName:String,//姓名
+        empLevel:String,//职级
+        empPhone:Number//联系电话
+    }]
 });
 
 mongoose.model("store", StoreSchema, "store");
