@@ -125,7 +125,13 @@ export default {
     },
     messagecenter() {
       //消息中心
-      this.$router.push("/info/messagecenter");
+      if(localStorage.userType=="平台管理员"){
+        this.$router.push("/info/messagecenter");
+      }else{
+        this.$alert("只能平太管理进入", "提示", {
+          confirmButtonText: "确定"
+        });
+      }
     },
     usermanagement() {
       //用户管理
