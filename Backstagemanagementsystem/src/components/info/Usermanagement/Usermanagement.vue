@@ -1,6 +1,5 @@
 <template>
   <el-card class="box-card">   
-    <inputs />
     <todolist/>
   </el-card>
 </template>

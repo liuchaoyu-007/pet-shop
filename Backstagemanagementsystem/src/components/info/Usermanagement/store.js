@@ -60,11 +60,42 @@ export default {
 
 
     },
-
     getters: {
         Todos(state) {
             return state.todos
+        },
+        shuaxin(){
+            this.async_getEmpsByPage()
         }
+    },
+    actions: {
+        async_getEmpsByPage(state) {
+            console.log("in")
+            // let data;
+            // if (localStorage.userType == "门店管理员") {
+            //     data = await fetch("/Ordermanagement/Ordermanagement", {//这个是当前店主的订单-门店管理员
+            //         method: "post",
+            //         body: JSON.stringify({
+            //             storesure: localStorage.userAcount,//店家账号
+            //         }),
+            //         headers: {
+            //             "Content-Type": "application/json"
+            //         }
+            //     }).then(res => res.json());
+            //     console.log(data)
+            //     Object.actions(state.todos, data)
+            // } else {
+            //     data = await fetch("/Ordermanagement/Ordermanagementtype", {//这个是所有店主的订单-平台管理员
+            //         method: "post",
+            //         body: JSON.stringify(),
+            //         headers: {
+            //             "Content-Type": "application/json"
+            //         }
+            //     }).then(res => res.json());
+            //     console.log(data)
+            //     Object.actions(state.todos, data)
+            // }
+        },
     }
 
 }
