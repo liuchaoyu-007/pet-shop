@@ -5,7 +5,7 @@ module.exports.addImg = async img => {
   await mongoose.model("imgs").create(img)
   let url = img.url
   await mongoose.model("Commodity").create({
-    goodsDate: "zxcxccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    goodsDate: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddawdd",
     goodsName: "",
     goodsType: "",
     goodsRegion: "",
