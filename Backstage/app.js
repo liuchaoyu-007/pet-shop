@@ -8,6 +8,7 @@ var Petowner = require('./routes/Petowner');//宠物用户
 var user = require('./routes/user');//后台用户
 var Ordermanagement = require('./routes/Ordermanagement');//订单
 var Commodity = require('./routes/Commodity');//商品
+var store = require('./routes/store')//门店管理
 
 require("./dao/database.js");
 var app = express();
@@ -31,6 +32,7 @@ app.use('/Petowner', Petowner);//宠物用户
 app.use('/user', user);//后台用户
 app.use('/Ordermanagement', Ordermanagement);//订单
 app.use('/Commodity', Commodity);//商品
+app.use('/store',store)//门店管理
 
 
 
