@@ -29,10 +29,17 @@
           <i class="el-icon-bell"></i>
           <span slot="title">消息中心</span>
         </el-menu-item>
-        <el-menu-item index="2" @click="usermanagement">
-          <i class="el-icon-date"></i>
-          <span slot="title">用户管理</span>
-        </el-menu-item>
+
+        <el-submenu index="2">
+          <template slot="title">
+            <i class="el-icon-menu"></i>
+            <span>用户管理</span>
+          </template>
+          <el-menu-item index="2-1" @click="chongwu">宠物用户</el-menu-item>
+          <el-menu-item index="2-2" @click="usermanagement">平台门店用户</el-menu-item>
+        </el-submenu>
+
+
         <el-submenu index="3">
           <template slot="title">
             <i class="el-icon-menu"></i>
@@ -125,6 +132,9 @@
 
         this.$router.push("/info/messagecenter");
 
+      },
+      chongwu() {//宠物用户
+        this.$router.push("/info/chongwu");
       },
       usermanagement() {
         //用户管理

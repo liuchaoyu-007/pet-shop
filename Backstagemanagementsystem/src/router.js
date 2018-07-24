@@ -12,6 +12,7 @@ import Order from './components/info/Storemanagement/order/order.vue'//门店管
 import Commoditypet from "./components/info/Storemanagement/Commodity/pet.vue"//门店管理-商品管理-宠物
 import Commodityfoot from "./components/info/Storemanagement/Commodity/foot.vue"//门店管理-商品管理-食物
 import CommodityArticles from "./components/info/Storemanagement/Commodity/Articles.vue"//门店管理-商品管理-食物
+import chongwu from './components/info/chongwu/chongwu.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -71,6 +72,10 @@ export default new Router({
         {
           path: "storemanagement/commodity/articles", //门店-商品-用品
           name: "CommodityArticles", component: CommodityArticles
+        },
+        {
+          path: "chongwu", //宠物用户
+          name: "chongwu", component: chongwu
         }
       ]
     }
