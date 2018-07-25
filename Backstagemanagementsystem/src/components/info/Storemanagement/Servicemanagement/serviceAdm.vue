@@ -1,11 +1,11 @@
-<template>
+<template> 
 <div>
     <div style="margin:20px 0;">
         <div style="margin-left:20px;display:inline-block;">
-            <el-button type="primary" @click="addService" plain>新增服务</el-button>
+            <el-button type="primary" @click="addService" plain >新增服务</el-button>
         </div>
         <div style="margin-left:20px;display:inline-block;">
-            <el-button type="primary" @click="async_getEmpsByPage" plain>刷新数据</el-button>
+            <el-button type="primary" @click="async_getEmpsByPage" plain >刷新数据</el-button>
         </div>
     </div>
     <div>
@@ -71,58 +71,109 @@
             </template>
         </el-table-column>
         </el-table>
-        
-        <div class="addService"
-            v-show="isShow">
-            <i class="el-icon-close"  @click="quxiao"></i>
-            <h3 style="text-align:center;margin-top:10px" >新增服务</h3>.
-            <el-main>
-            <el-form status-icon  class="demo-ruleForm">
-                <el-form-item label="服务名称">
-                    <el-input v-model="tableData.serviceName" style="width:300px;"></el-input>
-                </el-form-item>
-                <el-form-item  label="服务类型">
-                    <el-input v-model="tableData.serviceType" style="width:300px;"></el-input>
-                </el-form-item>
-                <el-form-item label="服务时间">
-                    <el-input v-model="tableData.serviceSchedule" style="width:300px;"></el-input>
-                </el-form-item>
-                <el-form-item label="体重范围">
-                    <el-input v-model="tableData.serviceCanFor" style="width:300px;"></el-input>
-                </el-form-item>
-                <el-form-item label="服务规格">
-                    <el-input v-model="tableData.serviceDetial" style="width:300px;"></el-input>
-                </el-form-item>
-                <el-form-item label="服务时长">
-                    <el-input v-model="tableData.serviceTime"  style="width:300px;"></el-input>
-                </el-form-item>
-                <el-form-item label="服务等级">
-                    <el-input v-model="tableData.serviceLevel" style="width:300px;"></el-input>
-                </el-form-item>
-                <el-form-item label="服务价格">
-                    <el-input v-model="tableData.servicePrice" style="width:300px;"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button @click="confirmAdd" type="primary">添加</el-button>
-                    <el-button  @click="quxiao">取消</el-button>
-                </el-form-item>
-                </el-form>
-            </el-main>
-        </div>
-            <div class="addService"
-            v-show="modify">
-            <i class="el-icon-close"  @click="quxiao"></i>
-            <h3 style="text-align:center;margin-top:10px" >修改服务</h3>.
-            <el-main>
+        <transition name="el-zoom-in-center">
+            <el-dialog title="新增服务" style="text-align:center" width="35%" :visible.sync="isShow">
+                <el-form status-icon  class="demo-ruleForm">
+                    <el-form-item label="服务名称">
+                        <el-input v-model="tableData.serviceName" style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="服务类型">
+                        <el-select v-model="tableData.serviceType" placeholder="请选择服务类型"  style="width:300px;">
+                            <el-option label="宠物医院" value="宠物医院"></el-option>
+                            <el-option label="宠物美容" value="宠物美容"></el-option>
+                            <el-option label="宠物配种" value="宠物配种"></el-option>
+                            <el-option label="宠物训练" value="宠物训练"></el-option>
+                            <el-option label="宠物托运" value="宠物托运"></el-option>
+                            <el-option label="宠物殡葬" value="宠物殡葬"></el-option>
+                            <el-option label="其他" value="其他"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="服务时间">
+                        <!-- <el-input v-model="tableData.serviceSchedule" style="width:300px;"></el-input> -->
+                        <el-time-select
+                            style="width:150px;"
+                            placeholder="起始时间"
+                            v-model="startTime"
+                            :picker-options="{
+                            start: '08:30',
+                            step: '00:15',
+                            end: '18:30'
+                            }">
+                        </el-time-select>
+                        <el-time-select
+                            style="width:150px;"
+                            placeholder="结束时间"
+                            v-model="endTime"
+                            :picker-options="{
+                            start: '08:30',
+                            step: '00:15',
+                            end: '18:30',
+                            minTime: startTime
+                            }">
+                        </el-time-select>
+                    </el-form-item>
+                    <el-form-item label="体重范围">
+                        <el-input v-model="tableData.serviceCanFor" style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="服务规格">
+                        <el-input v-model="tableData.serviceDetial" style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="服务时长">
+                        <el-input v-model="tableData.serviceTime"  style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="服务等级">
+                        <el-input v-model="tableData.serviceLevel" style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="服务价格">
+                        <el-input v-model="tableData.servicePrice" style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button @click="confirmAdd" type="primary">添加</el-button>
+                        <el-button  @click="quxiao">取消</el-button>
+                    </el-form-item>
+                    </el-form>
+            </el-dialog>
+        </transition>
+        <transition name="el-zoom-in-top">
+            <el-dialog title="修改服务" style="text-align:center" width="35%" :visible.sync="modify">
                 <el-form status-icon  class="demo-ruleForm">
                     <el-form-item label="服务名称">
                         <el-input  v-model="tableData.serviceName" style="width:300px;"></el-input>
                     </el-form-item>
-                    <el-form-item  label="服务类型">
-                        <el-input v-model="tableData.serviceType" style="width:300px;"></el-input>
+                    <el-form-item label="服务类型">
+                        <el-select v-model="tableData.serviceType" placeholder="请选择服务类型"  style="width:300px;">
+                            <el-option label="宠物医院" value="宠物医院"></el-option>
+                            <el-option label="宠物美容" value="宠物美容"></el-option>
+                            <el-option label="宠物配种" value="宠物配种"></el-option>
+                            <el-option label="宠物训练" value="宠物训练"></el-option>
+                            <el-option label="宠物托运" value="宠物托运"></el-option>
+                            <el-option label="宠物殡葬" value="宠物殡葬"></el-option>
+                            <el-option label="其他" value="其他"></el-option>
+                        </el-select>
                     </el-form-item>
                     <el-form-item label="服务时间">
-                        <el-input v-model="tableData.serviceSchedule" style="width:300px;"></el-input>
+                        <!-- <el-input v-model="tableData.serviceSchedule" style="width:300px;"></el-input> -->
+                        <el-time-select
+                            style="width:150px;"
+                            placeholder="起始时间"
+                            v-model="startTime"
+                            :picker-options="{
+                            start: '08:30',
+                            step: '00:15',
+                            end: '18:30'
+                            }">
+                        </el-time-select>
+                        <el-time-select
+                            style="width:150px;"
+                            placeholder="结束时间"
+                            v-model="endTime"
+                            :picker-options="{
+                            start: '08:30',
+                            step: '00:15',
+                            end: '18:30',
+                            minTime: startTime
+                            }">
+                        </el-time-select>
                     </el-form-item>
                     <el-form-item label="体重范围">
                         <el-input v-model="tableData.serviceCanFor" style="width:300px;"></el-input>
@@ -144,8 +195,8 @@
                         <el-button  @click="quxiao">取消</el-button>
                     </el-form-item>
                     </el-form>
-                </el-main>
-            </div>
+                </el-dialog>
+            </transition>
         </div>
 </div>
     
@@ -154,6 +205,8 @@
 export default {
   data() {
     return {
+        startTime: '',
+        endTime: '',
       rows: [],
       lsrows: [],
       tableData: {
@@ -174,8 +227,20 @@ export default {
     this.async_getEmpsByPage();
   },
   methods: {
-    handleClick(row) {
-      console.log(row);
+    qingkong(){
+        this.tableData.serviceName = "";
+        this.tableData.serviceType = "";
+        this.tableData.serviceSchedule = "";
+        this.tableData.serviceCanFor = "";
+        this.tableData.serviceDetial = "";
+        this.tableData.serviceTime = "";
+        this.tableData.serviceLevel = "";
+        this.tableData.servicePrice = "";
+    },
+    open(row) {
+        this.$alert(`${row}`, '提示', {
+        confirmButtonText: '确定',
+        });
     },
     fanhui() {
       this.$router.push("/info/storemanagement/servicemanagement");
@@ -186,30 +251,45 @@ export default {
     quxiao() {
       this.isShow = false;
       this.modify = false;
+      this.qingkong();
     },
     confirmAdd() {
-      //添加服务
-      const data = {
-        storesure: localStorage.userId,
-        serviceName: this.tableData.serviceName,
-        serviceType: this.tableData.serviceType,
-        serviceSchedule: this.tableData.serviceSchedule,
-        serviceCanFor: this.tableData.serviceCanFor,
-        serviceDetial: this.tableData.serviceDetial,
-        serviceTime: this.tableData.serviceTime,
-        serviceLevel: parseInt(this.tableData.serviceLevel),
-        servicePrice: parseInt(this.tableData.servicePrice)
-      };
-      // console.log(data)
-      let data1 = fetch("/serviceManagement/addService", {
-        method: "post",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json"
+        //添加服务
+        let serviceTime = this.startTime + "至" +this.endTime
+        // console.log(serviceTime)
+        const data = {
+            storesure: localStorage.userId,
+            serviceName: this.tableData.serviceName,
+            serviceType: this.tableData.serviceType,
+            serviceSchedule: serviceTime,
+            serviceCanFor: this.tableData.serviceCanFor,
+            serviceDetial: this.tableData.serviceDetial,
+            serviceTime: this.tableData.serviceTime,
+            serviceLevel: parseInt(this.tableData.serviceLevel),
+            servicePrice: parseInt(this.tableData.servicePrice)
+        };
+        if( data.serviceName===""||
+            data.serviceType===""||
+            data.serviceSchedule===""||
+            data.serviceCanFor===""||
+            data.serviceDetial===""||
+            data.serviceTime===""||
+            this.tableData.serviceName===""||
+            this.tableData.servicePrice===""
+        ){
+            this.open('输入有误，请重新输入')
+        }else{
+            fetch("/serviceManagement/addService", {
+                method: "post",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => res.json());
+            this.quxiao()  //新增成功 隐藏窗口
+            this.async_getEmpsByPage();
+            this.qingkong() //调用清空数据的方法 
         }
-      }).then(res => res.json());
-      this.quxiao(); //新增成功 隐藏窗口
-      this.async_getEmpsByPage();
     },
     async async_getEmpsByPage() {
       //判断是门店管理员还是平台管理员员登陆 渲染相应的数据
@@ -269,28 +349,32 @@ export default {
         .catch(() => {});
     },
     modifyService(scope) {
-      //修改服务
-      this.modify = true;
-      // console.log(scope)
-      // let canvas=this.$refs.cvs;
-      this.tableData.serviceName = scope.serviceName;
-      this.tableData.serviceType = scope.serviceType;
-      this.tableData.serviceSchedule = scope.serviceSchedule;
-      this.tableData.serviceCanFor = scope.serviceCanFor;
-      this.tableData.serviceDetial = scope.serviceDetial;
-      this.tableData.serviceTime = scope.serviceTime;
-      this.tableData.serviceLevel = scope.serviceLevel;
-      this.tableData.servicePrice = scope.servicePrice;
-      localStorage.serviceId = scope._id;
+        console.log(scope)
+        //修改服务
+        this.modify = true;
+        // console.log(scope)
+        // let canvas=this.$refs.cvs;
+        this.tableData.serviceName = scope.serviceName;
+        this.tableData.serviceType = scope.serviceType;
+    //   this.tableData.serviceSchedule = scope.serviceSchedule;
+        this.startTime = scope.serviceSchedule.substring(0,5)
+        this.endTime = scope.serviceSchedule.substring(6,11)
+        this.tableData.serviceCanFor = scope.serviceCanFor;
+        this.tableData.serviceDetial = scope.serviceDetial;
+        this.tableData.serviceTime = scope.serviceTime;
+        this.tableData.serviceLevel = scope.serviceLevel;
+        this.tableData.servicePrice = scope.servicePrice;
+        localStorage.serviceId = scope._id;
     },
 
     confirmModifyService() {
       //确认修改服务
+      let serviceTime = this.startTime + "至" +this.endTime
       const data = {
         serviceId: localStorage.serviceId,
         serviceName: this.tableData.serviceName,
         serviceType: this.tableData.serviceType,
-        serviceSchedule: this.tableData.serviceSchedule,
+        serviceSchedule: serviceTime,
         serviceCanFor: this.tableData.serviceCanFor,
         serviceDetial: this.tableData.serviceDetial,
         serviceTime: this.tableData.serviceTime,
@@ -310,31 +394,11 @@ export default {
       });
       this.async_getEmpsByPage();
       this.quxiao();
+      this.qingkong();
     }
   }
 };
 </script>
 
 <style>
-.el-main {
-  background-color: #e9eef3;
-  color: #333;
-  text-align: center;
-  line-height: 160px;
-  width: 500px;
-  height: 400px;
-}
-.addService {
-  position: absolute;
-  top: 100px;
-  left: 500px;
-  border-radius: 10px;
-  background-color: #e9eef3;
-}
-.el-icon-close {
-  float: right;
-  margin: 5px 5px 0 0;
-  cursor: pointer;
-  color: #f56c6c;
-}
 </style>

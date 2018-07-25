@@ -9,6 +9,43 @@
           </div>
       </div>
   <div>
+    <div id="dataxiugai">
+      <p style="text-align: center;margin: 10px;color: rgb(53, 63, 68);font-size:30px;">门店信息</p>
+        <el-form status-icon ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="门店名称:">
+            <el-input v-model="form.shopName" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="联系人:">
+            <el-input v-model="form.shopContacts" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="法人:">
+            <el-input v-model="form.shopCorporate" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="联系电话:">
+            <el-input v-model="form.shopTel" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="营业执照号码:">
+            <el-input v-model="form.shopLicenceNum" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="营业执照地址:">
+            <el-input v-model="form.shopAdd" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="店铺描述:">
+            <el-input v-model="form.shopDescription" clearable>
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="quixao">取 消</el-button>
+            <el-button type="primary" @click="confirmModify()" :plain="true">确 定</el-button>
+          </el-form-item>
+        </el-form>
+    </div>
     <template>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <!-- 门店信息框 -->
@@ -51,36 +88,6 @@
                 <template slot-scope="scope" >
                   <el-button size="mini" icon="el-icon-edit" @click="modify(scope.row)">编辑</el-button>
                     <!-- 门店信息 -->
-                    <el-dialog title="门店信息" :visible.sync="dialogFormVisible">
-                      <el-form :model="form">
-                        <el-form-item label="门店名称:" :label-width="formLabelWidth">
-                          <el-input v-model="form.shopName" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="联系人:" :label-width="formLabelWidth">
-                          <el-input v-model="form.shopContacts" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="法人:" :label-width="formLabelWidth">
-                          <el-input v-model="form.shopCorporate" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="联系电话:" :label-width="formLabelWidth">
-                          <el-input v-model="form.shopTel" auto-complete="off"></el-input>
-                        </el-form-item>
-                          <el-form-item label="营业执照号码:" :label-width="formLabelWidth">
-                          <el-input v-model="form.shopLicenceNum" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="营业执照地址:" :label-width="formLabelWidth">
-                          <el-input v-model="form.shopAdd" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="店铺描述:" :label-width="formLabelWidth">
-                          <el-input v-model="form.shopDescription" auto-complete="off"></el-input>
-                        </el-form-item>
-                      </el-form>
-                      <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogFormVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="confirmModify(scope.$index,scope.row)" :plain="true">确 定</el-button>
-                      </div>
-                    </el-dialog>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
                     <el-button type="danger" size="mini" icon="el-icon-delete" @click="remove(scope.$index,scope.row)" :plain="true">删除</el-button>
                 </template>
             </el-table-column>
@@ -212,9 +219,14 @@ export default {
       document.getElementById("zhuanquan").style.display = "none";
       this.tableData = data;
     },
+    quixao(){
+document.getElementById("dataxiugai").style.display = "none";
+    },
     modify(scope) {
       //修改
-      this.dialogFormVisible = true;
+      // this.dialogFormVisible = true;
+      document.getElementById("dataxiugai").style.display = "block";
+      console.log(document.getElementById("dataxiugai"));
       this.form.shopName = scope.shopName;
       this.form.shopContacts = scope.shopContacts;
       this.form.shopCorporate = scope.shopCorporate;
@@ -228,11 +240,11 @@ export default {
     addget() {
       this.$router.push("/info/storemanagement/StoreBuilding");
     },
-    async confirmModify(index, row) {
+    async confirmModify() {
       //确认修改
-      this.dialogFormVisible = false;
+      // this.dialogFormVisible = false;
       const modifyData = {
-        useradd: row._id,
+        useradd: this.form.useradd,
         shopName: this.form.shopName,
         shopContacts: this.form.shopContacts,
         shopCorporate: this.form.shopCorporate,
@@ -253,6 +265,7 @@ export default {
         message: "修改成功",
         type: "success"
       });
+      document.getElementById("dataxiugai").style.display = "none";
       this.asy();
     }
   }
@@ -260,6 +273,19 @@ export default {
 </script>
 
 <style>
+#dataxiugai {
+  /* display: none; */
+  position: fixed;
+  top: 30px;
+  left: 32%;
+  display: none;
+  width: 500px;
+  height: 500px;
+  overflow-y: scroll;
+  z-index: 99999999999999;
+  background-color: white;
+  border: 1px solid #409EFF;
+}
 </style>
 
 
