@@ -1,22 +1,17 @@
 <template>
     <div>
-        <h3 style="width: 100%;
-            height: 30px;
-            line-height:30px;
-            margin: 10px auto;
-            background-color:  #C0C4CC;
-            text-align: center;
-            color:#409EFF;">小七宠物店</h3>
         <el-table
         :data="lsrows"
         border
         style="width: 100%">
         <el-table-column
+            width="150"
             prop="serviceName"
             label="服务名称"
             >
         </el-table-column>
         <el-table-column
+            
             prop="serviceType"
             label="服务类型"
             >
@@ -52,18 +47,17 @@
             >
         </el-table-column>
         <el-table-column
-          
+            fixed="right"
             label="操作"
             width="210">
             <template slot-scope="scope">
-            <el-button  @click="handleClick(scope.row)" type="primary" icon="el-icon-edit">修改</el-button>
-            <el-button @click="deleteService(scope.row)" type="danger" icon="el-icon-delete">删除</el-button>
+                <el-button  @click="modifyService(scope.row)" type="primary" icon="el-icon-edit">修改</el-button>
+                <el-button @click="deleteService(scope.row)" type="danger" icon="el-icon-delete">删除</el-button>
             </template>
         </el-table-column>
         </el-table>
         <div style="width:500px;margin: 10px auto;text-align:center">
             <el-button type="primary" @click="addService" plain>新增服务</el-button>
-            <el-button type="primary" @click="fanhui"  plain>返回</el-button>
         </div>
         <div class="addService"
             v-show="isShow">
@@ -102,6 +96,43 @@
                     </el-form>
                 </el-main>
             </div>
+            <div class="addService"
+            v-show="modify">
+            <i class="el-icon-close"  @click="quxiao"></i>
+            <h3 style="text-align:center;margin-top:10px" >修改服务</h3>.
+            <el-main>
+                <el-form status-icon  class="demo-ruleForm">
+                    <el-form-item label="服务名称">
+                        <el-input  v-model="tableData.serviceName" style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item  label="服务类型">
+                        <el-input v-model="tableData.serviceType" style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="服务时间">
+                        <el-input v-model="tableData.serviceSchedule" style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="体重范围">
+                        <el-input v-model="tableData.serviceCanFor" style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="服务规格">
+                        <el-input v-model="tableData.serviceDetial" style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="服务时长">
+                        <el-input v-model="tableData.serviceTime"  style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="服务等级">
+                        <el-input v-model="tableData.serviceLevel" style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="服务价格">
+                        <el-input v-model="tableData.servicePrice" style="width:300px;"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button @click="confirmModifyService" type="primary">确认修改</el-button>
+                        <el-button  @click="quxiao">取消</el-button>
+                    </el-form-item>
+                    </el-form>
+                </el-main>
+            </div>
         </div>
     </template>
 
@@ -112,17 +143,18 @@
       return {
         rows: [],
         lsrows: [],
-        tableData: [{
-          serviceName: '修毛',
-          serviceType:'宠物美容',
-          serviceSchedule: "12",
-          serviceCanFor: '5kg--20kg',
-          serviceDetial: '精修',
-          serviceTime:'2小时',
-          serviceLevel: 2,
-          servicePrice:100
-        }],
-        isShow:false
+        tableData: {
+          serviceName: '',
+          serviceType:'',
+          serviceSchedule: "",
+          serviceCanFor: '',
+          serviceDetial: '',
+          serviceTime:'',
+          serviceLevel:"",
+          servicePrice:"",
+        },
+        isShow:false,
+        modify:false
       }
     },
     created() {
@@ -140,6 +172,7 @@
         },
         quxiao(){
             this.isShow=false;
+            this.modify=false;
         },
         confirmAdd(){   //添加服务
             const data = {
@@ -197,6 +230,7 @@
         deleteService(scope){    //删除服务
             // console.log(scope._id)
             let id ={serviceId:scope._id}
+            
             const datas =  fetch("/serviceManagement/deleteService", {
                 method: "post",
                 body: JSON.stringify(id),
@@ -206,6 +240,44 @@
                 }).then(res => res.json());
               
                 this.async_getEmpsByPage()
+        },
+        modifyService(scope){  //修改服务
+            this.modify=true;
+            // console.log(scope)
+            // let canvas=this.$refs.cvs;
+            this.tableData.serviceName= scope.serviceName
+            this.tableData.serviceType= scope.serviceType
+            this.tableData.serviceSchedule= scope.serviceSchedule
+            this.tableData.serviceCanFor= scope.serviceCanFor
+            this.tableData.serviceDetial= scope.serviceDetial
+            this.tableData.serviceTime= scope.serviceTime
+            this.tableData.serviceLevel= scope.serviceLevel
+            this.tableData.servicePrice= scope.servicePrice
+            localStorage.serviceId = scope._id
+        },
+        
+        confirmModifyService(){   //确认修改服务
+            
+            const data = {
+                serviceId:localStorage.serviceId,
+                serviceName:this.tableData.serviceName,
+                serviceType:this.tableData.serviceType,
+                serviceSchedule:this.tableData.serviceSchedule,
+                serviceCanFor: this.tableData.serviceCanFor,
+                serviceDetial: this.tableData.serviceDetial,
+                serviceTime:this.tableData.serviceTime,
+                serviceLevel:parseInt(this.tableData.serviceLevel),
+                servicePrice:parseInt(this.tableData.servicePrice) 
+            }
+            const datas =  fetch("/serviceManagement/modifyService", {
+                method: "post",
+                body: JSON.stringify(data),
+                headers: {
+                "Content-Type": "application/json"
+                }
+                }).then(res => res.json());
+            this.async_getEmpsByPage()
+            this.quxiao()
         }
 
     }

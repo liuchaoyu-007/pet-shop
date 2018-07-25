@@ -17,31 +17,31 @@
 </el-menu>
   <el-table
     :data="tableData3"
-    max-height="800"
+    height="400"
     border
     style="width: 100%">
     <el-table-column
-      prop="goodsDate"
+      prop="sDate"
       label="出厂日期"
       width="100">
     </el-table-column>
     <el-table-column
-      prop="goodsName"
+      prop="sName"
       label="商品名称"
       width="80">
     </el-table-column>
     <el-table-column
-      prop="goodsType"
+      prop="sType"
       label="商品品类"
       width="80">
     </el-table-column>
     <el-table-column
-      prop="goodsRegion"
+      prop="sRegion"
       label="产地"
       width="50">
     </el-table-column>
     <el-table-column
-      prop="goodsSpecial"
+      prop="sSpecial"
       label="特殊功能"
       width="100">
     </el-table-column>
@@ -49,33 +49,34 @@
     label="图片"
     width="140">
       <template slot-scope="scope">
-        <div v-for="(item,index) in scope.row.goodsImg" :key="index">
-          <img style="width:100px" :src='item' alt="" >
-        </div>
+        <el-button
+          size="mini">
+          <img src="../../../../assets/084f5070af51409b5a3401776072e60b.jpg" style="width:80px;height:100px">
+        </el-button>
       </template>
     </el-table-column>
     <el-table-column
-      prop="goodsTaste"
+      prop="sTaste"
       label="口味"
       width="70">
     </el-table-column>
     <el-table-column
-      prop="goodsSize"
+      prop="sSize"
       label="包装规格"
       width="80">
     </el-table-column>
     <el-table-column
-      prop="goodsTime"
+      prop="sTime"
       label="保质期"
       width="70">
     </el-table-column>
     <el-table-column
-      prop="goodsCanFor"
+      prop="sCanFor"
       label="适用阶段"
       width="80">
     </el-table-column>
     <el-table-column
-      prop="goodsPrice"
+      prop="sPrice"
       label="售价"
       width="60">
     </el-table-column>
@@ -127,7 +128,7 @@
     <el-upload
       class="upload-demo"
       drag
-      action="/imgs/upload"
+      action="https://jsonplaceholder.typicode.com/posts/"
       multiple>
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -145,9 +146,54 @@
 
 <script>
 export default {
+  methods: {
+    bian(){
+      this.dialogFormVisible = true
+    },
+    async tianjia(){
+      this.dialogFormVisible = false
+      const data = await fetch("/Commodity/Commodity",{
+        method:"post",
+        body: JSON.stringify ({
+          goodsDate:this.form.sDate,
+          goodsName:this.form.sName,
+          goodsType:this.form.sType,
+          goodsRegion:this.form.sRegion,
+          goodsSpecial:this.form.sSpecial,
+          goodsTime:this.form.sTime,
+          goodsPrice:this.form.sPrice,
+          goodsTaste:this.form.sTaste,
+          goodsSize:this.form.sSize,
+          goodsCanFor:this.form.sCanFor,
+          goodsImg:this.form.sImg,
+        }),
+        headers: {
+            "Content-Type": "application/json"
+          }
+      }).then(res=>res.json());
+    },
+    shanchu(){
+      console.log("123")
+    }
+  },
   data() {
     return {
-      tableData3: [],
+      tableData3: [
+        {
+          sDate: "2016-05-03",
+          sName: "福贵狗粮",
+          sType: "狗粮",
+          sRegion: "山东烟台",
+          sSpecial: "磨牙，洁齿，护肤美毛",
+          sTime: "12个月",
+          sImg: "../../../../assets/084f5070af51409b5a3401776072e60b.jpg",
+          sPrice: "238元",
+          sTaste: "鸡肉味",
+          sSize: "100-499g",
+          sCanFor: "全阶段",
+          sImg:""
+        }
+      ],
       input10: "",
       dialogTableVisible: false,
       dialogFormVisible: false,
@@ -164,72 +210,8 @@ export default {
         sCanFor: "",
         sImg: []
       },
-      formLabelWidth: "120px",
-      imgsarr: []
+      formLabelWidth: "120px"
     };
-  },
-  created() {
-    console.log("页面初始化");
-    this.aysdata();
-  },
-  methods: {
-    bian() {
-      this.dialogFormVisible = true;
-    },
-
-    async tianjia() {
-      this.dialogFormVisible = false;
-      const data = await fetch("/Commodity/Commodity", {
-        method: "post",
-        body: JSON.stringify({
-          goodsDate: this.form.sDate,
-          goodsName: this.form.sName,
-          goodsType: this.form.sType,
-          goodsRegion: this.form.sRegion,
-          goodsSpecial: this.form.sSpecial,
-          goodsTime: this.form.sTime,
-          goodsPrice: this.form.sPrice,
-          goodsTaste: this.form.sTaste,
-          goodsSize: this.form.sSize,
-          goodsCanFor: this.form.sCanFor,
-          goodsImg: this.form.sImg
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then(res => res.json());
-      if (data == true) {
-        this.aysdata();
-        console.log("增加成功");
-      }
-    },
-    shanchu() {
-      console.log("123");
-    },
-    // uploadimgs(res) {
-    //   this.imgsarr.push(res);
-    //   console.log(this.imgsarr);
-    // }
-    async aysdata() {
-      const comm = await fetch("/Commodity/getCinemaPage", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then(res => res.json());
-      this.tableData3 = comm
-      this.form.sName = '',
-      this.form.sDate = '',
-      this.form.sType = '',
-      this.form.sRegion = '',
-      this.form.sSpecial = '',
-      this.form.sTaste = '',
-      this.form.sSize = '',
-      this.form.sTime = '',
-      this.form.sCanFor = '',
-      this.form.sPrice = '',
-      console.log(comm);
-    }
   }
 };
 </script>
