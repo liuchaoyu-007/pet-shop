@@ -25,7 +25,7 @@
 
 
                     <el-button size="mini" type="primary" @click="bianjis(scope.$index,scope.row)" style="margin-right: 10px" icon="el-icon-edit">编辑</el-button>
-                    <el-dialog title="权限管理" :visible.sync="centerDialogVisible" width="30%" center>
+                    <el-dialog title="编辑" :visible.sync="centerDialogVisible" width="30%" center>
 
                         <div>
                             <span>账户</span>
