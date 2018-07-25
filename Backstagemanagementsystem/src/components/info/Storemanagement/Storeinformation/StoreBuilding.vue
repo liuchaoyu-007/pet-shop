@@ -104,7 +104,7 @@ export default {
         });
         this.$router.push("/info/storemanagement/storeinformation");
       } else {
-        this.$alert("添加失败，只能平台管理员才能添加", "警告", {
+        this.$alert("添加失败，只能门店管理员才能添加", "警告", {
           confirmButtonText: "确定"
         });
       }
