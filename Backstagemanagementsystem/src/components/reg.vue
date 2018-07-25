@@ -92,6 +92,7 @@ export default {
         this.name != ""
       ) {
         if (this.pass === this.pass1) {
+        document.getElementById("zhuanquan").style.display = "block";
           const data = await fetch("/user/register", {
             method: "post",
             body: JSON.stringify({
@@ -105,6 +106,7 @@ export default {
               "Content-Type": "application/json"
             }
           }).then(res => res.json());
+        document.getElementById("zhuanquan").style.display = "none";
           if (data == true) {
             this.$alert("注册成功！", "提示", {
               confirmButtonText: "确定",

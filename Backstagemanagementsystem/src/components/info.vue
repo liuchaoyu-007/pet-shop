@@ -101,7 +101,7 @@
 export default {
   data() {
     return {
-      myname: localStorage.userName,
+      myname: localStorage.userName.length > 2 ? localStorage.userName.substring(0, 2) + "..." : localStorage.userName,
       mytype: localStorage.userType,
       istypetrue: this.iftrue(),
       time: new Date().toLocaleString()

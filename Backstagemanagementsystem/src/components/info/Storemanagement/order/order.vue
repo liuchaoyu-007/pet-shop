@@ -2,7 +2,7 @@
   <div>
     <div class="header-s">
       <div style="margin-left:8px;" class="header-sdiv">
-        <el-button type="primary" @click="pdtj">添加订单</el-button>
+        <el-button type="primary" plain @click="pdtj">添加订单</el-button>
         <el-dialog title="添加订单" :visible.sync="dialogFormVisible" center modal class="add">
           <el-form :model="form">
             <el-form-item label="店家账号" :label-width="formLabelWidth">
@@ -38,11 +38,11 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="tianjia">确 定</el-button>
+            <el-button type="primary" @click="tianjia" :plain="true">确 定</el-button>
           </div>
         </el-dialog>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button type="primary" @click="async_getEmpsByPage">刷新数据</el-button>
+        <el-button type="primary" @click="async_getEmpsByPage" plain>刷新数据</el-button>
       </div>
       <div style="float:right;" class="header-sdiv">
         <el-select v-model="value" placeholder="默认-显示全部" @change="typexzs" >
@@ -61,15 +61,9 @@
         border
         style="width: 100%"> 
         <el-table-column
-        fixed
         prop="usertime"
         label="订单时间"
         width="160">
-        </el-table-column>
-        <el-table-column
-          type="index"
-          label="订单序号"
-          width="50">
         </el-table-column>
         <el-table-column
         prop="storesure"
@@ -119,19 +113,16 @@
         <el-table-column
         fixed="right"
         label="操作"
-        width="220px"
+        width="180"
         >
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handfy(scope.$index, scope.row)">详情</el-button>
-          <el-button
-            size="mini"
-            @click="handfy(scope.$index, scope.row)">更改</el-button>
+            @click="handfy(scope.$index, scope.row)" icon="el-icon-edit">编辑</el-button>
             <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="handleDelete(scope.$index, scope.row)" :plain="true" icon="el-icon-delete">删除</el-button>
         </template>
         </el-table-column>
       </el-table>
@@ -187,7 +178,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="queding" style="margin-left:26%;">确定</el-button>
+            <el-button type="primary" @click="queding" style="margin-left:26%;" :plain="true">确定</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -287,6 +278,10 @@ export default {
           "Content-Type": "application/json"
         }
       }).then(res => res.json());
+      this.$message({
+            message: "修改成功",
+            type: "success"
+          });
       this.async_getEmpsByPage();
       document.getElementById("adds").style.display = "none";
     },
@@ -307,6 +302,10 @@ export default {
               "Content-Type": "application/json"
             }
           }).then(res => res.json());
+          this.$message({
+            message: "删除成功",
+            type: "success"
+          });
           this.async_getEmpsByPage();
         })
         .catch(() => {});
@@ -370,6 +369,10 @@ export default {
           "Content-Type": "application/json"
         }
       }).then(res => res.json());
+      this.$message({
+            message: "添加成功",
+            type: "success"
+          });
       this.async_getEmpsByPage();
     },
     async async_getEmpsByPage() {

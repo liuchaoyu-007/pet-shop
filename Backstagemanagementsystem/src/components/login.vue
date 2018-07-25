@@ -39,7 +39,12 @@ export default {
   },
   methods: {
     async btn() {
-      if (this.user != undefined && this.pass != undefined && this.type != undefined) {
+      if (
+        this.user != undefined &&
+        this.pass != undefined &&
+        this.type != undefined
+      ) {
+        document.getElementById("zhuanquan").style.display = "block";
         const data = await fetch("/user/Land", {
           method: "post",
           body: JSON.stringify({
@@ -51,15 +56,17 @@ export default {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
-        if (data != false ){
+        for (let i = 0; i < 5000; i++) {}
+        document.getElementById("zhuanquan").style.display = "none";
+        if (data != false) {
           this.$alert("登陆成功！", "提示", {
             confirmButtonText: "确定",
             callback: action => {
-              localStorage.userName = data.userName;//姓名
-              localStorage.userStatus = data.userStatus//状态
-              localStorage.userType = data.userType//用户类型
-              localStorage.userAcount = data.userAcount//用户账号
-              localStorage.userId = data._id //用户ID
+              localStorage.userName = data.userName; //姓名
+              localStorage.userStatus = data.userStatus; //状态
+              localStorage.userType = data.userType; //用户类型
+              localStorage.userAcount = data.userAcount; //用户账号
+              localStorage.userId = data._id; //用户ID
               this.$router.push("/info/messagecenter");
             }
           });
@@ -89,7 +96,7 @@ export default {
 }
 
 .telogs {
-  height:700px;
+  height: 700px;
   background-image: url("../assets/16df68841428aaa063dd76639ca3cab8.jpg");
   background-repeat: no-repeat;
   background-size: 100%;

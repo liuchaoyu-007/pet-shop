@@ -1,25 +1,32 @@
 <template>
-    <div>
-        <el-select v-model="value" placeholder="默认-全部用户" @change="mydaya">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-        </el-select>
-        <el-table :data="Todos" style="width: 100%">
-            <el-table-column prop="userAcount" label="账户" width="100%">
+    <div style="margin-top:0;">
+        <div style="margin:20px 0;">
+            <div style="display:inline-block;">
+                <el-button type="primary" @click="async_getEmpsByPage" plain>刷新数据</el-button>
+            </div>
+            <div style="margin-left:20px;display:inline-block;float:right;">
+                <el-select v-model="value" placeholder="默认-全部用户" @change="mydaya">
+                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                    </el-option>
+                </el-select>
+            </div>
+        </div>
+        <el-table :data="Todos" style="width: 165" border>
+            <el-table-column prop="userAcount" label="账户" width="165">
             </el-table-column>
-            <el-table-column prop="userPhone" label="手机号" width="100%">
+            <el-table-column prop="userPhone" label="手机号" width="165">
             </el-table-column>
-            <el-table-column prop="userName" label="姓名" width="100%">
+            <el-table-column prop="userName" label="姓名" width="165">
             </el-table-column>
-            <el-table-column prop="userType" label="登录类型" width="100%">
+            <el-table-column prop="userType" label="登录类型" width="165">
             </el-table-column>
-            <el-table-column prop="userStatus" label="状态" width="100%">
+            <el-table-column prop="userStatus" label="状态" width="165">
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="操作" fixed="right">
                 <template slot-scope="scope">
 
 
-                    <el-button size="mini" type="primary" @click="bianjis(scope.$index,scope.row)" style="margin-right: 10px">权限管理</el-button>
+                    <el-button size="mini" type="primary" @click="bianjis(scope.$index,scope.row)" style="margin-right: 10px" icon="el-icon-edit">编辑</el-button>
                     <el-dialog title="权限管理" :visible.sync="centerDialogVisible" width="30%" center>
 
                         <div>
@@ -53,106 +60,116 @@
                         </span>
                     </el-dialog>
 
-                    <el-button size="mini" type="danger" @click="handleDeletes(scope.$index, scope.row)">删除</el-button>
+                    <el-button size="mini" type="danger" @click="handleDeletes(scope.$index, scope.row)" icon="el-icon-delete">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
     </div>
 </template>
 <script>
-    import { mapGetters, mapMutations } from 'vuex'
-    export default {
-        data() {
-            return {
-                options: [{
-                    value: '全部用户',
-                    label: '全部用户'
-                }, {
-                    value: '平台管理员',
-                    label: '平台管理员'
-                }, {
-                    value: '门店管理员',
-                    label: '门店管理员'
-                }],
-                value: '',
-                Todos: [],
-                index: 5,
-                centerDialogVisible: false,
-                userAcount: "",
-                userPhone: "",
-                userName: "",
-                userType: "",
-                userStatus: "",
-                idindex: 0
-            }
+import { mapGetters, mapMutations } from "vuex";
+export default {
+  data() {
+    return {
+      options: [
+        {
+          value: "全部用户",
+          label: "全部用户"
         },
-        created() {
-            this.async_getEmpsByPage("全部用户");
+        {
+          value: "平台管理员",
+          label: "平台管理员"
         },
-        methods: {
-
-            mydaya() { //切换用户类型
-                console.log(this.value)
-                this.async_getEmpsByPage(this.value);
-            },
-            async async_getEmpsByPage(data) {
-                console.log(data)
-                let datas = await fetch("/user/list", {//这个是当前店主的订单-门店管理员
-                    method: "post",
-                    body: JSON.stringify({
-                        myuser: data//店家账号
-                    }),
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }).then(res => res.json());
-                this.Todos = datas //渲染数据
-            },
-            bianjis(index, row) {
-                this.centerDialogVisible = true
-                this.userAcount = row.userAcount
-                this.userPhone = row.userPhone
-                this.userName = row.userName
-                this.userType = row.userType
-                this.userStatus = row.userStatus
-                this.idindex = row._id
-            },
-            async tianjia() {//修改管理
-                console.log(this.idindex)
-                let datas = await fetch("/user/set", {//这个是删除用户
-                    method: "post",
-                    body: JSON.stringify({
-                        _id: this.idindex,
-                        userAcount: this.userAcount,//账号
-                        userPwd: this.userPwd,//密码
-                        userPhone: this.userPhone,//电话
-                        userName: this.userName,//昵称
-                        userType: this.userType,//角色
-                        userStatus: this.userStatus,//状态
-                    }),
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }).then(res => res.json());
-                console.log(datas)
-                this.async_getEmpsByPage("全部用户")
-                this.centerDialogVisible = false
-            },
-            async handleDeletes(index, row) {
-                let datas = await fetch("/user/sets", {//这个是删除用户
-                    method: "post",
-                    body: JSON.stringify({
-                        _id: row._id
-                    }),
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }).then(res => res.json());
-                console.log(datas)
-                this.async_getEmpsByPage("全部用户")
-            }
+        {
+          value: "门店管理员",
+          label: "门店管理员"
         }
+      ],
+      value: "",
+      Todos: [],
+      index: 5,
+      centerDialogVisible: false,
+      userAcount: "",
+      userPhone: "",
+      userName: "",
+      userType: "",
+      userStatus: "",
+      idindex: 0
+    };
+  },
+  created() {
+    this.async_getEmpsByPage("全部用户");
+  },
+  methods: {
+    mydaya() {
+      //切换用户类型
+      console.log(this.value);
+      this.async_getEmpsByPage(this.value);
+    },
+    async async_getEmpsByPage(data) {
+      document.getElementById("zhuanquan").style.display = "block";
+      console.log(data);
+      let datas = await fetch("/user/list", {
+        //这个是当前店主的订单-门店管理员
+        method: "post",
+        body: JSON.stringify({
+          myuser: data //店家账号
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => res.json());
+      this.Todos = datas; //渲染数据
+      document.getElementById("zhuanquan").style.display = "none";
+    },
+    bianjis(index, row) {
+      this.centerDialogVisible = true;
+      this.userAcount = row.userAcount;
+      this.userPhone = row.userPhone;
+      this.userName = row.userName;
+      this.userType = row.userType;
+      this.userStatus = row.userStatus;
+      this.idindex = row._id;
+    },
+    async tianjia() {
+      //修改管理
+      console.log(this.idindex);
+      let datas = await fetch("/user/set", {
+        //这个是删除用户
+        method: "post",
+        body: JSON.stringify({
+          _id: this.idindex,
+          userAcount: this.userAcount, //账号
+          userPwd: this.userPwd, //密码
+          userPhone: this.userPhone, //电话
+          userName: this.userName, //昵称
+          userType: this.userType, //角色
+          userStatus: this.userStatus //状态
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => res.json());
+      console.log(datas);
+      this.async_getEmpsByPage("全部用户");
+      this.centerDialogVisible = false;
+    },
+    async handleDeletes(index, row) {
+      let datas = await fetch("/user/sets", {
+        //这个是删除用户
+        method: "post",
+        body: JSON.stringify({
+          _id: row._id
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => res.json());
+      console.log(datas);
+      this.async_getEmpsByPage("全部用户");
     }
+  }
+};
 </script>
 <style>
 </style>

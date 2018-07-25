@@ -1,15 +1,13 @@
 <template>
 <div>
-  <!-- 搜索框 -->
-  <div class="int">
-      <el-input style="width: 300px; margin:5px 10px;"
-      placeholder="请输入内容"
-      v-model="input"
-      clearable>
-      </el-input>
-      <el-button type="primary" icon="el-icon-search">搜索</el-button>
-      <el-button type="primary" icon="el-icon-refresh">刷新</el-button>
-  </div>
+  <div style="margin:20px 0;">
+    <div style="margin-left:20px;display:inline-block;">
+            <el-button type="primary" @click="addget" plain>新增服务</el-button>
+        </div>
+          <div style="margin-left:20px;display:inline-block;">
+              <el-button type="primary" @click="asy" plain>刷新数据</el-button>
+          </div>
+      </div>
   <div>
     <template>
       <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -17,8 +15,14 @@
         <el-tab-pane label="门店信息" name="first">
             <el-table
             :data="tableData"
+            border
             stripe
             style="width: 100%">
+            <el-table-column
+              prop="useradd"
+              label="所属账号"
+              width="180">
+            </el-table-column>
             <el-table-column
               prop="shopName"
               label="门店名称"
@@ -40,20 +44,44 @@
               width="180">
             </el-table-column>
             <el-table-column
-              prop="shopAdd"
-              label="地址"
-              width="180">
-            </el-table-column>
-            <el-table-column
-              prop="address"
-              label="状态"
-              width="180">
-            </el-table-column>
-            <el-table-column
                 label="操作"
+                width="200"
+                fixed="right"
                 >
-                <template slot-scope="scope">
-                    <el-button type="text" size="small">编辑</el-button>
+                <template slot-scope="scope" >
+                  <el-button size="mini" icon="el-icon-edit" @click="modify(scope.row)">编辑</el-button>
+                    <!-- 门店信息 -->
+                    <el-dialog title="门店信息" :visible.sync="dialogFormVisible">
+                      <el-form :model="form">
+                        <el-form-item label="门店名称:" :label-width="formLabelWidth">
+                          <el-input v-model="form.shopName" auto-complete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="联系人:" :label-width="formLabelWidth">
+                          <el-input v-model="form.shopContacts" auto-complete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="法人:" :label-width="formLabelWidth">
+                          <el-input v-model="form.shopCorporate" auto-complete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="联系电话:" :label-width="formLabelWidth">
+                          <el-input v-model="form.shopTel" auto-complete="off"></el-input>
+                        </el-form-item>
+                          <el-form-item label="营业执照号码:" :label-width="formLabelWidth">
+                          <el-input v-model="form.shopLicenceNum" auto-complete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="营业执照地址:" :label-width="formLabelWidth">
+                          <el-input v-model="form.shopAdd" auto-complete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="店铺描述:" :label-width="formLabelWidth">
+                          <el-input v-model="form.shopDescription" auto-complete="off"></el-input>
+                        </el-form-item>
+                      </el-form>
+                      <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="confirmModify(scope.$index,scope.row)" :plain="true">确 定</el-button>
+                      </div>
+                    </el-dialog>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <el-button type="danger" size="mini" icon="el-icon-delete" @click="remove(scope.$index,scope.row)" :plain="true">删除</el-button>
                 </template>
             </el-table-column>
           </el-table>
@@ -63,6 +91,7 @@
            <el-table
             :data="tableData"
             stripe
+            border
             style="width: 100%">
             <el-table-column
               prop="shopLicenceNum"
@@ -80,7 +109,7 @@
               <template slot-scope="scope">
                 <el-button
                   size="mini">
-                  <img src="../../../../assets/u=4119941613,1752835551&fm=27&gp=0.jpg" style="width:250px;" />
+                  <img :src="scope.row.shopLicenceImg" style="width:250px;height:150px;" />
                 </el-button>
               </template>
             </el-table-column>
@@ -91,53 +120,15 @@
             </el-table-column>
             <el-table-column
                 label="操作"
+                width="100"
                 >
                 <template slot-scope="scope">
-                    <el-button type="text" size="small">编辑</el-button>
+                    <el-button type="danger" size="mini" icon="el-icon-delete" @click="remove(scope.$index,scope.row)" :plain="true">删除</el-button>
                 </template>
            </el-table-column>
           </el-table>
         </el-tab-pane>
         <!-- 店员信息框 -->
-        <el-tab-pane label="店员信息" name="third">
-          <el-table
-            :data="tableData"
-            stripe
-            style="width: 100%">
-            <el-table-column
-              prop="empName"
-              label="店员"
-              width="180">
-            </el-table-column>
-            <el-table-column
-              prop="shopAdd"
-              label="营业执照地址"
-              width="180">
-            </el-table-column>
-             <el-table-column
-              label="营业执照图片"
-              width="300">
-              <template slot-scope="scope">
-                <el-button
-                  size="mini">
-                  <img src="../../../../assets/u=4119941613,1752835551&fm=27&gp=0.jpg" style="width:250px;" />
-                </el-button>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="shopDescription"
-              label="店铺描述"
-              width="300">
-            </el-table-column>
-            <el-table-column
-                label="操作"
-                >
-                <template slot-scope="scope">
-                    <el-button type="text" size="small">编辑</el-button>
-                </template>
-           </el-table-column>
-          </el-table>
-        </el-tab-pane>
       </el-tabs>
     </template>
   </div>
@@ -148,30 +139,26 @@
 export default {
   data() {
     return {
-      tableData: [
-        {
-          shopName: "123宠物店", //店名
-          shopContacts: "王大虎", //联系人
-          shopCorporate: "王小虎", //法人
-          shopTel: "13255949884", //联系电话
-          shopAdd: "上海市普陀区金沙江路 1518 弄", //营业执照地址
-          shopLicenceNum: "1614648468646", //营业执照号码
-          shopDescription: "打嘎嘎嘎刚", //店铺描述
-          shopLicenceImg: "", //营业执照图片
-          shopCover: "", //店铺门头图片
-          shopEmployee: [
-            {
-              //店员
-              empName: "王大锤", //姓名
-              empLevel: "高级抡大锤", //职级
-              empPhone: "1568489489" //联系电话
-            }
-          ]
-        }
-      ],
+      tableData: [],
+      dialogFormVisible: false,
+      form: {
+        shopName: "",
+        shopContacts: "",
+        shopCorporate: "",
+        shopAdd: "",
+        shopTel: "",
+        shopLicenceNum: "",
+        shopAdd: "",
+        shopDescription: "",
+        delivery: false
+      },
+      formLabelWidth: "120px",
       activeName: "second",
       input: ""
     };
+  },
+  created() {
+    this.asy();
   },
   methods: {
     handleClick(tab, event) {
@@ -179,6 +166,94 @@ export default {
     },
     handleClick1(row) {
       console.log(row);
+    },
+    remove(index, row) {
+      this.$confirm("您将要删除该门店, 是否继续?", "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.more(row);
+          this.$message({
+            message: "删除成功",
+            type: "success"
+          });
+          this.asy();
+        })
+        .catch(() => {});
+    },
+    async more(row) {
+      let data2 = await fetch("/store/remove", {
+        method: "post",
+        body: JSON.stringify({
+          id: row._id
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => res.json());
+    },
+    async asy() {
+      //门店查询
+      document.getElementById("zhuanquan").style.display = "block";
+      let type = localStorage.userType;
+      let data = await fetch("/store/get", {
+        //这个是当前店主的订单-门店管理员
+        method: "post",
+        body: JSON.stringify({
+          useradd: localStorage.userAcount, //店家账号
+          type: type
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => res.json());
+      document.getElementById("zhuanquan").style.display = "none";
+      this.tableData = data;
+    },
+    modify(scope) {
+      //修改
+      this.dialogFormVisible = true;
+      this.form.shopName = scope.shopName;
+      this.form.shopContacts = scope.shopContacts;
+      this.form.shopCorporate = scope.shopCorporate;
+      this.form.shopAdd = scope.shopAdd;
+      this.form.shopTel = scope.shopTel;
+      this.form.shopLicenceNum = scope.shopLicenceNum;
+      this.form.shopAdd = scope.shopAdd;
+      this.form.shopDescription = scope.shopDescription;
+      this.form.useradd = scope._id;
+    },
+    addget() {
+      this.$router.push("/info/storemanagement/StoreBuilding");
+    },
+    async confirmModify(index, row) {
+      //确认修改
+      this.dialogFormVisible = false;
+      const modifyData = {
+        useradd: row._id,
+        shopName: this.form.shopName,
+        shopContacts: this.form.shopContacts,
+        shopCorporate: this.form.shopCorporate,
+        shopAdd: this.form.shopAdd,
+        shopTel: this.form.shopTel,
+        shopLicenceNum: this.form.shopLicenceNum,
+        shopAdd: this.form.shopAdd,
+        shopDescription: this.form.shopDescription
+      };
+      let modifyData2 = await fetch("/store/modify", {
+        method: "post",
+        body: JSON.stringify(modifyData),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => res.json());
+      this.$message({
+        message: "修改成功",
+        type: "success"
+      });
+      this.asy();
     }
   }
 };

@@ -18,19 +18,19 @@ var MovieSchema = new Schema({
         type: String//这个订单购买时间
     },
     userpsrum: {
-        type: Number//这个订单购买的什么商品
+        type: String//这个订单购买的什么商品
     },
     usernum: {
-        type: Number//这个订单购买数量
+        type: String//这个订单购买数量
     },
     userprice: {
-        type: Number//这个订单购买单价
+        type: String//这个订单购买单价
     },
     userzong: {
-        type: Number//这个订单购买总价
+        type: String//这个订单购买总价
     },
     useryou: {
-        type: Number//这个订单运费
+        type: String//这个订单运费
     },
     userdiqu: {
         type: String//这个订单发往地
