@@ -34,7 +34,7 @@
     </el-table-column>
     <el-table-column
       prop="goodsSpecial"
-      label="特殊功能"
+      label="销售量"
       width="100">
     </el-table-column>
     <el-table-column 
@@ -148,7 +148,7 @@
     <el-form-item label="产地" :label-width="formLabelWidth">
       <el-input v-model="form.sRegion" ></el-input>
     </el-form-item>
-    <el-form-item label="特殊功能" :label-width="formLabelWidth">
+    <el-form-item label="销售量" :label-width="formLabelWidth">
       <el-input v-model="form.sSpecial" ></el-input>
     </el-form-item>
     <el-form-item label="口味" :label-width="formLabelWidth">

@@ -388,6 +388,7 @@ export default {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
+        console.log(data)
         this.rows = data;
         this.lsrows = this.rows;
       } else {
