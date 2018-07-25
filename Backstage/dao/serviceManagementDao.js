@@ -31,3 +31,39 @@ module.exports.platformService = async (data) => {  // ------平台管理员登�
 module.exports.deleteService = async ( {serviceId} ) => {  // ------删除服务---------//
     return await mongoose.model("serviceAdm").find().remove({_id:serviceId})   
 }
+
+module.exports.modifyService = async ( data ) => {  // ------修改服务---------//
+    const { serviceId,
+        serviceName,
+        serviceType,
+        serviceSchedule,
+        serviceCanFor,
+        serviceDetial,
+        serviceTime,
+        serviceLevel,
+        servicePrice,
+    } = data ;
+    // return await mongoose.model("serviceAdm").find()
+    // const datauser = await mongoose.model("serviceAdm").find()
+    // for(let i = 0;i<datauser.length;i++){
+    //     if(serviceId==datauser[i]._id){
+    //         await mongoose.model("serviceAdm").find().update(
+    //             datauser[i].serviceName = serviceName
+    //         )
+            
+    //     }
+    // }   
+    return await mongoose //把查询到的数据返回给服务层
+    .model("serviceAdm") //针对数据库里的studios对象
+    .find({_id:serviceId}) 
+    .update({
+        serviceName:serviceName,
+        serviceType:serviceType,
+        serviceSchedule:serviceSchedule,
+        serviceCanFor:serviceCanFor,
+        serviceDetial: serviceDetial,
+        serviceTime:serviceTime,
+        serviceLevel:serviceLevel,
+        servicePrice:servicePrice 
+    }).exec(); //exec()方法是执行
+}

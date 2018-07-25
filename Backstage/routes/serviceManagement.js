@@ -2,7 +2,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { addService,storeService,platformService,deleteService } = require("../service/serviceManagementService")
+const { addService,storeService,platformService,deleteService,modifyService } = require("../service/serviceManagementService")
 
 
 //-------添加服务----------//
@@ -26,6 +26,12 @@ router.post('/platformService', async function (req, res, next) {
 //-------删除服务----------//
 router.post('/deleteService', async function (req, res, next) {
     res.send(await deleteService(req.body))
+    // console.log(req.body)
+});
+
+//-------修改服务----------//
+router.post('/modifyService', async function (req, res, next) {
+    res.send(await modifyService(req.body))
     // console.log(req.body)
 });
 

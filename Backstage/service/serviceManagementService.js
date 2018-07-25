@@ -1,4 +1,4 @@
-const { addService,storeService,platformService,deleteService } = require("../dao/serviceManagementDao")
+const { addService,storeService,platformService,deleteService,modifyService } = require("../dao/serviceManagementDao")
 
 
 module.exports.addService = async (data) => { //添加服务
@@ -17,4 +17,7 @@ module.exports.platformService = async (data) => { //平台
 
 module.exports.deleteService = async (data) => { //删除服务
     return await deleteService(data)
+}
+module.exports.modifyService = async (data) => { //修改服务
+    return await modifyService(data)
 }

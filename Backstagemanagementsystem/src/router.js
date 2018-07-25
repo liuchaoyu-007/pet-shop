@@ -5,14 +5,13 @@ import Info from "./components/info.vue"//导航首页
 import Reg from './components/reg.vue'//注册
 import Messagecenter from './components/info/Messagecenter/Messagecenter.vue'//消息中心
 import Usermanagement from './components/info/Usermanagement/Usermanagement.vue'//用户管理
-import Servicemanagement from './components/info/Storemanagement/Servicemanagement/Servicemanagement.vue'//门店管理-服务管理
 import Storeinformation from './components/info/Storemanagement/Storeinformation/Storeinformation.vue'//门店管理-门店信息
 import StoreBuilding from './components/info/Storemanagement/Storeinformation/StoreBuilding.vue'//门店管理-创建门店
 import Order from './components/info/Storemanagement/order/order.vue'//门店管理-订单管理
 import Commoditypet from "./components/info/Storemanagement/Commodity/pet.vue"//门店管理-商品管理-宠物
 import Commodityfoot from "./components/info/Storemanagement/Commodity/foot.vue"//门店管理-商品管理-食物
 import CommodityArticles from "./components/info/Storemanagement/Commodity/Articles.vue"//门店管理-商品管理-食物
-import ServiceAdm from "./components/info/Storemanagement/Servicemanagement/serviceAdm.vue" //服务管理二级
+import ServiceAdm from "./components/info/Storemanagement/Servicemanagement/serviceAdm.vue" //服务管理
 Vue.use(Router)
 
 export default new Router({
@@ -52,10 +51,6 @@ export default new Router({
         {
           path: "storemanagement/StoreBuilding", //门店-创建门店
           name: "StoreBuilding", component: StoreBuilding
-        },
-        {
-          path: "storemanagement/servicemanagement", //门店-服务管理
-          name: "Servicemanagement", component: Servicemanagement
         },
         {
           path: "storemanagement/serviceAdm", //门店-服务管理

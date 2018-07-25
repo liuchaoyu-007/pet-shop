@@ -33,7 +33,10 @@ var CommoditySchema = new Schema({
     goodsCanFor:{
         type: String
     },
-    goodsImg:Array,
+    goodsImg:[{
+        type:Schema.Types.ObjectId,
+        ref:"goodsImg"
+    }],
 })
 
 mongoose.model("Commodity", CommoditySchema, "Commodity");
