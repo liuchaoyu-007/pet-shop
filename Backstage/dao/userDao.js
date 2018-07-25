@@ -53,3 +53,69 @@ module.exports.Land = async (data) => {//登陆
     }
     return my;
 }
+module.exports.list = async ({ myuser }) => {//登陆
+    console.log(myuser)
+    let data = []
+    if (myuser == "全部用户") {
+        let owe = await mongoose.model("user").find()//门店-平台
+        let two = await mongoose.model("Spoilmanagement").find()//宠物
+        for (let i = 0; i < owe.length; i++) {
+            data.push(owe[i])
+        }
+        for (let i = 0; i < two.length; i++) {
+            data.push(two[i])
+        }
+        console.log(data)//得到所有用户列表
+    } else if (myuser == "宠物用户") {
+        let two = await mongoose.model("Spoilmanagement").find()//宠物
+        for (let i = 0; i < two.length; i++) {
+            data.push(two[i])
+        }
+        console.log(data)//得到宠物用户列表
+    } else if (myuser == "平台管理员") {
+        let owe = await mongoose.model("user").find()//门店-平台
+        for (let i = 0; i < owe.length; i++) {
+            if (owe[i].userType == "平台管理员") {
+                data.push(owe[i])
+            }
+        }
+        console.log(data)//得到平台用户列表
+    } else {//平台用户
+        let owe = await mongoose.model("user").find()//门店-门店
+        for (let i = 0; i < owe.length; i++) {
+            if (owe[i].userType == "门店管理员") {
+                data.push(owe[i])
+            }
+        }
+        console.log(data)//得到门店用户列表
+    }
+    return data;
+}
+module.exports.sets = async ({ _id }) => {//删除平台和门店
+    await mongoose.model("user").remove({
+        _id: _id
+    })
+    return true
+}
+module.exports.set = async (data) => {//修改用户信息
+    const {
+        _id,
+        userAcount,//账号
+        userPwd,//密码
+        userPhone,//电话
+        userName,//昵称
+        userType,//角色
+        userStatus,//状态
+    } = data
+    await mongoose.model("user").find({
+        _id: _id
+    }).update({
+        userAcount,//账号
+        userPwd,//密码
+        userPhone,//电话
+        userName,//昵称
+        userType,//角色
+        userStatus,//状态
+    })
+    return true
+}
