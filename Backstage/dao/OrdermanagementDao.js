@@ -3,20 +3,58 @@ const mongoose = require("mongoose")
 module.exports.Ordermanagement = async (datas) => {// -------获取当前门店主任人有的订单（是主人的所有的店里的所有订单总和）--------//
     console.log("查询当前门店订单")
     const {
+        curPage,
+        eachPage,
         storesure,//店家账号
     } = datas
-    const datauser = await mongoose.model("Ordermanagement").find()
-    let moviesModel = []
-    for (let i = 0; i < datauser.length; i++) {
-        if (storesure == datauser[i].storesure) {
-            moviesModel.push(datauser[i])
-        }
+    const modelEmps = mongoose.model("Ordermanagement")
+    const count = await modelEmps.count()
+    const rows = await
+        modelEmps
+            .find({
+                storesure: storesure
+            })
+            .sort({
+                _id: -1
+            })
+            .skip((curPage - 1) * eachPage)
+            .limit(eachPage)
+    return {
+        curPage,
+        eachPage,
+        count: count,
+        maxPage: Math.ceil(count / eachPage),
+        rows
     }
-    return moviesModel
+    // const datauser = await mongoose.model("Ordermanagement").find()
+    // let moviesModel = []
+    // for (let i = 0; i < datauser.length; i++) {
+    //     if (storesure == datauser[i].storesure) {
+    //         moviesModel.push(datauser[i])
+    //     }
+    // }
+    // return moviesModel
 }
-module.exports.Ordermanagementtype = async (datas) => {// -------获取所有门店主任人有的订单总和--------//
-    console.log("查询所有门店订单")
-    return await mongoose.model("Ordermanagement").find()
+module.exports.Ordermanagementtype = async ({ curPage, eachPage }) => {// -------获取所有门店主任人有的订单总和--------//
+    curPage = parseInt(curPage)
+    eachPage = parseInt(eachPage)
+    const modelEmps = mongoose.model("Ordermanagement")
+    const count = await modelEmps.count()
+    const rows = await
+        modelEmps
+            .find()
+            .sort({
+                _id: -1
+            })
+            .skip((curPage - 1) * eachPage)
+            .limit(eachPage)
+    return {
+        curPage,
+        eachPage,
+        count: count,
+        maxPage: Math.ceil(count / eachPage),
+        rows
+    }
 }
 module.exports.add = async (data) => {// -------添加订单--------//
     return await mongoose.model("Ordermanagement").create(data)

@@ -183,6 +183,16 @@
         </el-form>
       </el-card>
     </div>
+    <div class="block">
+        <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-sizes="[5, 10, 20, 50]"
+        :page-size="100"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="count">
+        </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -196,6 +206,10 @@ export default {
     return {
       rows: [],
       lsrows: [],
+      curPage: 1,
+      eachPage: 5,
+      maxPage: 0,
+      count: 0,
       sousuo: "",
       options: [
         {
@@ -247,8 +261,32 @@ export default {
   created() {
     this.async_getEmpsByPage();
   },
-
+  watch: {
+    curPage() {
+      //监听curPage
+      this.async_getEmpsByPage();
+    },
+    eachPage() {
+      //监听eachPage
+      this.async_getEmpsByPage();
+    }
+  },
   methods: {
+     handleSizeChange(val) {
+      this.setEachPage(val);
+    },
+    handleCurrentChange(val) {
+      this.setCurPage(val);
+    },
+    setCurPage(curPage) {
+      this.curPage = curPage;
+      console.log(this.curPage)
+    },
+    setEachPage(eachPage) {
+      this.curPage = 1;
+      this.eachPage = eachPage;
+      console.log(this.eachPage)
+    },
     handfy(index, row) {
       //详情
       document.getElementById("adds").style.display = "block";
@@ -279,9 +317,9 @@ export default {
         }
       }).then(res => res.json());
       this.$message({
-            message: "修改成功",
-            type: "success"
-          });
+        message: "修改成功",
+        type: "success"
+      });
       this.async_getEmpsByPage();
       document.getElementById("adds").style.display = "none";
     },
@@ -337,18 +375,17 @@ export default {
       this.lsrows = data;
     },
     pdtj() {
-      if (localStorage.userType == "门店管理员") {
-        this.dialogFormVisible = true;
-      } else {
-        this.$alert("您不是门店管理人员，无法添加订单", "警告", {
-          confirmButtonText: "确定"
-        });
-      }
+      // if (localStorage.userType == "门店管理员") {
+      this.dialogFormVisible = true;
+      // } else {
+      //   this.$alert("您不是门店管理人员，无法添加订单", "警告", {
+      //     confirmButtonText: "确定"
+      //   });
+      // }
     },
     tianjia() {
       //添加订单
       this.dialogFormVisible = false;
-
       const data = {
         storesure: this.form.storesure, //这个订单属于那个店家的（店家账号）
         storename: this.form.storename, //这个订单属于那个门店
@@ -370,9 +407,9 @@ export default {
         }
       }).then(res => res.json());
       this.$message({
-            message: "添加成功",
-            type: "success"
-          });
+        message: "添加成功",
+        type: "success"
+      });
       this.async_getEmpsByPage();
     },
     async async_getEmpsByPage() {
@@ -382,25 +419,37 @@ export default {
           //这个是当前店主的订单-门店管理员
           method: "post",
           body: JSON.stringify({
+            curPage: this.curPage,
+            eachPage: this.eachPage,
             storesure: localStorage.userAcount //店家账号
           }),
           headers: {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
-        console.log(data)
-        this.rows = data;
-        this.lsrows = this.rows;
+        this.curPage = data.curPage;
+        this.eachPage = data.eachPage;
+        this.count = data.count;
+        this.maxPage = data.maxPage;
+        this.rows = data.rows;
+        this.lsrows = this.rows;``
       } else {
         let data = await fetch("/Ordermanagement/Ordermanagementtype", {
           //这个是所有店主的订单-平台管理员
           method: "post",
-          body: JSON.stringify(),
+          body: JSON.stringify({
+            curPage: this.curPage,
+            eachPage: this.eachPage
+          }),
           headers: {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
-        this.rows = data;
+        this.curPage = data.curPage;
+        this.eachPage = data.eachPage;
+        this.count = data.count;
+        this.maxPage = data.maxPage;
+        this.rows = data.rows;
         this.lsrows = this.rows;
       }
       document.getElementById("zhuanquan").style.display = "none";
