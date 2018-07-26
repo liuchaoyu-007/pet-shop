@@ -63,57 +63,73 @@
         <el-table-column
         prop="usertime"
         label="订单时间"
+        sortable
+        align="center"
         width="160">
         </el-table-column>
         <el-table-column
         prop="storesure"
         label="店主账号"
+        align="center"
         width="160">
         </el-table-column>
         <el-table-column
         prop="storename"
         label="店主门店"
+        align="center"
         width="160">
         </el-table-column>
         <el-table-column
         prop="username"
         label="宠物用户"
+        align="center"
         width="160">
         </el-table-column>
         <el-table-column
         prop="usernum"
         label="购买数量"
+        align="center"
+        sortable
         width="160">
         </el-table-column>
         <el-table-column
         prop="userprice"
         label="购买单价"
+        align="center"
+        sortable
         width="160">
         </el-table-column>
         <el-table-column
         prop="userzong"
         label="购买总价"
+        align="center"
+        sortable
         width="160">
         </el-table-column>
         <el-table-column
         prop="useryou"
         label="订单运费"
+        align="center"
+        sortable
         width="160">
         </el-table-column>
         <el-table-column
         prop="userdiqu"
+        align="center"
         label="订单发往地"
         width="160">
         </el-table-column>
         <el-table-column
         prop="state"
         label="是否发货"
+        align="center"
         width="160">
         </el-table-column>
         <el-table-column
         fixed="right"
         label="操作"
         width="180"
+        align="center"
         >
         <template slot-scope="scope">
           <el-button

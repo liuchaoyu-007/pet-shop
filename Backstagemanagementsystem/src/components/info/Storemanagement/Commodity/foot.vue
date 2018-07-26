@@ -1,78 +1,100 @@
 <template>
 <div>
-  <el-button style="margin:20px;" type="primary" plain @click="bian">新增商品</el-button>
-  <el-button style="margin:20px;" type="primary" plain @click="aysdata">刷新数据</el-button>
+  <el-button style="margin:10px;" type="primary" plain @click="bian">新增商品</el-button>
+  <el-button style="margin:10px;" type="primary" plain @click="aysdata">刷新数据</el-button>
   <el-table
     :data="data"
     max-height="800"
     border
     style="width: 100%">
     <el-table-column
-      prop="user"
-      label="所属账号"
-      width="100">
-    </el-table-column>
-    <el-table-column
       prop="goodsDate"
+      sortable
+      align="center"
       label="出厂日期"
-      width="100">
-    </el-table-column>
-    <el-table-column
-      prop="goodsName"
-      label="商品名称"
-      width="80">
-    </el-table-column>
-    <el-table-column
-      prop="goodsType"
-      label="商品品类"
-      width="80">
-    </el-table-column>
-    <el-table-column
-      prop="goodsRegion"
-      label="产地"
-      width="50">
+      width="120">
     </el-table-column>
     <el-table-column
       prop="goodsSpecial"
+      sortable
+      align="center"
       label="销售量"
-      width="100">
-    </el-table-column>
-    <el-table-column 
-    label="图片"
-    width="120">
-      <template slot-scope="scope">
-        <div v-for="(item,index) in scope.row.goodsImg" :key="index">
-          <img style="width:80px;height:100px;" :src='item' alt="" />
-        </div>
-      </template>
+      width="120">
     </el-table-column>
     <el-table-column
-      prop="goodsTaste"
-      label="口味"
-      width="70">
-    </el-table-column>
-    <el-table-column
-      prop="goodsSize"
-      label="包装规格"
-      width="80">
+      prop="goodsPrice"
+      sortable
+      align="center"
+      label="售价"
+      width="120">
     </el-table-column>
     <el-table-column
       prop="goodsTime"
+      align="center"
       label="保质期"
-      width="70">
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="user"
+      align="center"
+      label="所属账号"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="goodsName"
+      align="center"
+      label="商品名称"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="goodsType"
+      align="center"
+      label="商品品类"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="goodsRegion"
+      align="center"
+      label="产地"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="goodsTaste"
+      align="center"
+      label="口味"
+      width="80">
     </el-table-column>
     <el-table-column
       prop="goodsCanFor"
+      align="center"
       label="适用阶段"
       width="80">
     </el-table-column>
     <el-table-column
-      prop="goodsPrice"
-      label="售价"
-      width="60">
+      prop="goodsSize"
+      align="center"
+      label="包装规格"
+      width="80">
+    </el-table-column>
+    <el-table-column
+      label="图片"
+      align="center"
+      width="100">
+      <template slot-scope="scope">
+        <el-popover trigger="hover" placement="top">
+          <p style="margin-bottom:5px;text-align:center;color:#409EFF;">商品图片</p>
+          <div v-for="(item,index) in scope.row.goodsImg" :key="index">
+            <img style="width:160px;" :src='item' alt="" />
+          </div>
+          <div slot="reference" class="name-wrapper">
+            <el-tag size="medium">浏览图片</el-tag>
+          </div>
+        </el-popover>
+      </template>
     </el-table-column>
     <el-table-column fixed="right"
         label="操作"
+        align="center"
         width="180">
       <template slot-scope="scope">
         <el-button
@@ -182,8 +204,6 @@
     <el-button @click="handleEditk" type="primary" plain>确 定</el-button>
   </div>
 </el-dialog>
-
-
     <div class="block">
         <el-pagination
         @size-change="handleSizeChange"
@@ -203,7 +223,7 @@ export default {
   data() {
     return {
       curPage: 1,
-      eachPage: 3,
+      eachPage: 5,
       maxPage: 0,
       count: 0,
       tableData: [],
@@ -226,7 +246,7 @@ export default {
       },
       formLabelWidth: "120px",
       imgsarr: [],
-      imgsup: []
+      imgsup: [],
     };
   },
   created() {

@@ -17,53 +17,66 @@
             width="150"
             prop="serviceName"
             label="服务名称"
+             align="center"
             >
         </el-table-column>
         <el-table-column
             width="150"
             prop="serviceType"
             label="服务类型"
+             align="center"
             >
         </el-table-column>
         <el-table-column
             width="150"
             prop="serviceSchedule"
             label="服务时间段"
+             align="center"
+             sortable
             >
         </el-table-column>
         <el-table-column
             width="150"
             prop="serviceCanFor"
             label="服务宠物体重范围"
+             align="center"
             >
         </el-table-column>
         <el-table-column
             width="150"
             prop="serviceDetial"
             label="服务规格"
+             align="center"
             >
         </el-table-column>
         <el-table-column
             width="150"
             prop="serviceTime"
             label="服务时长"
+             align="center"
+             sortable
             >
         </el-table-column>
         <el-table-column
             width="150"
             prop="serviceLevel"
             label="服务员等级"
+             align="center"
+             sortable
             >
         </el-table-column>
         <el-table-column
             width="150"
             prop="servicePrice"
             label="服务价格"
+            align="center"
+            sortable
             >
         </el-table-column>
         <el-table-column
             fixed="right"
             label="操作"
+             align="center"
             width="180">
             <template slot-scope="scope">
                 <el-button  @click="modifyService(scope.row)" size="mini" type="primary" icon="el-icon-edit" :plain="true">编辑</el-button>

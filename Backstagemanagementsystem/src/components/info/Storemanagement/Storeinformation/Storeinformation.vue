@@ -58,30 +58,36 @@
             <el-table-column
               prop="useradd"
               label="所属账号"
+              align="center"
               width="180">
             </el-table-column>
             <el-table-column
               prop="shopName"
               label="门店名称"
+              align="center"
               width="180">
             </el-table-column>
             <el-table-column
               prop="shopContacts"
               label="联系人"
+              align="center"
               width="180">
             </el-table-column>
             <el-table-column
               prop="shopCorporate"
+              align="center"
               label="法人"
               width="180">
             </el-table-column>
             <el-table-column
               prop="shopTel"
+              align="center"
               label="联系电话"
               width="180">
             </el-table-column>
             <el-table-column
                 label="操作"
+                align="center"
                 width="200"
                 fixed="right"
                 >
@@ -112,15 +118,18 @@
             <el-table-column
               prop="shopLicenceNum"
               label="营业执照号码"
+              align="center"
               width="180">
             </el-table-column>
             <el-table-column
               prop="shopAdd"
               label="营业执照地址"
+              align="center"
               width="180">
             </el-table-column>
              <el-table-column
               label="营业执照图片"
+              align="center"
               width="300">
               <template slot-scope="scope">
                 <el-button
@@ -132,11 +141,13 @@
             <el-table-column
               prop="shopDescription"
               label="店铺描述"
+              align="center"
               width="300">
             </el-table-column>
             <el-table-column
                 label="操作"
                 width="100"
+                align="center"
                 >
                 <template slot-scope="scope">
                     <el-button type="danger" size="mini" icon="el-icon-delete" @click="remove(scope.$index,scope.row)" :plain="true">删除</el-button>

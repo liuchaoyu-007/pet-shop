@@ -10,17 +10,17 @@
 
         </div>
         <el-table :data="Todos" style="width: 100%" border>
-            <el-table-column prop="userAcount" label="账户" width="160">
+            <el-table-column prop="userAcount" label="账户" width="160" align="center">
             </el-table-column>
-            <el-table-column prop="userPhone" label="手机号" width="160">
+            <el-table-column prop="userPhone" label="手机号" width="160" align="center">
             </el-table-column>
-            <el-table-column prop="userName" label="姓名" width="160">
+            <el-table-column prop="userName" label="姓名" width="160" align="center">
             </el-table-column>
-            <el-table-column prop="userType" label="登录类型" width="160">
+            <el-table-column prop="userType" label="登录类型" width="160" align="center">
             </el-table-column>
-            <el-table-column prop="userStatus" label="状态" width="160">
+            <el-table-column prop="userStatus" label="状态" width="160" align="center">
             </el-table-column>
-            <el-table-column label="操作" width="180">
+            <el-table-column label="操作" width="180" align="center">
                 <template slot-scope="scope">
 
 

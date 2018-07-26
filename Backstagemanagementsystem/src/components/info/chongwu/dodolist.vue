@@ -3,25 +3,25 @@
         <el-button type="primary" style="margin:20px;" @click="shuxin" plain>刷新数据</el-button>
         <template>
             <el-table :data="Todos" border style="width: 100%">
-                <el-table-column prop="memberuser" label="账号" width="150">
+                <el-table-column prop="memberuser" label="账号" width="150" align="center">
                 </el-table-column>
-                <el-table-column prop="memberpassword" label="密码" width="120">
+                <el-table-column prop="memberpassword" label="密码" width="120" align="center">
                 </el-table-column>
-                <el-table-column prop="memberPhone" label="电话" width="120">
+                <el-table-column prop="memberPhone" label="电话" width="120" align="center">
                 </el-table-column>
-                <el-table-column prop="memberAcount" label="昵称" width="120">
+                <el-table-column prop="memberAcount" label="昵称" width="120" align="center">
                 </el-table-column>
-                <el-table-column prop="memberName" label="真实姓名" width="150">
+                <el-table-column prop="memberName" label="真实姓名" width="150" align="center">
                 </el-table-column>
-                <el-table-column prop="menberCard" label="会员卡" width="120">
+                <el-table-column prop="menberCard" label="会员卡" width="120" align="center">
                 </el-table-column>
-                <el-table-column prop="memberArea" label="区域" width="200">
+                <el-table-column prop="memberArea" label="区域" width="200" align="center">
                 </el-table-column>
-                <el-table-column prop="memberPoint" label="积分" width="120">
+                <el-table-column prop="memberPoint" label="积分" width="120" align="center">
                 </el-table-column>
-                <el-table-column prop="haveapet" label="会员" width="120">
+                <el-table-column prop="haveapet" label="会员" width="120" align="center">
                 </el-table-column>
-                <el-table-column label="操作" width="200" fixed="right">
+                <el-table-column label="操作" width="200" fixed="right" align="center">
                     <template slot-scope="scope">
                         <el-button size="mini" type="primary" @click="bianji(scope.$index,scope.row)" style="margin-right: 10px" icon="el-icon-edit">编辑</el-button>
                         <el-dialog title="宠主管理" :visible.sync="centerDialogVisible" width="30%" center>
