@@ -92,6 +92,15 @@
                 </template>
             </el-table-column>
           </el-table>
+           <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="curPage"
+            :page-sizes="[5, 10, 20, 30]"
+            :page-size="eachPage"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="count">
+          </el-pagination>
         </el-tab-pane>
         <!-- 营业执照信息框 -->
         <el-tab-pane label="营业执照信息" name="second">
@@ -147,6 +156,10 @@ export default {
   data() {
     return {
       tableData: [],
+      curPage: 1, //当前页
+      eachPage: 5, //总页数
+      maxPage: 0, //每页显示条数
+      count: 0, //总条数
       dialogFormVisible: false,
       form: {
         shopName: "",
@@ -160,14 +173,39 @@ export default {
         delivery: false
       },
       formLabelWidth: "120px",
-      activeName: "second",
+      activeName: "first",
       input: ""
     };
   },
   created() {
     this.asy();
   },
+  watch: {
+    curPage() {
+      //监听curPage
+      this.asy();
+    },
+    eachPage() {
+      //监听eachPage
+      this.asy();
+    }
+  },
   methods: {
+    handleSizeChange(val) {
+      this.setEachPage(val);
+    },
+    handleCurrentChange(val) {
+      this.setCurPage(val);
+    },
+    setCurPage(curPage) {
+      this.curPage = curPage;
+      console.log(this.curPage);
+    },
+    setEachPage(eachPage) {
+      this.curPage = 1;
+      this.eachPage = eachPage;
+      console.log(this.eachPage);
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
@@ -209,6 +247,8 @@ export default {
         //这个是当前店主的订单-门店管理员
         method: "post",
         body: JSON.stringify({
+          curPage: this.curPage,
+          eachPage: this.eachPage,
           useradd: localStorage.userAcount, //店家账号
           type: type
         }),
@@ -217,10 +257,14 @@ export default {
         }
       }).then(res => res.json());
       document.getElementById("zhuanquan").style.display = "none";
-      this.tableData = data;
+      this.curPage = data.curPage;
+      this.eachPage = data.eachPage;
+      this.count = data.count;
+      this.maxPage = data.maxPage;
+      this.tableData = data.rows;
     },
-    quixao(){
-document.getElementById("dataxiugai").style.display = "none";
+    quixao() {
+      document.getElementById("dataxiugai").style.display = "none";
     },
     modify(scope) {
       //修改
@@ -284,7 +328,7 @@ document.getElementById("dataxiugai").style.display = "none";
   overflow-y: scroll;
   z-index: 99999999999999;
   background-color: white;
-  border: 1px solid #409EFF;
+  border: 1px solid #409eff;
 }
 </style>
 

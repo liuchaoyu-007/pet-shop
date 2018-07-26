@@ -432,7 +432,7 @@ export default {
         this.count = data.count;
         this.maxPage = data.maxPage;
         this.rows = data.rows;
-        this.lsrows = this.rows;``
+        this.lsrows = this.rows;
       } else {
         let data = await fetch("/Ordermanagement/Ordermanagementtype", {
           //这个是所有店主的订单-平台管理员
