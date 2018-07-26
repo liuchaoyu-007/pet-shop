@@ -25,7 +25,7 @@ module.exports.storeService = async data => {
     eachPage,
     storesure //店家账号
   } = data;
-  console.log(data);
+//   console.log(data);
   // curPage = parseInt(curPage)
   // eachPage = parseInt(eachPage)
   const modelEmps = mongoose.model("serviceAdm");
