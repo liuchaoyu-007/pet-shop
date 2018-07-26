@@ -79,34 +79,50 @@ export default {
   },
   methods: {
     async handleClicke() {
-      if (localStorage.userType == "门店管理员") {
-        let data = await fetch("/store/add", {
-          method: "post",
-          body: JSON.stringify({
-            useradd: localStorage.userAcount, //店家账号
-            shopName: this.shopName,
-            shopContacts: this.shopContacts,
-            shopTel: this.shopTel,
-            shopAdd: this.shopAdd,
-            shopCorporate: this.shopCorporate,
-            shopLicenceNum: this.shopLicenceNum,
-            shopDescription: this.shopDescription,
-            shopLicenceImg: this.imgId
-          }),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }).then(res => res.json());
-        console.log(data);
+      if (
+        this.shopName == "" ||
+        this.shopContacts == "" ||
+        this.shopTel == "" ||
+        this.shopAdd == "" ||
+        this.shopCorporate == "" ||
+        this.shopLicenceNum == "" ||
+        this.shopDescription == "" ||
+        this.imgId == ""
+      ) {
         this.$message({
-          message: "恭喜你，创建成功，等待审核",
-          type: "success"
+          message: "警告资料不能为空",
+          type: "warning"
         });
-        this.$router.push("/info/storemanagement/storeinformation");
       } else {
-        this.$alert("添加失败，只能门店管理员才能添加", "警告", {
-          confirmButtonText: "确定"
-        });
+        if (localStorage.userType == "门店管理员") {
+          let data = await fetch("/store/add", {
+            method: "post",
+            body: JSON.stringify({
+              useradd: localStorage.userAcount, //店家账号
+              shopName: this.shopName,
+              shopContacts: this.shopContacts,
+              shopTel: this.shopTel,
+              shopAdd: this.shopAdd,
+              shopCorporate: this.shopCorporate,
+              shopLicenceNum: this.shopLicenceNum,
+              shopDescription: this.shopDescription,
+              shopLicenceImg: this.imgId
+            }),
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }).then(res => res.json());
+          console.log(data);
+          this.$message({
+            message: "恭喜你，创建成功，等待审核",
+            type: "success"
+          });
+          this.$router.push("/info/storemanagement/storeinformation");
+        } else {
+          this.$alert("添加失败，只能门店管理员才能添加", "警告", {
+            confirmButtonText: "确定"
+          });
+        }
       }
     },
     success0(res) {
