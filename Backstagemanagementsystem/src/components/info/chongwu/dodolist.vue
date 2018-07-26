@@ -21,7 +21,7 @@
                 </el-table-column>
                 <el-table-column prop="haveapet" label="会员" width="120">
                 </el-table-column>
-                <el-table-column label="操作" width="100" fixed="right">
+                <el-table-column label="操作" width="200" fixed="right">
                     <template slot-scope="scope">
                         <el-button size="mini" type="primary" @click="bianji(scope.$index,scope.row)" style="margin-right: 10px" icon="el-icon-edit">编辑</el-button>
                         <el-dialog title="宠主管理" :visible.sync="centerDialogVisible" width="30%" center>

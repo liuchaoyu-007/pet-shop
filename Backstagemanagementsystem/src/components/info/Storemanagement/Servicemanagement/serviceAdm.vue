@@ -1,11 +1,11 @@
-<template>
+<template> 
 <div>
     <div style="margin:20px 0;">
         <div style="margin-left:20px;display:inline-block;">
-            <el-button type="primary" @click="addService" >新增服务</el-button>
+            <el-button type="primary" @click="addService" plain >新增服务</el-button>
         </div>
         <div style="margin-left:20px;display:inline-block;">
-            <el-button type="primary" @click="async_getEmpsByPage" >刷新数据</el-button>
+            <el-button type="primary" @click="async_getEmpsByPage" plain >刷新数据</el-button>
         </div>
     </div>
     <div>

@@ -3,6 +3,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CommoditySchema = new Schema({
+    user:{//账号
+        type: String
+    },
     goodsDate:{
         type: String
     },

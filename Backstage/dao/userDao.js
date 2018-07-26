@@ -92,8 +92,29 @@ module.exports.list = async ({ myuser }) => {//登陆
     return data;
 }
 module.exports.sets = async ({ _id }) => {//删除平台和门店
-    await mongoose.model("user").remove({
+    let data = await mongoose.model("user").find()
+    let user = ""
+    let id = ""
+    for (let i = 0; i < data.length; i++) {
+        if(data[i]._id==_id){
+            user = data[i].userAcount
+            id = data[i]._id
+        }
+    }
+    await mongoose.model("user").remove({//用户
         _id: _id
+    })
+    await mongoose.model("store").remove({//门店
+        useradd: user
+    })
+    await mongoose.model("serviceAdm").remove({//服务
+        storesure: id
+    })
+    await mongoose.model("Ordermanagement").remove({//订单
+        storesure: user
+    }),
+    await mongoose.model("Ordermanagement").remove({//商品
+        user: user
     })
     return true
 }

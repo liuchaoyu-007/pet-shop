@@ -4,35 +4,8 @@ const fs = require("fs")
 module.exports.addImg = async img => {
   await mongoose.model("imgs").create(img)
   let url = img.url
-  await mongoose.model("Commodity").create({
-    goodsDate: "zxcxccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-    goodsName: "",
-    goodsType: "",
-    goodsRegion: "",
-    goodsSpecial: "",
-    goodsTime: "",
-    goodsPrice: "",
-    goodsTaste: "",
-    goodsSize: "",
-    goodsCanFor: "",
-    goodsImg: url,
-  })
-  // await mongoose.model("imgs")
-  //     .update({
-  //       _id:movieId
-  //     },{
-  //       $push:{
-  //         imgs:imgId
-  //       }
-  //     })
+  return url
 }
-
-// module.exports.addImg = async img => {
-//   // 增加图片
-//   return await mongoose
-//     .model("imgs")
-//     .create(img)
-// }
 
 module.exports.getImgsByPage = async ({
   movieId,
