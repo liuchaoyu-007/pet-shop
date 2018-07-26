@@ -73,7 +73,16 @@
                 </el-table-column>
             </el-table>
         </template>
-
+        <div class="block">
+            <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :page-sizes="[5, 10, 20, 50]"
+            :page-size="100"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="count">
+            </el-pagination>
+        </div>
     </div>
 </template>
 <script>
@@ -92,13 +101,40 @@ export default {
       memberPoint: "",
       haveapet: "",
       idindex: 0,
-      Todos: []
+      Todos: [],
+      curPage: 1,
+      eachPage: 5,
+      maxPage: 0,
+      count: 0
     };
+  },
+  watch: {
+    curPage() {
+      //监听curPage
+      this.async_getEmpsByPage("宠物用户");
+    },
+    eachPage() {
+      //监听eachPage
+      this.async_getEmpsByPage("宠物用户");
+    }
   },
   created() {
     this.async_getEmpsByPage("宠物用户");
   },
   methods: {
+    handleSizeChange(val) {
+      this.setEachPage(val);
+    },
+    handleCurrentChange(val) {
+      this.setCurPage(val);
+    },
+    setCurPage(curPage) {
+      this.curPage = curPage;
+    },
+    setEachPage(eachPage) {
+      this.curPage = 1;
+      this.eachPage = eachPage;
+    },
     shuxin() {
       this.async_getEmpsByPage("宠物用户");
     },
@@ -110,13 +146,19 @@ export default {
         //这个是当前店主的订单-门店管理员
         method: "post",
         body: JSON.stringify({
+          curPage: this.curPage,
+          eachPage: this.eachPage,
           myuser: data //店家账号
         }),
         headers: {
           "Content-Type": "application/json"
         }
       }).then(res => res.json());
-      this.Todos = datas; //渲染数据
+      this.curPage = datas.curPage;
+      this.eachPage = datas.eachPage;
+      this.count = datas.count;
+      this.maxPage = datas.maxPage;
+      this.Todos = datas.rows; //渲染数据
       document.getElementById("zhuanquan").style.display = "none";
     },
     bianji(index, row) {
@@ -137,9 +179,6 @@ export default {
       console.log("i");
     }
   },
-  computed: {
-    ...mapGetters("chongwu", ["Todos"])
-  }
 };
 </script>
 <style>

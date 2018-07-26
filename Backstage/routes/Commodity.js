@@ -11,6 +11,7 @@ router.post('/Commodity', async function (req, res, next) {//添加
 
 router.post('/getCinemaPage', async function (req, res, next) {   //查询
     res.send(await getCinemaPage(req.body))   
+    console.log(req.body)
   });
 
   router.post('/moveCinema', async function (req, res, next) {     //删除

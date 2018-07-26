@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 module.exports.Commodity = async Comm => { //添加
-
+console.log(Comm.goodsImg)
     await mongoose
         .model("Commodity")
         .create({
@@ -21,19 +21,53 @@ module.exports.Commodity = async Comm => { //添加
     return true
 }
 
-module.exports.getCinemaPage = async ({ type, user }) => { //查询
-    let data = []
-    if (type == "平台管理员") {
-        data = await mongoose.model("Commodity").find()
+module.exports.getCinemaPage = async ({ curPage, eachPage, type, user }) => { //查询
+    let types = type
+    let datas = {}
+    if (types == "平台管理员") {
+        curPage = parseInt(curPage);
+        eachPage = parseInt(eachPage);
+        const modelEmps = mongoose.model("Commodity");
+        const count = await modelEmps.count();
+        const rows = await modelEmps
+            .find()
+            .sort({
+                _id: -1
+            })
+            .skip((curPage - 1) * eachPage)
+            .limit(eachPage);
+        datas = {
+            curPage,
+            eachPage,
+            count: count,
+            maxPage: Math.ceil(count / eachPage),
+            rows
+        };
     } else {
-        let datas = await mongoose.model("Commodity").find()
-        for (let i = 0; i < datas.length; i++) {
-            if (datas[i].user == user) {
-                data.push(datas[i])
-            }
-        }
+        const modelEmps = mongoose.model("Commodity");
+        const count = await modelEmps
+            .find({
+                user: user
+            })
+            .count();
+        const rows = await modelEmps
+            .find({
+                user: user
+            })
+            .sort({
+                _id: -1
+            })
+            .skip((curPage - 1) * eachPage)
+            .limit(eachPage);
+        datas = {
+            curPage,
+            eachPage,
+            count: count,
+            maxPage: Math.ceil(count / eachPage),
+            rows
+        };
     }
-    return data
+    return datas
 };
 
 module.exports.moveCinema = async ({

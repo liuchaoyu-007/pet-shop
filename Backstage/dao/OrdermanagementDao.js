@@ -30,14 +30,6 @@ module.exports.Ordermanagement = async datas => {
     maxPage: Math.ceil(count / eachPage),
     rows
   };
-  // const datauser = await mongoose.model("Ordermanagement").find()
-  // let moviesModel = []
-  // for (let i = 0; i < datauser.length; i++) {
-  //     if (storesure == datauser[i].storesure) {
-  //         moviesModel.push(datauser[i])
-  //     }
-  // }
-  // return moviesModel
 };
 module.exports.Ordermanagementtype = async ({ curPage, eachPage }) => {
   // -------获取所有门店主任人有的订单总和--------//

@@ -183,6 +183,17 @@
   </div>
 </el-dialog>
 
+
+    <div class="block">
+        <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-sizes="[3, 5, 10]"
+        :page-size="100"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="count">
+        </el-pagination>
+    </div>
 </div>
 </template>
 
@@ -191,6 +202,10 @@
 export default {
   data() {
     return {
+      curPage: 1,
+      eachPage: 3,
+      maxPage: 0,
+      count: 0,
       tableData: [],
       data: [],
       dialogTableVisible: false,
@@ -218,7 +233,32 @@ export default {
     console.log("页面初始化");
     this.aysdata();
   },
+  watch: {
+    curPage() {
+      //监听curPage
+      this.aysdata();
+    },
+    eachPage() {
+      //监听eachPage
+      this.aysdata();
+    }
+  },
   methods: {
+    handleSizeChange(val) {
+      this.setEachPage(val);
+    },
+    handleCurrentChange(val) {
+      this.setCurPage(val);
+    },
+    setCurPage(curPage) {
+      this.curPage = curPage;
+      console.log(this.curPage);
+    },
+    setEachPage(eachPage) {
+      this.curPage = 1;
+      this.eachPage = eachPage;
+      console.log(this.eachPage);
+    },
     bian() {
       this.dialogFormVisible = true;
     },
@@ -332,6 +372,8 @@ export default {
       const comm = await fetch("/Commodity/getCinemaPage", {
         method: "post",
         body: JSON.stringify({
+          curPage: this.curPage,
+          eachPage: this.eachPage,
           type: localStorage.userType,
           user: localStorage.userAcount
         }),
@@ -339,7 +381,11 @@ export default {
           "Content-Type": "application/json"
         }
       }).then(res => res.json());
-      this.data = comm;
+      this.curPage = comm.curPage;
+      this.eachPage = comm.eachPage;
+      this.count = comm.count;
+      this.maxPage = comm.maxPage;
+      this.data = comm.rows;
       console.log(this.data);
       (this.form.sName = ""),
         (this.form.sDate = ""),

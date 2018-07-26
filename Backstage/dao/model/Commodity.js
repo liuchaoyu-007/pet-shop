@@ -25,7 +25,7 @@ var CommoditySchema = new Schema({
         type: String
     },
     goodsPrice:{
-        type: Number
+        type: String
     },
     goodsTaste:{
         type: String
@@ -37,7 +37,7 @@ var CommoditySchema = new Schema({
         type: String
     },
     goodsImg:[{
-        type:Schema.Types.ObjectId,
+        type:Array,
         ref:"goodsImg"
     }],
 })
