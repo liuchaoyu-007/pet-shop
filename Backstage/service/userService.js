@@ -1,4 +1,4 @@
-const { register, Land, list, sets,set } = require("../dao/userDao")
+const { register, Land, list, sets, set, setuserapp, setuserapps } = require("../dao/userDao")
 module.exports.register = async (data) => {
     return await register(data)
 }
@@ -13,4 +13,10 @@ module.exports.sets = async (data) => {
 }
 module.exports.set = async (data) => {
     return await set(data)
+}
+module.exports.setuserapp = async (data) => {
+    return await setuserapp(data)
+}
+module.exports.setuserapps = async (data) => {
+    return await setuserapps(data)
 }

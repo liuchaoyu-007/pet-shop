@@ -5,12 +5,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var MovieSchema = new Schema({
-    memberuser :{
+	memberuser: {
 		type: String//账号
-    },
-    memberpassword :{
+	},
+	memberpassword: {
 		type: String//密码
-    },
+	},
 	memberPhone: {
 		type: String//电话
 	},
@@ -27,16 +27,22 @@ var MovieSchema = new Schema({
 		type: String//头像url
 	},
 	memberAdd: {
-		type: String//收货地址
+		type: Array//收货地址
 	},
 	memberArea: {
 		type: String//区域
 	},
 	memberPoint: {
-        type: Number//积分
-    },
+		type: String//积分
+	},
 	haveapet: {
 		type: Array,//拥有的宠物
+	},
+	ShoppingCart: {
+		type: Array,//购物车
+	},
+	vip: {
+		type: String//vip
 	}
 });
 

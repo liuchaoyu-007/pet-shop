@@ -1,4 +1,35 @@
 const mongoose = require("mongoose")
+module.exports.setuserapp = async (data) => {//删除宠物用户
+    const { memberuser } = data;
+    console.log(memberuser)
+    return await mongoose.model("Spoilmanagement").remove({
+        memberuser: memberuser
+    })
+}
+module.exports.setuserapps = async (data) => {//删除宠物用户
+    const { _id, //id
+        memberuser, //账号
+        memberpassword, //密码
+        memberPhone, //电话
+        memberAcount, //昵称
+        memberName, //真实姓名
+        memberArea, //地址
+        memberPoint, //积分
+        vip //vip } = data;
+    } = data
+    return await mongoose.model("Spoilmanagement").find({
+        _id: _id
+    }).update({
+        memberuser, //账号
+        memberpassword, //密码
+        memberPhone, //电话
+        memberAcount, //昵称
+        memberName, //真实姓名
+        memberArea, //地址
+        memberPoint, //积分
+        vip //vip } = data;
+    })
+}
 module.exports.register = async (data) => {//注册包括判断是否已注册
     const {
         userAcount,//账号
@@ -117,42 +148,6 @@ module.exports.list = async ({ myuser, curPage, eachPage }) => {//渲染
         };
     }
     return data
-    // console.log(myuser)
-    // let data = []
-    // if (myuser == "全部用户") {
-    //     let owe = await mongoose.model("user").find()//门店-平台
-    //     let two = await mongoose.model("Spoilmanagement").find()//宠物用户
-    //     for (let i = 0; i < owe.length; i++) {
-    //         data.push(owe[i])
-    //     }
-    //     for (let i = 0; i < two.length; i++) {
-    //         data.push(two[i])
-    //     }
-    //     console.log(data)//得到所有用户列表
-    // } else if (myuser == "宠物用户") {
-    //     let two = await mongoose.model("Spoilmanagement").find()//宠物
-    //     for (let i = 0; i < two.length; i++) {
-    //         data.push(two[i])
-    //     }
-    //     console.log(data)//得到宠物用户列表
-    // } else if (myuser == "平台管理员") {
-    //     let owe = await mongoose.model("user").find()//门店-平台
-    //     for (let i = 0; i < owe.length; i++) {
-    //         if (owe[i].userType == "平台管理员") {
-    //             data.push(owe[i])
-    //         }
-    //     }
-    //     console.log(data)//得到平台用户列表
-    // } else {//平台用户
-    //     let owe = await mongoose.model("user").find()//门店-门店
-    //     for (let i = 0; i < owe.length; i++) {
-    //         if (owe[i].userType == "门店管理员") {
-    //             data.push(owe[i])
-    //         }
-    //     }
-    //     console.log(data)//得到门店用户列表
-    // }
-    // return data;
 }
 module.exports.sets = async ({ _id }) => {//删除平台和门店
     let data = await mongoose.model("user").find()
