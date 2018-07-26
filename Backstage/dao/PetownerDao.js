@@ -55,15 +55,9 @@ module.exports.Petowget = async (data) => {//登陆
         memberuser,//账号
         memberpassword,//密码
     } = data
-    let isdata = "false";
-    const datauser = await mongoose.model("Spoilmanagement").find()
-    for (let i = 0; i < datauser.length; i++) {
-        if (memberuser == datauser[i].memberuser && memberpassword == datauser[i].memberpassword) {
-            isdata = "true";
-            i = datauser.length + 1;
-        } else {
-            isdata = "false";
-        }
-    }
-    return isdata;
+    const datauser = await mongoose.model("Spoilmanagement").find({
+        memberuser: memberuser,
+        memberpassword: memberpassword
+    })
+    return datauser;
 }
