@@ -71,6 +71,16 @@
             </template>
         </el-table-column>
         </el-table>
+        <div class="block">
+            <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :page-sizes="[5, 10, 20, 50]"
+            :page-size="100"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="count">
+            </el-pagination>
+        </div>
         <transition name="el-zoom-in-center">
             <el-dialog title="新增服务" style="text-align:center" width="35%" :visible.sync="isShow">
                 <el-form status-icon  class="demo-ruleForm">
@@ -205,8 +215,8 @@
 export default {
   data() {
     return {
-        startTime: '',
-        endTime: '',
+      startTime: "",
+      endTime: "",
       rows: [],
       lsrows: [],
       tableData: {
@@ -220,27 +230,56 @@ export default {
         servicePrice: ""
       },
       isShow: false,
-      modify: false
+      modify: false,
+      curPage: 1,
+      eachPage: 5,
+      maxPage: 0,
+      count: 0
     };
   },
   created() {
     this.async_getEmpsByPage();
   },
+  watch: {
+    curPage() {
+      //监听curPage
+      this.async_getEmpsByPage();
+    },
+    eachPage() {
+      //监听eachPage
+      this.async_getEmpsByPage();
+    }
+  },
   methods: {
-    qingkong(){
-        this.tableData.serviceName = "";
-        this.tableData.serviceType = "";
-        this.tableData.serviceSchedule = "";
-        this.tableData.serviceCanFor = "";
-        this.tableData.serviceDetial = "";
-        this.tableData.serviceTime = "";
-        this.tableData.serviceLevel = "";
-        this.tableData.servicePrice = "";
+    handleSizeChange(val) {
+      this.setEachPage(val);
+    },
+    handleCurrentChange(val) {
+      this.setCurPage(val);
+    },
+    setCurPage(curPage) {
+      this.curPage = curPage;
+      console.log(this.curPage);
+    },
+    setEachPage(eachPage) {
+      this.curPage = 1;
+      this.eachPage = eachPage;
+      console.log(this.eachPage);
+    },
+    qingkong() {
+      this.tableData.serviceName = "";
+      this.tableData.serviceType = "";
+      this.tableData.serviceSchedule = "";
+      this.tableData.serviceCanFor = "";
+      this.tableData.serviceDetial = "";
+      this.tableData.serviceTime = "";
+      this.tableData.serviceLevel = "";
+      this.tableData.servicePrice = "";
     },
     open(row) {
-        this.$alert(`${row}`, '提示', {
-        confirmButtonText: '确定',
-        });
+      this.$alert(`${row}`, "提示", {
+        confirmButtonText: "确定"
+      });
     },
     fanhui() {
       this.$router.push("/info/storemanagement/servicemanagement");
@@ -254,42 +293,43 @@ export default {
       this.qingkong();
     },
     confirmAdd() {
-        //添加服务
-        let serviceTime = this.startTime + "至" +this.endTime
-        // console.log(serviceTime)
-        const data = {
-            storesure: localStorage.userId,
-            serviceName: this.tableData.serviceName,
-            serviceType: this.tableData.serviceType,
-            serviceSchedule: serviceTime,
-            serviceCanFor: this.tableData.serviceCanFor,
-            serviceDetial: this.tableData.serviceDetial,
-            serviceTime: this.tableData.serviceTime,
-            serviceLevel: parseInt(this.tableData.serviceLevel),
-            servicePrice: parseInt(this.tableData.servicePrice)
-        };
-        if( data.serviceName===""||
-            data.serviceType===""||
-            data.serviceSchedule===""||
-            data.serviceCanFor===""||
-            data.serviceDetial===""||
-            data.serviceTime===""||
-            this.tableData.serviceName===""||
-            this.tableData.servicePrice===""
-        ){
-            this.open('输入有误，请重新输入')
-        }else{
-            fetch("/serviceManagement/addService", {
-                method: "post",
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(res => res.json());
-            this.quxiao()  //新增成功 隐藏窗口
-            this.async_getEmpsByPage();
-            this.qingkong() //调用清空数据的方法 
-        }
+      //添加服务
+      let serviceTime = this.startTime + "至" + this.endTime;
+      // console.log(serviceTime)
+      const data = {
+        storesure: localStorage.userId,
+        serviceName: this.tableData.serviceName,
+        serviceType: this.tableData.serviceType,
+        serviceSchedule: serviceTime,
+        serviceCanFor: this.tableData.serviceCanFor,
+        serviceDetial: this.tableData.serviceDetial,
+        serviceTime: this.tableData.serviceTime,
+        serviceLevel: parseInt(this.tableData.serviceLevel),
+        servicePrice: parseInt(this.tableData.servicePrice)
+      };
+      if (
+        data.serviceName === "" ||
+        data.serviceType === "" ||
+        data.serviceSchedule === "" ||
+        data.serviceCanFor === "" ||
+        data.serviceDetial === "" ||
+        data.serviceTime === "" ||
+        this.tableData.serviceName === "" ||
+        this.tableData.servicePrice === ""
+      ) {
+        this.open("输入有误，请重新输入");
+      } else {
+        fetch("/serviceManagement/addService", {
+          method: "post",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(res => res.json());
+        this.quxiao(); //新增成功 隐藏窗口
+        this.async_getEmpsByPage();
+        this.qingkong(); //调用清空数据的方法
+      }
     },
     async async_getEmpsByPage() {
       //判断是门店管理员还是平台管理员员登陆 渲染相应的数据
@@ -299,27 +339,45 @@ export default {
           //这个是当前店主的服务
           method: "post",
           body: JSON.stringify({
+            curPage: this.curPage,
+            eachPage: this.eachPage,
             storesure: localStorage.userId //用户ID
           }),
           headers: {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
+        console.log(data)
+        this.curPage = data.curPage;
+        this.eachPage = data.eachPage;
+        this.count = data.count;
+        this.maxPage = data.maxPage;
+        this.rows = data.rows;
         // console.log(data);
-        this.rows = data;
         this.lsrows = this.rows;
       } else {
         let data = await fetch("/serviceManagement/platformService", {
           //这个是所有店主的服务-平台管理员
           method: "post",
-          body: JSON.stringify(),
+          body: JSON.stringify({
+            curPage: this.curPage,
+            eachPage: this.eachPage
+          }),
           headers: {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
+        console.log(data)
+        this.curPage = data.curPage;
+        this.eachPage = data.eachPage;
+        this.count = data.count;
+        this.maxPage = data.maxPage;
+        this.rows = data.rows;
         // console.log(data);
-        this.rows = data;
         this.lsrows = this.rows;
+        // console.log(data);
+        // this.rows = data;
+        // this.lsrows = this.rows;
       }
       document.getElementById("zhuanquan").style.display = "none";
     },
@@ -349,27 +407,27 @@ export default {
         .catch(() => {});
     },
     modifyService(scope) {
-        console.log(scope)
-        //修改服务
-        this.modify = true;
-        // console.log(scope)
-        // let canvas=this.$refs.cvs;
-        this.tableData.serviceName = scope.serviceName;
-        this.tableData.serviceType = scope.serviceType;
-    //   this.tableData.serviceSchedule = scope.serviceSchedule;
-        this.startTime = scope.serviceSchedule.substring(0,5)
-        this.endTime = scope.serviceSchedule.substring(6,11)
-        this.tableData.serviceCanFor = scope.serviceCanFor;
-        this.tableData.serviceDetial = scope.serviceDetial;
-        this.tableData.serviceTime = scope.serviceTime;
-        this.tableData.serviceLevel = scope.serviceLevel;
-        this.tableData.servicePrice = scope.servicePrice;
-        localStorage.serviceId = scope._id;
+      console.log(scope);
+      //修改服务
+      this.modify = true;
+      // console.log(scope)
+      // let canvas=this.$refs.cvs;
+      this.tableData.serviceName = scope.serviceName;
+      this.tableData.serviceType = scope.serviceType;
+      //   this.tableData.serviceSchedule = scope.serviceSchedule;
+      this.startTime = scope.serviceSchedule.substring(0, 5);
+      this.endTime = scope.serviceSchedule.substring(6, 11);
+      this.tableData.serviceCanFor = scope.serviceCanFor;
+      this.tableData.serviceDetial = scope.serviceDetial;
+      this.tableData.serviceTime = scope.serviceTime;
+      this.tableData.serviceLevel = scope.serviceLevel;
+      this.tableData.servicePrice = scope.servicePrice;
+      localStorage.serviceId = scope._id;
     },
 
     confirmModifyService() {
       //确认修改服务
-      let serviceTime = this.startTime + "至" +this.endTime
+      let serviceTime = this.startTime + "至" + this.endTime;
       const data = {
         serviceId: localStorage.serviceId,
         serviceName: this.tableData.serviceName,
