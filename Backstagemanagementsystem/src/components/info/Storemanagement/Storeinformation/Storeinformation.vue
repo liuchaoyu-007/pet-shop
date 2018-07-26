@@ -2,7 +2,7 @@
 <div>
   <div style="margin:20px 0;">
     <div style="margin-left:20px;display:inline-block;">
-            <el-button type="primary" @click="addget" plain>新增服务</el-button>
+            <el-button type="primary" @click="addget" plain>创建门店</el-button>
         </div>
           <div style="margin-left:20px;display:inline-block;">
               <el-button type="primary" @click="asy" plain>刷新数据</el-button>
