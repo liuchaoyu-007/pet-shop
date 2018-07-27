@@ -48,6 +48,7 @@ module.exports.Petowner = async (data) => {//注册包括判断是否已注册
     } else {
         isdata = "false";
     }
+    for (let i = 0; i < 5000; i++) { }
     return isdata;
 }
 module.exports.Petowget = async (data) => {//登陆
@@ -59,6 +60,7 @@ module.exports.Petowget = async (data) => {//登陆
         memberuser: memberuser,
         memberpassword: memberpassword
     })
+    for (let i = 0; i < 5000; i++) { }
     return datauser;
 }
 
@@ -92,12 +94,13 @@ module.exports.Petowgetdog = async (data) => {//销量
         }
     }
     let resultarr = [...new Set(myuser)];
+    for (let i = 0; i < 5000; i++) { }
     return {
         curPage,
         eachPage,
         count: count,
         maxPage: Math.ceil(count / eachPage),
-        rows:resultarr
+        rows: resultarr
     };
 }
 module.exports.Petowgetmov = async (data) => {//价格
@@ -130,11 +133,47 @@ module.exports.Petowgetmov = async (data) => {//价格
         }
     }
     let resultarr = [...new Set(myuser)];
+    for (let i = 0; i < 5000; i++) { }
     return {
         curPage,
         eachPage,
         count: count,
         maxPage: Math.ceil(count / eachPage),
-        rows:resultarr
+        rows: resultarr
     };
+}
+module.exports.search = async ({ input }) => {//搜索
+    let start = 0, count = 10, title = input
+    console.log(start, count, title)
+    const result = {
+        start: ~~start,
+        count: ~~count,
+    }
+    try {
+        const movieModel = mongoose.model("Commodity")
+        result.total = await movieModel.count({
+            goodsName: {
+                $regex: new RegExp(title)
+            }
+        })
+        result.rows = await
+            movieModel.find({
+                goodsName: {
+                    $regex: new RegExp(title)
+                }
+            })
+                .skip(result.start)
+                .limit(result.count)
+                .exec()
+        await new Promise((resolve) => {
+            setTimeout(() => {
+                resolve("")
+            }, 2000)
+        })
+        return result
+    } catch (e) {
+        console.log('=============== getMovies 异常: =====================');
+        console.log(e);
+        console.log('====================================');
+    }
 }
