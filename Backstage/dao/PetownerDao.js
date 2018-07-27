@@ -61,3 +61,43 @@ module.exports.Petowget = async (data) => {//登陆
     })
     return datauser;
 }
+
+module.exports.Petowgetdog = async (data) => {//销量
+    const {
+        curPage, eachPage
+    } = data
+    const modelEmps = mongoose.model("Commodity");
+    const count = await modelEmps.count();
+    console.log(count)
+    const rows = await modelEmps
+        .find()
+        .sort({
+            _id: -1
+        })
+        .skip((curPage - 1) * eachPage)
+        .limit(eachPage);
+    console.log(rows)
+    let user = [];//开始排序
+    for (let i = 0; i < rows.length; i++) {
+        user.push(parseInt(rows[i].goodsSpecial));
+    }
+    user.sort(function (a, b) {
+        return b - a;
+    });
+    let myuser = [];
+    for (let m = 0; m < user.length; m++) {
+        for (let j = 0; j < rows.length; j++) {
+            if (user[m] == rows[j].goodsSpecial) {
+                myuser.push(rows[j]);
+            }
+        }
+    }
+    let resultarr = [...new Set(myuser)];
+    return {
+        curPage,
+        eachPage,
+        count: count,
+        maxPage: Math.ceil(count / eachPage),
+        rows:resultarr
+    };
+}
