@@ -1,4 +1,4 @@
-const { Petowner, Petowget, Petowgetdog, Petowgetmov, search } = require("../dao/PetownerDao")
+const { Petowner, Petowget, Petowgetdog, Petowgetmov, search, Petowgetmovs } = require("../dao/PetownerDao")
 module.exports.Petowner = async (data) => {
     return await Petowner(data)
 }
@@ -13,4 +13,7 @@ module.exports.Petowgetmov = async (data) => {
 }
 module.exports.search = async (data) => {
     return await search(data)
+}
+module.exports.Petowgetmovs = async (data) => {
+    return await Petowgetmovs(data)
 }

@@ -2,7 +2,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { Petowner, Petowget, Petowgetdog, Petowgetmov, search } = require("../service/PetownerService")
+const { Petowner, Petowget, Petowgetdog, Petowgetmov, search, Petowgetmovs } = require("../service/PetownerService")
 // -------注册包括判断是否已注册--------//
 router.post('/Petowner', async function (req, res, next) {
     res.send(await Petowner(req.body))
@@ -18,6 +18,10 @@ router.post('/Petowgetdog', async function (req, res, next) {
 //---价格由低到高--//
 router.post('/Petowgetmov', async function (req, res, next) {
     res.send(await Petowgetmov(req.body))
+});
+//---价格由高到低--//
+router.post('/Petowgetmovs', async function (req, res, next) {
+    res.send(await Petowgetmovs(req.body))
 });
 //---搜索--//
 router.post('/search', async function (req, res, next) {
