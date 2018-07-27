@@ -208,7 +208,7 @@
         <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :page-sizes="[3, 5, 10]"
+        :page-sizes="[5, 10, 15]"
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
         :total="count">
@@ -397,7 +397,7 @@ export default {
           type: localStorage.userType,
           user: localStorage.userAcount
         }),
-        headers: {
+        headers: { 
           "Content-Type": "application/json"
         }
       }).then(res => res.json());
