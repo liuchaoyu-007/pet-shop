@@ -194,7 +194,7 @@ export default {
           memberName: this.memberName, //真实姓名
           memberArea: this.memberArea, //地址
           memberPoint: this.memberPoint, //积分
-          vip: this.vip //vip
+          vip: this.haveapet //vip
         }),
         headers: {
           "Content-Type": "application/json"

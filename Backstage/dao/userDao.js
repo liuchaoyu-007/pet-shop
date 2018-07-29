@@ -15,8 +15,9 @@ module.exports.setuserapps = async (data) => {//删除宠物用户
         memberName, //真实姓名
         memberArea, //地址
         memberPoint, //积分
-        vip //vip } = data;
+        vip
     } = data
+    console.log(vip)
     return await mongoose.model("Spoilmanagement").find({
         _id: _id
     }).update({
@@ -27,7 +28,7 @@ module.exports.setuserapps = async (data) => {//删除宠物用户
         memberName, //真实姓名
         memberArea, //地址
         memberPoint, //积分
-        vip //vip } = data;
+        vip
     })
 }
 module.exports.register = async (data) => {//注册包括判断是否已注册

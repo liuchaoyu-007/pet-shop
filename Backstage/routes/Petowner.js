@@ -2,7 +2,24 @@
 var express = require('express');
 var router = express.Router();
 
-const { Petowner, Petowget, Petowgetdog, Petowgetmov, search, Petowgetmovs } = require("../service/PetownerService")
+const {
+    Petowner,
+    Petowget,
+    Petowgetdog,
+    Petowgetmov,
+    search,
+    Petowgetmovs,
+    Addressadd,
+    Addressget,
+    Addressgetsc,
+    Addressgetset,
+    Addresssddmy,
+    getshangping,
+} = require("../service/PetownerService")
+// -------计算商家所在的最低价格最低邮费和销量总和--------//
+router.post('/getshangping', async function (req, res, next) {
+    res.send(await getshangping(req.body))
+});
 // -------注册包括判断是否已注册--------//
 router.post('/Petowner', async function (req, res, next) {
     res.send(await Petowner(req.body))
@@ -26,5 +43,25 @@ router.post('/Petowgetmovs', async function (req, res, next) {
 //---搜索--//
 router.post('/search', async function (req, res, next) {
     res.send(await search(req.body))
+});
+//---地址添加--//
+router.post('/Addressadd', async function (req, res, next) {
+    res.send(await Addressadd(req.body))
+});
+//---地址添加--//
+router.post('/Addressget', async function (req, res, next) {
+    res.send(await Addressget(req.body))
+});
+//---删除地址--//
+router.post('/Addressgetsc', async function (req, res, next) {
+    res.send(await Addressgetsc(req.body))
+});
+//---修改默认地址--//
+router.post('/Addressgetset', async function (req, res, next) {
+    res.send(await Addressgetset(req.body))
+});
+//---修改地址--//
+router.post('/Addresssddmy', async function (req, res, next) {
+    res.send(await Addresssddmy(req.body))
 });
 module.exports = router;

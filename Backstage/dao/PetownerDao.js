@@ -33,13 +33,13 @@ module.exports.Petowner = async (data) => {//注册包括判断是否已注册
             memberPhone: memberPhone,//电话
             memberAcount: memberAcount,//昵称
             memberName: memberName,//真实姓名
-            menberCard: menberCard,//会员卡
+            menberCard: [],//会员卡
             memberImg: memberImg,//头像,
-            memberAdd: memberAdd,//收货地址
+            memberAdd: [],//收货地址
             memberArea: memberArea,//区域,
             memberPoint: memberPoint,//积分
-            haveapet: haveapet,//宠物
-            ShoppingCart: ShoppingCart,//购物车
+            haveapet: [],//宠物
+            ShoppingCart: [],//购物车
             vip: vip//vip
         }
         await mongoose.model("Spoilmanagement")
@@ -63,7 +63,6 @@ module.exports.Petowget = async (data) => {//登陆
     for (let i = 0; i < 5000; i++) { }
     return datauser;
 }
-
 module.exports.Petowgetdog = async (data) => {//销量
     const {
         curPage, eachPage
@@ -109,7 +108,6 @@ module.exports.Petowgetmov = async (data) => {//价格
     } = data
     const modelEmps = mongoose.model("Commodity");
     const count = await modelEmps.count();
-    console.log(count)
     const rows = await modelEmps
         .find()
         .sort({
@@ -214,4 +212,126 @@ module.exports.search = async ({ start, count, input }) => {//搜索
         console.log(e);
         console.log('====================================');
     }
+}
+module.exports.Addressadd = async ({ name, home, sucs, defaults, _id }) => {//添加地址
+    let data = await mongoose.model("Spoilmanagement").find({ _id: _id })
+    let datas = []
+    for (let i = 0; i < data[0].memberAdd.length; i++) {
+        datas.push(data[0].memberAdd[i])
+    }
+    let ids = 456789;
+    if (datas.length <= 0) {
+        ids = 0;
+    } else {
+        let zhi = parseInt(datas[datas.length - 1].id)
+        ids = zhi + 1
+    }
+    datas.push({
+        id: ids,
+        name: name,
+        home: home,
+        sucs: sucs,
+        defaults: defaults
+    })
+    await mongoose.model("Spoilmanagement").find({ _id: _id }).update({
+        memberAdd: datas
+    })
+    return datas
+}
+module.exports.Addressget = async ({ _id }) => {//查询地址
+    let data = await mongoose.model("Spoilmanagement").find({ _id: _id })
+    return data[0].memberAdd
+}
+module.exports.Addressgetsc = async ({ _id, id }) => {//删除地址
+    console.log(_id, id)
+    let data = await mongoose.model("Spoilmanagement").find({ _id: _id })
+    let datas = []
+    for (let i = 0; i < data[0].memberAdd.length; i++) {
+        datas.push(data[0].memberAdd[i])
+    }
+    console.log(datas)
+    for (let i = 0; i < datas.length; i++) {
+        if (datas[i].id == id) {
+            datas.splice(i, 1)
+        }
+    }
+    console.log(datas)
+    await mongoose.model("Spoilmanagement").find({ _id: _id }).update({
+        memberAdd: datas
+    })
+    return datas
+}
+module.exports.Addressgetset = async ({ _id, defaults, id }) => {//修改默认地址
+    let defaultss = ""
+    if (defaults == "yes") {
+        defaultss = "no"
+    } else {
+        defaultss = "yes"
+    }
+    let data = await mongoose.model("Spoilmanagement").find({ _id: _id })
+    let datas = []
+    for (let i = 0; i < data[0].memberAdd.length; i++) {
+        datas.push(data[0].memberAdd[i])
+    }
+    let msi = 0;
+    for (let i = 0; i < datas.length; i++) {
+        datas[i].defaults = "no"
+    }
+    for (let i = 0; i < datas.length; i++) {
+        if (datas[i].id == id) {//找到当前地址
+            datas[i].defaults = defaultss;
+            i = i + datas.length;
+        } else {
+            datas[i].defaults = "no"
+        }
+    }
+    await mongoose.model("Spoilmanagement").find({ _id: _id }).update({
+        memberAdd: datas
+    })
+    return datas
+}
+module.exports.Addresssddmy = async ({ name, home, sucs, defaults, _id, id }) => {//修改地址
+    console.log(name, home, sucs, defaults, _id, id)
+    let data = await mongoose.model("Spoilmanagement").find({ _id: _id })
+    let datas = []
+    for (let i = 0; i < data[0].memberAdd.length; i++) {
+        datas.push(data[0].memberAdd[i])
+    }
+    for (let i = 0; i < datas.length; i++) {
+        if (datas[i].id == id) {//找到当前地址
+            datas[i].name = name;
+            datas[i].home = home;
+            datas[i].sucs = sucs;
+            datas[i].defaults = defaults;
+            i = i + datas.length;
+        }
+    }
+    await mongoose.model("Spoilmanagement").find({ _id: _id }).update({
+        memberAdd: datas
+    })
+    return datas
+}
+module.exports.getshangping = async ({ useradd, type }) => {// -------计算商家所在的最低价格最低邮费和销量总和--------//
+    let data = await mongoose.model("Commodity").find({ user: useradd })
+    let datas = []
+    if (type == "1") {
+        datas = data
+    } else {
+        let Salesvolume = 0;//销量
+        let Price = 0;//价格
+        let Postage = 0;//邮费
+        for (let i = 0; i < data.length; i++) {
+            Salesvolume += parseInt(data[i].goodsSpecial)
+        }
+        let user = [];//开始排序
+        for (let i = 0; i < data.length; i++) {
+            user.push(parseInt(data[i].goodsPrice));
+        }
+        user.sort(function (a, b) {
+            return a - b;
+        });
+        Price = user[0]
+        datas = [Salesvolume, Price, Postage]
+    }
+    return datas
 }

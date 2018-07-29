@@ -55,13 +55,13 @@
     <el-table-column
       prop="goodsRegion"
       align="center"
-      label="产地"
+      label="商品产地"
       width="120">
     </el-table-column>
     <el-table-column
       prop="goodsTaste"
       align="center"
-      label="口味"
+      label="商品介绍"
       width="80">
     </el-table-column>
     <el-table-column
@@ -118,13 +118,13 @@
     <el-form-item label="商品品类" :label-width="formLabelWidth">
       <el-input v-model="form.sType" ></el-input>
     </el-form-item>
-    <el-form-item label="产地" :label-width="formLabelWidth">
+    <el-form-item label="商品产地" :label-width="formLabelWidth">
       <el-input v-model="form.sRegion" ></el-input>
     </el-form-item>
     <el-form-item label="销售量" :label-width="formLabelWidth">
       <el-input v-model="form.sSpecial" ></el-input>
     </el-form-item>
-    <el-form-item label="口味" :label-width="formLabelWidth">
+    <el-form-item label="商品介绍" :label-width="formLabelWidth">
       <el-input v-model="form.sTaste" ></el-input>
     </el-form-item>
     <el-form-item label="包装规格" :label-width="formLabelWidth">
@@ -173,7 +173,7 @@
     <el-form-item label="销售量" :label-width="formLabelWidth">
       <el-input v-model="form.sSpecial" ></el-input>
     </el-form-item>
-    <el-form-item label="口味" :label-width="formLabelWidth">
+    <el-form-item label="商品介绍" :label-width="formLabelWidth">
       <el-input v-model="form.sTaste" ></el-input>
     </el-form-item>
     <el-form-item label="包装规格" :label-width="formLabelWidth">
