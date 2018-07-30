@@ -334,4 +334,4 @@ module.exports.getshangping = async ({ useradd, type }) => {// -------计算商�
         datas = [Salesvolume, Price, Postage]
     }
     return datas
-}
+}//
