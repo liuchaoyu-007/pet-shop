@@ -12,6 +12,8 @@ const {
     Addresssddmy,
     getshangping,
     xiaoliangzengjia,
+    gocat,
+    getcat
 } = require("../dao/PetownerDao")
 module.exports.getshangping = async (data) => {
     return await getshangping(data)
@@ -51,4 +53,10 @@ module.exports.Addresssddmy = async (data) => {
 }
 module.exports.xiaoliangzengjia = async (data) => {
     return await xiaoliangzengjia(data)
+}
+module.exports.gocat = async (data) => {
+    return await gocat(data)
+}
+module.exports.getcat = async (data) => {
+    return await getcat(data)
 }

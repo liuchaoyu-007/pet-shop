@@ -81,7 +81,7 @@
         </el-table-column>
         <el-table-column
         prop="username"
-        label="宠物用户"
+        label="用户账号"
         align="center"
         width="160">
         </el-table-column>

@@ -345,3 +345,19 @@ module.exports.xiaoliangzengjia = async ({ user, name, num }) => {//---用户购
     await mongoose.model("Commodity").find({ user: user, goodsName: name }).update(data[0])
     return true
 }//
+module.exports.gocat = async (data) => {//---用户添加商品到购物车--//username
+    let datas = await mongoose.model("Spoilmanagement").find({ memberuser: data.username })
+    let datass = []
+    for (let i = 0; i < datas[0].ShoppingCart.length; i++) {
+        datass.push(datas[0].ShoppingCart[i])
+    }
+    datass.push(data)
+    await mongoose.model("Spoilmanagement").find({ memberuser: data.username }).update({
+        ShoppingCart: datass
+    })
+    return true
+}
+module.exports.getcat = async ({ user }) => {//---用户查询购物车--//
+    let datas = await mongoose.model("Spoilmanagement").find({ memberuser: user })
+    return datas[0].ShoppingCart
+}
