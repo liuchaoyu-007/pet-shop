@@ -339,9 +339,8 @@ module.exports.getshangping = async ({ useradd, type }) => {// -------计算商�
 module.exports.xiaoliangzengjia = async ({ user, name, num }) => {//---用户购买商品后商品销量加数量--//
     console.log(user, name, num)
     let data = await mongoose.model("Commodity").find({ user: user, goodsName: name })
-    console.log(data[0])
     data[0].goodsSpecial = parseInt(data[0].goodsSpecial) + parseInt(num)
-    console.log(data[0])
+    console.log(data[0].goodsSpecial)
     await mongoose.model("Commodity").find({ user: user, goodsName: name }).update(data[0])
     return true
 }//
@@ -360,4 +359,9 @@ module.exports.gocat = async (data) => {//---用户添加商品到购物车--//u
 module.exports.getcat = async ({ user }) => {//---用户查询购物车--//
     let datas = await mongoose.model("Spoilmanagement").find({ memberuser: user })
     return datas[0].ShoppingCart
+}
+module.exports.shanchucat = async ({ user }) => {//---清空购物车购物车--//
+    return await mongoose.model("Spoilmanagement").find({ memberuser: user }).update({
+        ShoppingCart: []
+    })
 }
