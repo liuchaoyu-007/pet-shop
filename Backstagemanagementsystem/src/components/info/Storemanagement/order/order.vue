@@ -86,6 +86,12 @@
         width="160">
         </el-table-column>
         <el-table-column
+        prop="userpsrum"
+        label="商品名称"
+        align="center"
+        width="160">
+        </el-table-column>
+        <el-table-column
         prop="usernum"
         label="购买数量"
         align="center"
