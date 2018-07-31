@@ -11,6 +11,7 @@ const {
     Addressgetset,
     Addresssddmy,
     getshangping,
+    xiaoliangzengjia,
 } = require("../dao/PetownerDao")
 module.exports.getshangping = async (data) => {
     return await getshangping(data)
@@ -45,6 +46,9 @@ module.exports.Addressgetsc = async (data) => {
 module.exports.Addressgetset = async (data) => {
     return await Addressgetset(data)
 }
-module.exports.Addresssddmy· = async (data) => {
-    return await Addresssddmy·(data)
+module.exports.Addresssddmy = async (data) => {
+    return await Addresssddmy(data)
+}
+module.exports.xiaoliangzengjia = async (data) => {
+    return await xiaoliangzengjia(data)
 }

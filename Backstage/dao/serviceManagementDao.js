@@ -8,26 +8,11 @@ module.exports.addService = async data => {
 
 module.exports.storeService = async data => {
   // ------门店管理员登陆对应的服务---------//
-  // console.log(data)
-  // const {
-  //     storesure,//店家账号
-  // } = data
-  // const datauser = await mongoose.model("serviceAdm").find()
-  // let moviesModel = []
-  // for (let i = 0; i < datauser.length; i++) {
-  //     if (storesure == datauser[i].storesure) {
-  //         moviesModel.push(datauser[i])
-  //     }
-  // }
-  // return moviesModel
   const {
     curPage,
     eachPage,
     storesure //店家账号
   } = data;
-//   console.log(data);
-  // curPage = parseInt(curPage)
-  // eachPage = parseInt(eachPage)
   const modelEmps = mongoose.model("serviceAdm");
   const count = await modelEmps
     .find({

@@ -323,6 +323,7 @@ module.exports.getshangping = async ({ useradd, type }) => {// -------计算商�
         for (let i = 0; i < data.length; i++) {
             Salesvolume += parseInt(data[i].goodsSpecial)
         }
+        console.log(Salesvolume)
         let user = [];//开始排序
         for (let i = 0; i < data.length; i++) {
             user.push(parseInt(data[i].goodsPrice));
@@ -334,4 +335,13 @@ module.exports.getshangping = async ({ useradd, type }) => {// -------计算商�
         datas = [Salesvolume, Price, Postage]
     }
     return datas
+}//
+module.exports.xiaoliangzengjia = async ({ user, name, num }) => {//---用户购买商品后商品销量加数量--//
+    console.log(user, name, num)
+    let data = await mongoose.model("Commodity").find({ user: user, goodsName: name })
+    console.log(data[0])
+    data[0].goodsSpecial = parseInt(data[0].goodsSpecial) + parseInt(num)
+    console.log(data[0])
+    await mongoose.model("Commodity").find({ user: user, goodsName: name }).update(data[0])
+    return true
 }//

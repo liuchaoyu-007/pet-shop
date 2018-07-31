@@ -15,6 +15,7 @@ const {
     Addressgetset,
     Addresssddmy,
     getshangping,
+    xiaoliangzengjia,
 } = require("../service/PetownerService")
 // -------计算商家所在的最低价格最低邮费和销量总和--------//
 router.post('/getshangping', async function (req, res, next) {
@@ -63,5 +64,9 @@ router.post('/Addressgetset', async function (req, res, next) {
 //---修改地址--//
 router.post('/Addresssddmy', async function (req, res, next) {
     res.send(await Addresssddmy(req.body))
+});
+//---用户购买商品后商品销量加1--//
+router.post('/xiaoliangzengjia', async function (req, res, next) {
+    res.send(await xiaoliangzengjia(req.body))
 });
 module.exports = router;
