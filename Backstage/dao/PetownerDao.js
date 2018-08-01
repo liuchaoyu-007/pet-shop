@@ -365,3 +365,21 @@ module.exports.shanchucat = async ({ user }) => {//---清空购物车购物车--
         ShoppingCart: []
     })
 }
+module.exports.dingdanuser = async ({ user }) => {//---根据当前宠物用户查询相对应的订单--//
+    let data = await mongoose.model("Ordermanagement").find({ username: user })
+    let datas = []
+    for (let i = 0; i < data.length; i++) {
+        let img = await mongoose.model("Commodity").find({ user: data[i].storesure })
+        datas.push({
+            storesure: data[i].storesure,//店家
+            states: data[i].state,//发货状态
+            name: data[i].userpsrum,//商品名称
+            shuomin: img[0].goodsTaste,//商品说明
+            userzong: data[i].userzong,//商品总价
+            num: data[i].usernum,//商品数量
+            userprice: data[i].userprice,//商品单价   
+            img: `http://localhost:7201${img[0].goodsImg[0]}`,//商品图片     
+        })
+    }
+    return datas
+}

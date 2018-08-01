@@ -39,7 +39,6 @@ module.exports.storeService = async data => {
 
 module.exports.platformService = async ({ curPage, eachPage }) => {
   // ------平台管理员登陆对应的服务---------//
-  // return await mongoose.model("serviceAdm").find()
   curPage = parseInt(curPage);
   eachPage = parseInt(eachPage);
   const modelEmps = mongoose.model("serviceAdm");
@@ -58,7 +57,6 @@ module.exports.platformService = async ({ curPage, eachPage }) => {
     maxPage: Math.ceil(count / eachPage),
     rows
   };
-  // console.log(data)
 };
 
 module.exports.deleteService = async ({ serviceId }) => {
