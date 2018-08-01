@@ -383,3 +383,79 @@ module.exports.dingdanuser = async ({ user }) => {//---根据当前宠物用户�
     }
     return datas
 }
+module.exports.fuwu = async (datas) => {//---服务--//
+    let data = []
+    if (datas.type == "全部") {
+        let datai = await mongoose.model("serviceAdm").find()
+        console.log(datai)
+        for (let i = 0; i < datai.length; i++) {
+            let img = ""
+            let sjs = parseInt(Math.random() * 4 + 1)
+            if (sjs == 1) {
+                img = "/imgs/fuwu1.jpg"
+            }
+            if (sjs == 2) {
+                img = "/imgs/fuwu2.jpg"
+            }
+            if (sjs == 3) {
+                img = "/imgs/fuwu3.jpg"
+            }
+            if (sjs == 4) {
+                img = "/imgs/fuwu4.jpg"
+            }
+            console.log(img)
+            data.push({
+                serviceName: datai[i].serviceName,//服务名称
+                serviceType: datai[i].serviceType,//服务类型
+                serviceSchedule: datai[i].serviceSchedule,//服务时间段
+                serviceLevel: datai[i].serviceLevel,//服务员等级
+                serviceCanFor: datai[i].serviceCanFor,//服务宠物体重范围
+                serviceDetial: datai[i].serviceDetial,//服务规格
+                serviceTime: datai[i].serviceTime,//服务时长   
+                img: img,//店家图片 
+                servicePrice: datai[i].servicePrice,//价格
+            })
+        }
+    } else {
+        let dats = await mongoose.model("store").find({
+            useradd: datas.storesure
+        })
+        let datais = await mongoose.model("user").find({
+            userAcount: dats[0].useradd,
+            userType: "门店管理员"
+        })
+        console.log(datais)
+        let datai = await mongoose.model("serviceAdm").find({
+            storesure: datais[0]._id,
+        })
+        for (let i = 0; i < datai.length; i++) {
+            let img = ""
+            let sjs = parseInt(Math.random() * 4 + 1)
+            if (sjs == 1) {
+                img = "/imgs/fuwu1.jpg"
+            }
+            if (sjs == 2) {
+                img = "/imgs/fuwu2.jpg"
+            }
+            if (sjs == 3) {
+                img = "/imgs/fuwu3.jpg"
+            }
+            if (sjs == 4) {
+                img = "/imgs/fuwu4.jpg"
+            }
+            console.log(img)
+            data.push({
+                serviceName: datai[i].serviceName,//服务名称
+                serviceType: datai[i].serviceType,//服务类型
+                serviceSchedule: datai[i].serviceSchedule,//服务时间段
+                serviceLevel: datai[i].serviceLevel,//服务员等级
+                serviceCanFor: datai[i].serviceCanFor,//服务宠物体重范围
+                serviceDetial: datai[i].serviceDetial,//服务规格
+                serviceTime: datai[i].serviceTime,//服务时长   
+                img: img,//店家图片 
+                servicePrice: datai[i].servicePrice,//价格
+            })
+        }
+    }
+    return data
+}

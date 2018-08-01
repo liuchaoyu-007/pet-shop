@@ -20,6 +20,7 @@ const {
     getcat,
     shanchucat,
     dingdanuser,
+    fuwu
 } = require("../service/PetownerService")
 // -------计算商家所在的最低价格最低邮费和销量总和--------//
 router.post('/getshangping', async function (req, res, next) {
@@ -88,5 +89,9 @@ router.post('/shanchucat', async function (req, res, next) {
 //---根据当前宠物用户查询相对应的订单--//
 router.post('/dingdanuser', async function (req, res, next) {
     res.send(await dingdanuser(req.body))
+});
+//---服务--//
+router.post('/fuwu', async function (req, res, next) {
+    res.send(await fuwu(req.body))
 });
 module.exports = router;
