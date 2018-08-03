@@ -371,6 +371,7 @@ module.exports.dingdanuser = async ({ user }) => {//---根据当前宠物用户�
     for (let i = 0; i < data.length; i++) {
         let img = await mongoose.model("Commodity").find({ user: data[i].storesure })
         datas.push({
+            _id: data[i]._id,
             storesure: data[i].storesure,//店家
             states: data[i].state,//发货状态
             name: data[i].userpsrum,//商品名称
@@ -458,4 +459,11 @@ module.exports.fuwu = async (datas) => {//---服务--//
         }
     }
     return data
+}
+module.exports.removeCommodity = async (data) => {//---用户删除购物车某样商品--//username
+    let { datass } = data
+    await mongoose.model("Spoilmanagement").find({ memberuser: data.username }).update({
+        ShoppingCart: datass
+    })
+    return true
 }
