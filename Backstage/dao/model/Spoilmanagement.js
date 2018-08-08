@@ -41,6 +41,9 @@ var MovieSchema = new Schema({
 	ShoppingCart: {
 		type: Array,//购物车
 	},
+	service: {
+		type: Array,//已预约的服务
+	},
 	vip: {
 		type: String//vip
 	}

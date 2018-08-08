@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 module.exports.addService = async data => {
   // ------添加服务---------//
+  console.log(data)
   return await mongoose.model("serviceAdm").create(data);
   // console.log(data)
 };
@@ -90,6 +91,9 @@ module.exports.modifyService = async data => {
 
   //     }
   // }
+  let datas = await mongoose //把查询到的数据返回给服务层
+    .model("serviceAdm") //针对数据库里的studios对象
+    .find({ _id: serviceId })
   return await mongoose //把查询到的数据返回给服务层
     .model("serviceAdm") //针对数据库里的studios对象
     .find({ _id: serviceId })
@@ -101,7 +105,8 @@ module.exports.modifyService = async data => {
       serviceDetial: serviceDetial,
       serviceTime: serviceTime,
       serviceLevel: serviceLevel,
-      servicePrice: servicePrice
+      servicePrice: servicePrice,
+      img: datas[0].img
     })
     .exec(); //exec()方法是执行
 };
