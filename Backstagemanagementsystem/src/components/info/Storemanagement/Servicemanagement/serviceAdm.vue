@@ -310,7 +310,7 @@ export default {
       let serviceTime = this.startTime + "至" + this.endTime;
       // console.log(serviceTime)
       let img = "";
-      let sjs = parseInt(Math.random() * 4 + 1);
+      let sjs = parseInt(Math.random() * 10 + 1);
       if (sjs == 1) {
         img = "http://localhost:7201/mysevenimg/fuwu1.jpg";
       }
@@ -322,6 +322,24 @@ export default {
       }
       if (sjs == 4) {
         img = "http://localhost:7201/mysevenimg/fuwu4.jpg";
+      }
+      if (sjs == 5) {
+        img = "http://localhost:7201/mysevenimg/fuwu5.jpg";
+      }
+      if (sjs == 6) {
+        img = "http://localhost:7201/mysevenimg/fuwu6.jpg";
+      }
+      if (sjs == 7) {
+        img = "http://localhost:7201/mysevenimg/fuwu7.jpg";
+      }
+      if (sjs == 8) {
+        img = "http://localhost:7201/mysevenimg/fuwu8.jpg";
+      }
+      if (sjs == 9) {
+        img = "http://localhost:7201/mysevenimg/fuwu9.jpg";
+      }
+      if (sjs == 10) {
+        img = "http://localhost:7201/mysevenimg/fuwu10.jpg";
       }
       const data = {
         storesure: localStorage.userId,
