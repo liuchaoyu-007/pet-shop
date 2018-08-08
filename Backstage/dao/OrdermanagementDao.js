@@ -57,7 +57,7 @@ module.exports.add = async data => {
   return await mongoose.model("Ordermanagement").create(data);
 };
 module.exports.hot = async data => {
-  // -------添加订单--------//
+  // -------替换 订单--------//
   const {
     id,
     storesure, //这个订单属于那个店家的（店家账号）

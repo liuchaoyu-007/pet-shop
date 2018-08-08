@@ -374,7 +374,7 @@ module.exports.dingdanuser = async ({ user }) => {//---根据当前宠物用户�
             storesure: data[i].storesure,//店家
             states: data[i].state,//发货状态
             name: data[i].userpsrum,//商品名称
-            shuomin: img[0].goodsTaste,//商品说明
+            shuomin: img[0].goodsTaste,//商品   说明
             userzong: data[i].userzong,//商品总价
             num: data[i].usernum,//商品数量
             userprice: data[i].userprice,//商品单价   
