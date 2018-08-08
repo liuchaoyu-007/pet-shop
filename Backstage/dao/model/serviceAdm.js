@@ -9,6 +9,9 @@ var serviceAdmSchema = new Schema({
     serviceName: {  //服务 名称
         type: String
     },
+    img: {  //服务 图片
+        type: String
+    },
     // 服务类别
     serviceType: {
         type: String

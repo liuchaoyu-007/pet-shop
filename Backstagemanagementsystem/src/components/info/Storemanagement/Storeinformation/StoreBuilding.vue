@@ -39,7 +39,7 @@
           v-model="shopLicenceNum"
           clearable>  
         </el-input></p>
-        <p style="height: 260px;">营业执照:<el-upload
+        <p style="height: 260px;">店铺图片:<el-upload
           style="width: 400px;float: right;"
           class="upload-demo"
           drag

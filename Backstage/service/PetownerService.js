@@ -16,10 +16,23 @@ const {
     getcat,
     shanchucat,
     dingdanuser,
-    fuwu
+    fuwu,
+    removeCommodity,
+    fuwusetssss,
+    getfuwusetssss,
+    getfuwusetset
 } = require("../dao/PetownerDao")
+module.exports.getfuwusetset = async (data) => {
+    return await getfuwusetset(data)
+}
 module.exports.getshangping = async (data) => {
     return await getshangping(data)
+}
+module.exports.getfuwusetssss = async (data) => {
+    return await getfuwusetssss(data)
+}
+module.exports.fuwusetssss = async (data) => {
+    return await fuwusetssss(data)
 }
 module.exports.Petowner = async (data) => {
     return await Petowner(data)
@@ -71,4 +84,7 @@ module.exports.dingdanuser = async (data) => {
 }
 module.exports.fuwu = async (data) => {
     return await fuwu(data)
+}
+module.exports.removeCommodity = async (data) => {
+    return await removeCommodity(data)
 }

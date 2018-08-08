@@ -13,7 +13,7 @@ module.exports.Petowner = async (data) => {//注册包括判断是否已注册
         memberArea,//区域
         memberPoint,//积分
         haveapet,//拥有的宠物
-        ShoppingCart,//购物车
+        ShoppingCart,//购物车 
         vip//是不是vip
     } = data
     let isdata = "false";
@@ -40,7 +40,8 @@ module.exports.Petowner = async (data) => {//注册包括判断是否已注册
             memberPoint: memberPoint,//积分
             haveapet: [],//宠物
             ShoppingCart: [],//购物车
-            vip: vip//vip
+            vip: "0",//vip
+            service: []//预约的服务
         }
         await mongoose.model("Spoilmanagement")
             .create(datauser)
@@ -371,6 +372,7 @@ module.exports.dingdanuser = async ({ user }) => {//---根据当前宠物用户�
     for (let i = 0; i < data.length; i++) {
         let img = await mongoose.model("Commodity").find({ user: data[i].storesure })
         datas.push({
+            _id: data[i]._id,
             storesure: data[i].storesure,//店家
             states: data[i].state,//发货状态
             name: data[i].userpsrum,//商品名称
@@ -389,32 +391,7 @@ module.exports.fuwu = async (datas) => {//---服务--//
         let datai = await mongoose.model("serviceAdm").find()
         console.log(datai)
         for (let i = 0; i < datai.length; i++) {
-            let img = ""
-            let sjs = parseInt(Math.random() * 4 + 1)
-            if (sjs == 1) {
-                img = "/imgs/fuwu1.jpg"
-            }
-            if (sjs == 2) {
-                img = "/imgs/fuwu2.jpg"
-            }
-            if (sjs == 3) {
-                img = "/imgs/fuwu3.jpg"
-            }
-            if (sjs == 4) {
-                img = "/imgs/fuwu4.jpg"
-            }
-            console.log(img)
-            data.push({
-                serviceName: datai[i].serviceName,//服务名称
-                serviceType: datai[i].serviceType,//服务类型
-                serviceSchedule: datai[i].serviceSchedule,//服务时间段
-                serviceLevel: datai[i].serviceLevel,//服务员等级
-                serviceCanFor: datai[i].serviceCanFor,//服务宠物体重范围
-                serviceDetial: datai[i].serviceDetial,//服务规格
-                serviceTime: datai[i].serviceTime,//服务时长   
-                img: img,//店家图片 
-                servicePrice: datai[i].servicePrice,//价格
-            })
+            data.push(datai[i])
         }
     } else {
         let dats = await mongoose.model("store").find({
@@ -424,38 +401,52 @@ module.exports.fuwu = async (datas) => {//---服务--//
             userAcount: dats[0].useradd,
             userType: "门店管理员"
         })
-        console.log(datais)
         let datai = await mongoose.model("serviceAdm").find({
             storesure: datais[0]._id,
         })
         for (let i = 0; i < datai.length; i++) {
-            let img = ""
-            let sjs = parseInt(Math.random() * 4 + 1)
-            if (sjs == 1) {
-                img = "/imgs/fuwu1.jpg"
-            }
-            if (sjs == 2) {
-                img = "/imgs/fuwu2.jpg"
-            }
-            if (sjs == 3) {
-                img = "/imgs/fuwu3.jpg"
-            }
-            if (sjs == 4) {
-                img = "/imgs/fuwu4.jpg"
-            }
-            console.log(img)
-            data.push({
-                serviceName: datai[i].serviceName,//服务名称
-                serviceType: datai[i].serviceType,//服务类型
-                serviceSchedule: datai[i].serviceSchedule,//服务时间段
-                serviceLevel: datai[i].serviceLevel,//服务员等级
-                serviceCanFor: datai[i].serviceCanFor,//服务宠物体重范围
-                serviceDetial: datai[i].serviceDetial,//服务规格
-                serviceTime: datai[i].serviceTime,//服务时长   
-                img: img,//店家图片 
-                servicePrice: datai[i].servicePrice,//价格
-            })
+            data.push(datai[i])
         }
     }
     return data
+}
+module.exports.removeCommodity = async (data) => {//---用户删除购物车某样商品--//
+    let { datass } = data
+    await mongoose.model("Spoilmanagement").find({ memberuser: data.username }).update({
+        ShoppingCart: datass
+    })
+    return true
+}
+module.exports.fuwusetssss = async (data) => {// -------用户添加预约--------//
+    let datas = await mongoose.model("Spoilmanagement").find({ memberuser: data.user })
+    let datass = []
+    for (let i = 0; i < datas[0].service.length; i++) {
+        datass.push(datas[0].service[i])
+    }
+    datass.push(data)
+    await mongoose.model("Spoilmanagement").find({ memberuser: data.user }).update({
+        service: datass
+    })
+    console.log(await mongoose.model("Spoilmanagement").find({ memberuser: data.user }))
+    return true
+}
+module.exports.getfuwusetssss = async ({ user }) => {// -------用户查询预约--------//
+    let datas = await mongoose.model("Spoilmanagement").find({ memberuser: user })
+    return datas
+}
+module.exports.getfuwusetset = async ({ user, index }) => {// -------用户取消预约--------//
+    let datas = await mongoose.model("Spoilmanagement").find({ memberuser: user })
+    let data = []
+    for (let i = 0; i < datas[0].service.length; i++) {
+        data.push(datas[0].service[i])
+    }
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].index == index) {
+            data.splice(i, 1)
+        }
+    }
+    await mongoose.model("Spoilmanagement").find({ memberuser: user }).update({
+        service: data
+    })
+    return await mongoose.model("Spoilmanagement").find({ memberuser: user })
 }

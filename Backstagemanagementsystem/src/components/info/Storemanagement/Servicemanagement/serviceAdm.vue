@@ -309,6 +309,38 @@ export default {
       //添加服务
       let serviceTime = this.startTime + "至" + this.endTime;
       // console.log(serviceTime)
+      let img = "";
+      let sjs = parseInt(Math.random() * 10 + 1);
+      if (sjs == 1) {
+        img = "http://localhost:7201/mysevenimg/fuwu1.jpg";
+      }
+      if (sjs == 2) {
+        img = "http://localhost:7201/mysevenimg/fuwu2.jpg";
+      }
+      if (sjs == 3) {
+        img = "http://localhost:7201/mysevenimg/fuwu3.jpg";
+      }
+      if (sjs == 4) {
+        img = "http://localhost:7201/mysevenimg/fuwu4.jpg";
+      }
+      if (sjs == 5) {
+        img = "http://localhost:7201/mysevenimg/fuwu5.jpg";
+      }
+      if (sjs == 6) {
+        img = "http://localhost:7201/mysevenimg/fuwu6.jpg";
+      }
+      if (sjs == 7) {
+        img = "http://localhost:7201/mysevenimg/fuwu7.jpg";
+      }
+      if (sjs == 8) {
+        img = "http://localhost:7201/mysevenimg/fuwu8.jpg";
+      }
+      if (sjs == 9) {
+        img = "http://localhost:7201/mysevenimg/fuwu9.jpg";
+      }
+      if (sjs == 10) {
+        img = "http://localhost:7201/mysevenimg/fuwu10.jpg";
+      }
       const data = {
         storesure: localStorage.userId,
         serviceName: this.tableData.serviceName,
@@ -318,8 +350,11 @@ export default {
         serviceDetial: this.tableData.serviceDetial,
         serviceTime: this.tableData.serviceTime,
         serviceLevel: parseInt(this.tableData.serviceLevel),
-        servicePrice: parseInt(this.tableData.servicePrice)
+        servicePrice: parseInt(this.tableData.servicePrice),
+        img: img
       };
+      console.log(data)
+      console.log("in")
       if (
         data.serviceName === "" ||
         data.serviceType === "" ||
@@ -332,6 +367,7 @@ export default {
       ) {
         this.open("输入有误，请重新输入");
       } else {
+      console.log(data)
         fetch("/serviceManagement/addService", {
           method: "post",
           body: JSON.stringify(data),
@@ -360,7 +396,7 @@ export default {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
-        console.log(data)
+        console.log(data);
         this.curPage = data.curPage;
         this.eachPage = data.eachPage;
         this.count = data.count;
@@ -380,7 +416,7 @@ export default {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
-        console.log(data)
+        console.log(data);
         this.curPage = data.curPage;
         this.eachPage = data.eachPage;
         this.count = data.count;

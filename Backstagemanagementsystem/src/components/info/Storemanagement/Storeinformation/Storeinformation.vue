@@ -128,7 +128,7 @@
               width="180">
             </el-table-column>
              <el-table-column
-              label="营业执照图片"
+              label="店铺图片"
               align="center"
               width="300">
               <template slot-scope="scope">
